@@ -1,6 +1,6 @@
 <?php
 
-$env = "local";
+$env = "production";
 
 /**
  * The base configuration for WordPress
