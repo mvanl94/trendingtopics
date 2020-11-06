@@ -1,0 +1,810 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Fullscreen Agency\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-11 06:50+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.2.1; wp-5.2.2"
+
+#: 404.php:20
+msgid "Error"
+msgstr ""
+
+#: 404.php:22
+msgid "Oops! That page can&rsquo;t be found."
+msgstr ""
+
+#. 1: title.
+#: comments.php:37
+#, php-format
+msgid "One thought on &ldquo;%1$s&rdquo;"
+msgstr ""
+
+#. 1: comment count number, 2: title.
+#: comments.php:43
+#, php-format
+msgctxt "comments title"
+msgid "%1$s thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] ""
+msgstr[1] ""
+
+#: comments.php:68
+msgid "Comments are closed."
+msgstr ""
+
+#: functions.php:51
+msgid "Primary"
+msgstr ""
+
+#: functions.php:52
+msgid "Footer"
+msgstr ""
+
+#: functions.php:124
+msgid "Sidebar"
+msgstr ""
+
+#: functions.php:126
+msgid "Add widgets here."
+msgstr ""
+
+#: header.php:28
+msgid "Skip to content"
+msgstr ""
+
+#: inc/cv-class-breadcrumbs.php:264
+msgid "Browse:"
+msgstr ""
+
+#: inc/cv-class-breadcrumbs.php:265
+msgctxt "breadcrumbs aria label"
+msgid "Breadcrumbs"
+msgstr ""
+
+#: inc/cv-class-breadcrumbs.php:266
+msgid "Home"
+msgstr ""
+
+#: inc/cv-class-breadcrumbs.php:267
+msgid "404 Not Found"
+msgstr ""
+
+#: inc/cv-class-breadcrumbs.php:268
+msgid "Archives"
+msgstr ""
+
+#. %s is the search query.
+#: inc/cv-class-breadcrumbs.php:270
+#, php-format
+msgid "Search results for: %s"
+msgstr ""
+
+#. %s is the page number.
+#: inc/cv-class-breadcrumbs.php:272
+#, php-format
+msgid "Page %s"
+msgstr ""
+
+#. %s is the page number.
+#: inc/cv-class-breadcrumbs.php:274
+#, php-format
+msgid "Comment Page %s"
+msgstr ""
+
+#. Minute archive title. %s is the minute time format.
+#: inc/cv-class-breadcrumbs.php:276
+#, php-format
+msgid "Minute %s"
+msgstr ""
+
+#. Weekly archive title. %s is the week date format.
+#: inc/cv-class-breadcrumbs.php:278
+#, php-format
+msgid "Week %s"
+msgstr ""
+
+#: inc/cv-class-breadcrumbs.php:738
+msgctxt "minute and hour archives time format"
+msgid "g:i a"
+msgstr ""
+
+#: inc/cv-class-breadcrumbs.php:755
+msgctxt "minute archives time format"
+msgid "i"
+msgstr ""
+
+#: inc/cv-class-breadcrumbs.php:772
+msgctxt "hour archives time format"
+msgid "g a"
+msgstr ""
+
+#: inc/cv-class-breadcrumbs.php:788 inc/cv-class-breadcrumbs.php:817
+#: inc/cv-class-breadcrumbs.php:844 inc/cv-class-breadcrumbs.php:871
+#: inc/cv-class-breadcrumbs.php:1211
+msgctxt "yearly archives date format"
+msgid "Y"
+msgstr ""
+
+#: inc/cv-class-breadcrumbs.php:789 inc/cv-class-breadcrumbs.php:845
+#: inc/cv-class-breadcrumbs.php:1215
+msgctxt "monthly archives date format"
+msgid "F"
+msgstr ""
+
+#: inc/cv-class-breadcrumbs.php:790 inc/cv-class-breadcrumbs.php:1219
+msgctxt "daily archives date format"
+msgid "j"
+msgstr ""
+
+#: inc/cv-class-breadcrumbs.php:818
+msgctxt "weekly archives date format"
+msgid "W"
+msgstr ""
+
+#. If there are characters in your language that are not supported
+#. by Lora translate this to 'off'. Do not translate into your own language.
+#: inc/template-functions.php:42
+msgctxt "Lora font: on or off"
+msgid "on"
+msgstr ""
+
+#. If there are characters in your language that are not supported
+#. by Poppins, translate this to 'off'. Do not translate into your own language.
+#: inc/template-functions.php:50
+msgctxt "Poppins font: on or off"
+msgid "on"
+msgstr ""
+
+#: inc/template-functions.php:149
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:185
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:256
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:307
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:358
+msgid "Select Category"
+msgstr ""
+
+#: inc/template-functions.php:173
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:135
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:428
+msgid "Select Page"
+msgstr ""
+
+#. used between list items, there is a space after the comma
+#: inc/template-tags.php:53
+msgid ", "
+msgstr ""
+
+#. used between list items, there is a space after the comma
+#: inc/template-tags.php:57
+msgctxt "list item separator"
+msgid ", "
+msgstr ""
+
+#. 1: list of tags.
+#: inc/template-tags.php:60
+#, php-format
+msgid "Tagged %1$s"
+msgstr ""
+
+#. %s: post title
+#: inc/template-tags.php:70
+#, php-format
+msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
+msgstr ""
+
+#. %s: Name of current post. Only visible to screen readers
+#: inc/template-tags.php:87 template-parts/content-page.php:36
+#, php-format
+msgid "Edit <span class=\"screen-reader-text\">%s</span>"
+msgstr ""
+
+#: inc/woocommerce.php:229
+msgid "View your shopping cart"
+msgstr ""
+
+#. number of items in the mini cart.
+#: inc/woocommerce.php:233
+#, php-format
+msgid "%d item"
+msgid_plural "%d items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: template-parts/content-none.php:16
+msgid "Nothing Found"
+msgstr ""
+
+#. 1: link to WP admin new post page.
+#: template-parts/content-none.php:26
+#, php-format
+msgid ""
+"Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr ""
+
+#: template-parts/content-none.php:39
+msgid ""
+"Sorry, but nothing matched your search terms. Please try again with some "
+"different keywords."
+msgstr ""
+
+#: template-parts/content-none.php:45
+msgid ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching can help."
+msgstr ""
+
+#: template-parts/content-page.php:23 template-parts/content-single.php:44
+#: template-parts/content.php:56 template-parts/content/content-home.php:42
+msgid "Pages:"
+msgstr ""
+
+#. %s: Name of current post. Only visible to screen readers
+#: template-parts/content-single.php:33 template-parts/content.php:42
+#, php-format
+msgid "Continue reading<span class=\"screen-reader-text\"> \"%s\"</span>"
+msgstr ""
+
+#: inc/customizer/cv-customizer-design-panel-options.php:15
+msgid "Archive/Blog Sidebar Layout"
+msgstr ""
+
+#: inc/customizer/cv-customizer-design-panel-options.php:34
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:206
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:378
+msgid "Read More Button"
+msgstr ""
+
+#: inc/customizer/cv-customizer-design-panel-options.php:36
+msgid "Discover"
+msgstr ""
+
+#: inc/customizer/cv-customizer-design-panel-options.php:47
+msgid "Posts Sidebar Layout"
+msgstr ""
+
+#: inc/customizer/cv-customizer-design-panel-options.php:66
+msgid "Pages Sidebar Layout"
+msgstr ""
+
+#: inc/customizer/cv-customizer-footer-panel-options.php:15
+msgid "Copyright Text"
+msgstr ""
+
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:15
+msgid "Enable Hero Section"
+msgstr ""
+
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:27
+msgid "Hero Image"
+msgstr ""
+
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:28
+msgid ""
+"Click \"Select image\" to upload an image file from your computer. "
+"Recommended an image size of 1920 × 850 pixels for perfect fit."
+msgstr ""
+
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:47
+msgid "Hero Title"
+msgstr ""
+
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:66
+msgid "Hero Content"
+msgstr ""
+
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:85
+msgid "Hero Button Label"
+msgstr ""
+
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:104
+msgid "Hero Button Link"
+msgstr ""
+
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:123
+msgid "Enable About Us Section"
+msgstr ""
+
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:154
+msgid "Enable Services Section"
+msgstr ""
+
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:166
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:237
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:288
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:339
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:409
+msgid "Section Title"
+msgstr ""
+
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:168
+#: template-parts/service/content-service.php:18
+msgid "Services"
+msgstr ""
+
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:208
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:380
+#: template-parts/blog/content-blog.php:20
+#: template-parts/service/content-service.php:19
+msgid "Read More"
+msgstr ""
+
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:225
+msgid "Enable Portfolio Section"
+msgstr ""
+
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:239
+msgid "New Projects"
+msgstr ""
+
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:276
+msgid "Enable Testimonial Section"
+msgstr ""
+
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:290
+msgid "Testimonials"
+msgstr ""
+
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:327
+msgid "Enable Blog Section"
+msgstr ""
+
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:341
+#: template-parts/blog/content-blog.php:18
+msgid "Latest News"
+msgstr ""
+
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:397
+msgid "Enable Contact Section"
+msgstr ""
+
+#: inc/customizer/cv-customizer-frontpage-panel-options.php:411
+#: template-parts/contact/content-contact.php:17
+msgid "Contact Us"
+msgstr ""
+
+#: inc/customizer/cv-customizer-general-panel-options.php:15
+msgid "Enable Wow Animation"
+msgstr ""
+
+#: inc/customizer/cv-customizer-general-panel-options.php:27
+msgid "Show Breadcrumb"
+msgstr ""
+
+#: inc/customizer/cv-customizer-general-panel-options.php:39
+msgid "Primary Color"
+msgstr ""
+
+#: inc/customizer/cv-customizer-general-panel-options.php:50
+msgid "Checked to hide latest posts in homepage."
+msgstr ""
+
+#: inc/customizer/cv-customizer-header-panel-options.php:15
+msgid "Enable Search Menu"
+msgstr ""
+
+#: inc/customizer/cv-customizer-header-panel-options.php:26
+msgid "Add Social Icons here"
+msgstr ""
+
+#: inc/customizer/cv-customizer-header-panel-options.php:27
+msgid "Drag & Drop items to re-arrange the order"
+msgstr ""
+
+#: inc/customizer/cv-customizer-header-panel-options.php:32
+#: inc/customizer/cv-customizer-header-panel-options.php:52
+msgid "Social Icon"
+msgstr ""
+
+#: inc/customizer/cv-customizer-header-panel-options.php:58
+msgid "Social Link URL"
+msgstr ""
+
+#: inc/customizer/cv-customizer-panels.php:15
+msgid "General Settings"
+msgstr ""
+
+#: inc/customizer/cv-customizer-panels.php:23
+msgid "Header Settings"
+msgstr ""
+
+#: inc/customizer/cv-customizer-panels.php:31
+msgid "Frontpage Settings"
+msgstr ""
+
+#: inc/customizer/cv-customizer-panels.php:39
+msgid "Design Settings"
+msgstr ""
+
+#: inc/customizer/cv-customizer-sections.php:14
+msgid "Site Settings"
+msgstr ""
+
+#: inc/customizer/cv-customizer-sections.php:24
+msgid "Extra Options"
+msgstr ""
+
+#: inc/customizer/cv-customizer-sections.php:33
+msgid "Hero Section"
+msgstr ""
+
+#: inc/customizer/cv-customizer-sections.php:42
+msgid "About Us Section"
+msgstr ""
+
+#: inc/customizer/cv-customizer-sections.php:51
+msgid "Services Section"
+msgstr ""
+
+#: inc/customizer/cv-customizer-sections.php:60
+msgid "Portfolio Section"
+msgstr ""
+
+#: inc/customizer/cv-customizer-sections.php:69
+msgid "Testimonial Section"
+msgstr ""
+
+#: inc/customizer/cv-customizer-sections.php:78
+msgid "Blog Section"
+msgstr ""
+
+#: inc/customizer/cv-customizer-sections.php:87
+msgid "Contact Section"
+msgstr ""
+
+#: inc/customizer/cv-customizer-sections.php:96
+msgid "Archive Settings"
+msgstr ""
+
+#: inc/customizer/cv-customizer-sections.php:105
+msgid "Post Settings"
+msgstr ""
+
+#: inc/customizer/cv-customizer-sections.php:114
+msgid "Page Settings"
+msgstr ""
+
+#: inc/customizer/cv-customizer-sections.php:123
+msgid "Footer Settings"
+msgstr ""
+
+#: inc/customizer/cv-customizer.php:28
+msgid "Innerpage Header Image"
+msgstr ""
+
+#: inc/customizer/cv-customizer.php:62 inc/welcome/welcome.php:457
+msgid "Fullscreen Agency Pro"
+msgstr ""
+
+#: inc/customizer/cv-customizer.php:63
+msgid "Buy Pro"
+msgstr ""
+
+#: inc/cv-custom-hooks/cv-custom-hooks.php:75
+#, php-format
+msgid "Search Results for: %s"
+msgstr ""
+
+#. 1: Theme name, 2: Theme author.
+#: inc/cv-custom-hooks/cv-footer-hooks.php:43
+#, php-format
+msgid "Theme: %1$s by %2$s."
+msgstr ""
+
+#: inc/welcome/welcome.php:35
+msgid "Welcome"
+msgstr ""
+
+#: inc/welcome/welcome.php:75
+msgid "Action failed. Please refresh the page and retry."
+msgstr ""
+
+#: inc/welcome/welcome.php:79
+msgid "Cheat in &#8217; huh?"
+msgstr ""
+
+#: inc/welcome/welcome.php:95
+#, php-format
+msgid "Welcome to %s"
+msgstr ""
+
+#: inc/welcome/welcome.php:96
+#, php-format
+msgid ""
+"Welcome! Thank you for choosing %1$s! To fully take advantage of the best "
+"our theme can offer please make sure you visit our %2$s welcome page %3$s."
+msgstr ""
+
+#: inc/welcome/welcome.php:97
+#, php-format
+msgid "Get started with %1$s"
+msgstr ""
+
+#: inc/welcome/welcome.php:122
+#, php-format
+msgid "About %1$s"
+msgstr ""
+
+#: inc/welcome/welcome.php:124
+#, php-format
+msgid "Version: %1$s"
+msgstr ""
+
+#: inc/welcome/welcome.php:138
+msgid "Theme Info"
+msgstr ""
+
+#: inc/welcome/welcome.php:140
+msgid "View Demo"
+msgstr ""
+
+#: inc/welcome/welcome.php:142 inc/welcome/welcome.php:221
+msgid "View PRO version"
+msgstr ""
+
+#: inc/welcome/welcome.php:144
+msgid "Rate this theme"
+msgstr ""
+
+#: inc/welcome/welcome.php:146
+msgid "More Tutorials"
+msgstr ""
+
+#: inc/welcome/welcome.php:155
+msgid "Free Vs Pro"
+msgstr ""
+
+#: inc/welcome/welcome.php:159
+msgid "More Themes"
+msgstr ""
+
+#: inc/welcome/welcome.php:163
+msgid "Changelog"
+msgstr ""
+
+#: inc/welcome/welcome.php:201
+msgid "Theme Customizer"
+msgstr ""
+
+#: inc/welcome/welcome.php:202
+msgid "All Theme Options are available via Customize screen."
+msgstr ""
+
+#: inc/welcome/welcome.php:203 inc/welcome/welcome.php:288
+msgid "Customize"
+msgstr ""
+
+#: inc/welcome/welcome.php:207 inc/welcome/welcome.php:209
+msgid "Documentation"
+msgstr ""
+
+#: inc/welcome/welcome.php:208
+msgid "Please view our documentation page to setup the theme."
+msgstr ""
+
+#: inc/welcome/welcome.php:213
+msgid "Got theme support question?"
+msgstr ""
+
+#: inc/welcome/welcome.php:214
+msgid "Please put it in our dedicated support forum."
+msgstr ""
+
+#: inc/welcome/welcome.php:215
+msgid "Support"
+msgstr ""
+
+#: inc/welcome/welcome.php:219
+msgid "Need more features?"
+msgstr ""
+
+#: inc/welcome/welcome.php:220 inc/welcome/welcome.php:450
+msgid "Upgrade to PRO version for more exciting features."
+msgstr ""
+
+#: inc/welcome/welcome.php:225
+msgid "Have you need customization?"
+msgstr ""
+
+#: inc/welcome/welcome.php:226
+msgid "Please send message with your requirement."
+msgstr ""
+
+#: inc/welcome/welcome.php:227
+msgid "Customization"
+msgstr ""
+
+#: inc/welcome/welcome.php:232
+msgid "Click below to translate this theme into your own language."
+msgstr ""
+
+#: inc/welcome/welcome.php:243
+msgid "Return to Updates"
+msgstr ""
+
+#: inc/welcome/welcome.php:243
+msgid "Return to Dashboard &rarr; Updates"
+msgstr ""
+
+#: inc/welcome/welcome.php:246
+msgid "Go to Dashboard &rarr; Home"
+msgstr ""
+
+#: inc/welcome/welcome.php:246
+msgid "Go to Dashboard"
+msgstr ""
+
+#: inc/welcome/welcome.php:286
+msgid "Active"
+msgstr ""
+
+#: inc/welcome/welcome.php:325
+msgid "Activate"
+msgstr ""
+
+#: inc/welcome/welcome.php:334
+msgid "Install Now"
+msgstr ""
+
+#: inc/welcome/welcome.php:337
+msgid "Live Preview"
+msgstr ""
+
+#: inc/welcome/welcome.php:398
+msgid "View changelog below:"
+msgstr ""
+
+#: inc/welcome/welcome.php:455
+msgid "Features"
+msgstr ""
+
+#. Name of the theme
+#: inc/welcome/welcome.php:456
+msgid "Fullscreen Agency"
+msgstr ""
+
+#: inc/welcome/welcome.php:462
+msgid "Price"
+msgstr ""
+
+#: inc/welcome/welcome.php:463
+msgid "Free"
+msgstr ""
+
+#: inc/welcome/welcome.php:464
+msgid "$59"
+msgstr ""
+
+#: inc/welcome/welcome.php:467
+msgid "Import Demo Data"
+msgstr ""
+
+#: inc/welcome/welcome.php:472
+msgid "Pre Loaders"
+msgstr ""
+
+#: inc/welcome/welcome.php:477
+msgid "Header Layouts"
+msgstr ""
+
+#: inc/welcome/welcome.php:478 inc/welcome/welcome.php:483
+msgid "1"
+msgstr ""
+
+#: inc/welcome/welcome.php:479
+msgid "3"
+msgstr ""
+
+#: inc/welcome/welcome.php:482
+msgid "Archive Pages Layouts"
+msgstr ""
+
+#: inc/welcome/welcome.php:484
+msgid "4"
+msgstr ""
+
+#: inc/welcome/welcome.php:487
+msgid "Google Fonts"
+msgstr ""
+
+#: inc/welcome/welcome.php:489
+msgid "600+"
+msgstr ""
+
+#: inc/welcome/welcome.php:492
+msgid "Sections background image options"
+msgstr ""
+
+#: inc/welcome/welcome.php:497
+msgid "Sections overlay pattern options"
+msgstr ""
+
+#: inc/welcome/welcome.php:502
+msgid "Counter Section"
+msgstr ""
+
+#: inc/welcome/welcome.php:507
+msgid "Team Section"
+msgstr ""
+
+#: inc/welcome/welcome.php:512
+msgid "Section Reorder"
+msgstr ""
+
+#: inc/welcome/welcome.php:517
+msgid "Typography Options"
+msgstr ""
+
+#: inc/welcome/welcome.php:522
+msgid "WooCommerce Compatible"
+msgstr ""
+
+#: inc/welcome/welcome.php:527
+msgid "Custom 404 Page"
+msgstr ""
+
+#: inc/welcome/welcome.php:531
+msgid "slider"
+msgstr ""
+
+#: inc/welcome/welcome.php:535
+msgid "Layouts option"
+msgstr ""
+
+#: inc/welcome/welcome.php:540
+msgid "Gutenberg Compatible"
+msgstr ""
+
+#: inc/welcome/welcome.php:545
+msgid "The Events Calendar Plugin Compatible"
+msgstr ""
+
+#: inc/welcome/welcome.php:553
+msgid "View Pro"
+msgstr ""
+
+#: inc/welcome/welcome.php:576
+#, php-format
+msgid ""
+"If you like <strong>%1$s</strong> please leave us a %2$s rating. A huge "
+"thank you from <strong>CodeVibrant</strong> in advance!"
+msgstr ""
+
+#: template-parts/portfolio/content-portfolio.php:18
+msgid "Portfolio"
+msgstr ""
+
+#: template-parts/testimonial/content-testimonial.php:18
+msgid "Testimonial"
+msgstr ""
+
+#. Description of the theme
+msgid ""
+"Free WordPress Theme related to the agency with a fullscreen option. It is "
+"developed with creative design and powerful features that let you write "
+"articles and blog posts with ease. It uses the best clean SEO practices, "
+"responsive HTML5, and on top of that, it is fast, simple, and easy to use. "
+"Use the Customizer to add your own background, page layout, site width and "
+"more."
+msgstr ""
+
+#. URI of the theme
+msgid "https://codevibrant.com/wpthemes/fullscreen-agency/"
+msgstr ""
+
+#. Author of the theme
+msgid "CodeVibrant"
+msgstr ""
+
+#. Author URI of the theme
+msgid "https://codevibrant.com"
+msgstr ""

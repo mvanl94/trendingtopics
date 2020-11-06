@@ -1,0 +1,16 @@
+<!-- start Simple Custom CSS and JS -->
+<style type="text/css">
+.ff-square-commentbox {
+  width: 100%;
+      background-color: #f8f9fa;
+  height: 100%;
+  padding: 20px 20px 20px;    
+  box-sizing: border-box;
+}
+
+.ff-square-commentbox-textarea {
+  resize: none;
+      margin-top: 15px;
+  border-color: #2d6ff7;
+}</style>
+<!-- end Simple Custom CSS and JS -->

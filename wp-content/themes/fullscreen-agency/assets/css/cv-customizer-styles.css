@@ -1,0 +1,66 @@
+/*=================================================
+            Radio Image Control
+=================================================*/
+.customize-control-kirki-radio-image input + label .image-clickable {
+    margin:        0;
+    border-radius: 0;
+    border:        none;
+    background:    transparent;
+}
+
+/*.customize-control-radio-image .ui-button-text { padding: 0; }*/
+
+.customize-control-kirki-radio-image input + label .image-clickable,
+.customize-control-kirki-radio-image input:checked + label img {
+    box-sizing: border-box;
+    max-width:  100%;
+    height:     auto;
+    padding:    2px;
+    border:     3px solid transparent;
+}
+
+.customize-control-kirki-radio-image input + label .image-clickable:hover,
+.customize-control-kirki-radio-image input + label .image-clickable:focus {
+    border-color: #ddd;
+}
+
+.customize-control-kirki-radio-image input:checked + label img {
+    border-color: #00a0d2;
+    display: block;
+}
+
+.customize-control-kirki-radio-image .image label {
+    margin-right: 10px;
+}
+
+.customize-control-kirki-radio-image input:checked + label img {
+    box-shadow: none;
+}
+.customize-control-kirki-radio-image > .image {
+    display: block;
+}
+
+.customize-pane-parent #accordion-section-theme_upsell{
+    display: block!important;
+}
+
+/*=================================================
+             Pro theme link
+=================================================*/
+#customize-controls .control-section-upsell .accordion-section-title:hover,
+#customize-controls .control-section-upsell .accordion-section-title:focus {
+    background-color: #fff;
+}
+
+.control-section-upsell .accordion-section-title .button {
+    margin-top:  -4px;
+    font-weight: 700;
+    margin-left: 8px;
+    border-color: #ff58a5;
+    background-color: #ff58a5;
+    color: #fff;
+}
+
+.control-section-upsell .accordion-section-title .button:hover {
+    background-color: #fb137d;
+}
