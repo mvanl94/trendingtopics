@@ -1,4 +1,7 @@
 <?php
+
+$env = "local";
+
 /**
  * The base configuration for WordPress
  *
@@ -18,18 +21,39 @@
  * @package WordPress
  */
 
-// ** MySQL settings - You can get this info from your web host ** //
-/** The name of the database for WordPress */
-define('DB_NAME', 'trendingtopics_nl_wordpress');
+if ($env == 'local') {
 
-/** MySQL database username */
-define('DB_USER', 'root');
+    // ** MySQL settings - You can get this info from your web host ** //
+    /** The name of the database for WordPress */
+    define('DB_NAME', 'trendingtopics_nl_wordpress');
 
-/** MySQL database password */
-define('DB_PASSWORD', '');
+    /** MySQL database username */
+    define('DB_USER', 'root');
 
-/** MySQL hostname */
-define('DB_HOST', '127.0.0.1:3307');
+    /** MySQL database password */
+    define('DB_PASSWORD', '');
+
+    /** MySQL hostname */
+    define('DB_HOST', '127.0.0.1:3307');
+
+} else {
+
+    // ** MySQL settings - You can get this info from your web host ** //
+    /** The name of the database for WordPress */
+    define('DB_NAME', 'deb120056_trendingtopics');
+
+    /** MySQL database username */
+    define('DB_USER', 'deb120056_trendingtopics');
+
+    /** MySQL database password */
+    define('DB_PASSWORD', 'niger9');
+
+    /** MySQL hostname */
+    define('DB_HOST', '127.0.0.1');
+
+}
+
+
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');
