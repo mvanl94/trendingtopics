@@ -1,13 +1,39 @@
 /**
- * All of the CSS for your public-facing functionality should be
- * included in this file.
- */
+* All of the CSS for your public-facing functionality should be
+* included in this file.
+*/
 
 .fa-comments {
     color: blue;
 }
 .ff-square-box-item:first-of-type {
-    margin-top: 1.5em;
+    margin-top: 0.5em;
+}
+.ff-square-item-vote-up {
+    background: #70ec70;
+}
+.ff-square-item-vote-down {
+    background: #ff6b6b;
+    color: white;
+}
+.ff-square-item-vote-placeholder {
+    padding: 0 5px;
+    border-radius: 12px;
+    font-size: 10px;
+    text-align: right;
+    font-weight: 700;
+    display: inline-grid;
+    line-height: 20px;
+}
+.ff-square-item-header {
+    overflow:hidden;
+    font-size: 14px;
+    margin-left: 5px;
+}
+.ff-square-box-items {
+    overflow-y: scroll;
+    height: 190px;
+    padding: 10px;
 }
 .ff-square-box-item {
     padding-bottom: 0.5em;
@@ -25,53 +51,81 @@
     overflow:hidden;
     line-height: 18px;
 }
+.ff-square-box-item-vote a {
+    font-weight: 700;
+    color: #2d6ff7;
+}
 .ff-square-box-item-comment {
     margin-bottom: 0px;
-     font-size: 12px;
-     width:100%;
-     font-style: italic;
-     overflow:hidden;
-     display: inline-block;
-     line-height: 16px;
- }
+    font-size: 12px;
+    width:100%;
+    font-style: italic;
+    overflow:hidden;
+    display: inline-block;
+    line-height: 16px;
+}
 
- .ff-square-box-item-time {
-     font-size: 12px;
-     line-height:16px;
-     color: grey;
-     display:inline-block;
- }
-
-
+.ff-square-box-item-time {
+    font-size: 12px;
+    line-height:16px;
+    color: grey;
+    display:inline-block;
+}
 
 .ff-square-box {
     border-radius: 5px;
     border: 1px solid #f3f3f3;
-    padding: 10px;
-    min-height: 200px;
+    min-height: 240px;
+    max-height: 240px;
+
 }
 .ff-square-box-header {
     /* display:flex; */
     /* justify-content: space-between; */
     line-height: 30px;
-    height:30px;
+    background: #4984ff;
+    padding: 10px;
+    display: block;
+    border-radius: 3px 3px 0 0;
+    color :white;
 }
-.ff-square-box-header span {
 
-        display: inline-block;
-}
 .ff-square-box-header select {
-        width: 100px;
-        float:right;
-        font-size: 12px;
-        height:30px;
-        display: inline-block;
+    float:right;
+    border: none !important;
+    padding: 0 !important;
+    font-size: 12px;
+    height:30px;
+    display: inline-block;
+    background: #f4f4f4;
+    margin-right: 5px;
+    border-radius: 3px;
+}
+.ff-square-box-header select:hover {
+    background: #2d6ff7;
+    color: white;
+    font-weight: 700;
+    cursor:pointer;
 }
 .ff-square-box-header h5 {
     line-height: 30px;
-    padding-left: 10px;
-        display: inline-block;
+    margin-bottom: 0;
+    display: inline-block;
+    color: white;
 }
+
+.ff-square-item-vote-span-placeholder {
+    display: inline-grid;
+    width: 30px;
+}
+
+.select-type {
+    width: 80px;
+}
+.select-date {
+    width: 70px;
+}
+
 
 .ff-slideshow .ff-content.not-empty:first-of-type {
     display:block;
@@ -85,12 +139,12 @@
 .ff-comments-list-inner {
     display: none !important;
 }
- .ff-square-commentbox {
-  width: 100%;
-      background-color: #f8f9fa;
-  height: 100%;
-  padding: 20px 20px 20px;
-  box-sizing: border-box;
+.ff-square-commentbox {
+    width: 100%;
+    background-color: #f8f9fa;
+    height: 100%;
+    padding: 20px 20px 20px;
+    box-sizing: border-box;
 }
 .ff-share-wrapper {
     position: absolute !important;
@@ -132,16 +186,16 @@
     margin-right: 6px;
 }
 /* .ff-square-bar-item:first-child i {
-    color: #008e16;
+color: #008e16;
 }
 .ff-square-bar-item:first-child i:hover {
-    color: #3ebe52;
+color: #3ebe52;
 }
 .ff-square-bar-item:last-child i {
-    color: #d14419;
+color: #d14419;
 }
 .ff-square-bar-item:last-child i:hover {
-    color: #e6633a; */
+color: #e6633a; */
 /* } */
 h6.ff-item-bar {
     display:none !important;
@@ -153,9 +207,9 @@ h6.ff-item-bar {
     width:100%;
 }
 .ff-square-commentbox-textarea {
-  resize: none;
-      margin-top: 15px;
-  border-color: #2d6ff7;
+    resize: none;
+    margin-top: 15px;
+    border-color: #2d6ff7;
 }
 
 .ff-square-comments-list {
@@ -173,31 +227,31 @@ h6.ff-item-bar {
     margin: 0 5px 0 0;
 }
 .sk-chase {
-  width: 22px;
-  height: 22px;
-  left: 50%;
-  top: 50%;
-  position: absolute;
-  animation: sk-chase 2.5s infinite linear both;
+    width: 22px;
+    height: 22px;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    animation: sk-chase 2.5s infinite linear both;
 }
 
 .sk-chase-dot {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  animation: sk-chase-dot 2.0s infinite ease-in-out both;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    animation: sk-chase-dot 2.0s infinite ease-in-out both;
 }
 
 .sk-chase-dot:before {
-  content: '';
-  display: block;
-  width: 25%;
-  height: 25%;
-  background-color: black;
-  border-radius: 100%;
-  animation: sk-chase-dot-before 2.0s infinite ease-in-out both;
+    content: '';
+    display: block;
+    width: 25%;
+    height: 25%;
+    background-color: black;
+    border-radius: 100%;
+    animation: sk-chase-dot-before 2.0s infinite ease-in-out both;
 }
 
 .sk-chase-dot:nth-child(1) { animation-delay: -1.1s; }
@@ -214,17 +268,17 @@ h6.ff-item-bar {
 .sk-chase-dot:nth-child(6):before { animation-delay: -0.6s; }
 
 @keyframes sk-chase {
-  100% { transform: rotate(360deg); }
+    100% { transform: rotate(360deg); }
 }
 
 @keyframes sk-chase-dot {
-  80%, 100% { transform: rotate(360deg); }
+    80%, 100% { transform: rotate(360deg); }
 }
 
 @keyframes sk-chase-dot-before {
-  50% {
-    transform: scale(0.4);
-  } 100%, 0% {
-    transform: scale(1.0);
-  }
-}
+    50% {
+        transform: scale(0.4);
+        } 100%, 0% {
+            transform: scale(1.0);
+        }
+    }

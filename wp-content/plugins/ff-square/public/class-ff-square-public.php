@@ -68,7 +68,6 @@ class Ff_Square_Public {
         <div class="col-md-4">
             <div class="ff-square-box">
                 <div class="ff-square-box-header">
-                    <span><i class="fas fa-comments"></i></span>
                     <h5>Laatste Reacties</h5>
                 </div>
                 <div class="ff-square-box-items">
@@ -86,8 +85,12 @@ class Ff_Square_Public {
         <div class="col-md-4">
             <div class="ff-square-box">
                 <div class="ff-square-box-header">
-                    <span><i class="fas fa-plus-square"></i></span>
-                    <h5>Meeste + Stemmen</h5>
+
+                    <h5>Meeste stemmen</h5>
+                    <select class="select-type">
+                    <option value="0">Upvotes</option>
+                    <option value="2">Downvotes</option>
+                    </select>
                     <select class="select-date">
                     <option value="0">24 uur</option>
                     <option value="1">1 week</option>
@@ -107,29 +110,7 @@ class Ff_Square_Public {
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="ff-square-box">
-                <div class="ff-square-box-header">
-                    <span><i class="fas fa-minus-square"></i></span>
-                    <h5>Meeste - Stemmen</h5>
-                    <select class="select-date">
-                    <option value="0">24 uur</option>
-                    <option value="1">1 week</option>
-                    <option value="2">1 maand</option>
-                    </select>
-                </div>
-                <div class="ff-square-box-items">
-                    <div class="sk-chase" style="width: 22px; margin-top:2px; height: 22px; margin-right:1em;">
-                              <div class="sk-chase-dot"></div>
-                              <div class="sk-chase-dot"></div>
-                              <div class="sk-chase-dot"></div>
-                              <div class="sk-chase-dot"></div>
-                              <div class="sk-chase-dot"></div>
-                              <div class="sk-chase-dot"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         </div>';
 
         return $html . $content;
@@ -196,44 +177,59 @@ class Ff_Square_Public {
         }
 
         if ($_REQUEST['block'] == 1) {
-            $sql = "SELECT A.*,B.post_header FROM {$wpdb->prefix}ff_square_comments A LEFT JOIN (SELECT post_header,post_id FROM {$wpdb->prefix}ff_posts)B ON A.post_id=B.post_id ORDER BY A.created_at LIMIT 6";
+            $sql = "SELECT A.*,B.post_header FROM {$wpdb->prefix}ff_square_comments A LEFT JOIN (SELECT post_header,post_id FROM {$wpdb->prefix}ff_posts)B ON A.post_id=B.post_id ORDER BY A.created_at LIMIT 9";
             echo json_encode($wpdb->get_results($sql, OBJECT));
         }
 
-        if ($_REQUEST['block'] == 2 || $_REQUEST['block'] == 3) {
+
+
+        if ($_REQUEST['block'] == 2) {
 
             switch ($_REQUEST['after']) {
                 case 0 : $date = (new \DateTime())->modify('-1 day'); break;
                 case 1 : $date = (new \DateTime())->modify('-1 week'); break;
                 case 2 : $date = (new \DateTime())->modify('-4 weeks'); break;
             }
-            $since = "WHERE post_timestamp>" . $date->getTimestamp() . " AND";
+
+            $sql = "SELECT item_id, SUM(vote) AS vote
+            FROM {$wpdb->prefix}ff_square_votes
+            WHERE type='item' AND created_at>" . $date->getTimestamp() . "
+            GROUP BY item_id
+            HAVING vote " . ($_REQUEST['type'] == 0 ? '>' : '<' ) . " 0
+            ORDER BY vote " . ($_REQUEST['type'] == 0 ? 'DESC' : 'ASC' ) . "
+            LIMIT 7 ";
         }
 
-        if ($_REQUEST['block'] == 2) {
-            $sql = "SELECT item_id, SUM(vote) as vote FROM {$wpdb->prefix}ff_square_votes WHERE type='item' GROUP BY item_id having vote > 0 ORDER BY vote DESC LIMIT 7 ";
-        }
-        if ($_REQUEST['block'] == 3) {
-            $sql = "SELECT item_id, SUM(vote) as vote FROM {$wpdb->prefix}ff_square_votes WHERE type='item' GROUP BY item_id having vote < 0 ORDER BY vote ASC LIMIT 7 ";
-        }
+        // if ($_REQUEST['block'] == 3) {
+        //     $sql = "SELECT item_id, SUM(vote) as vote FROM {$wpdb->prefix}ff_square_votes WHERE type='item' GROUP BY item_id having vote < 0 ORDER BY vote ASC LIMIT 7 ";
+        // }
 
         if ($_REQUEST['block'] == 2 || $_REQUEST['block'] == 3) {
 
-            $resultd = $wpdb->get_results($sql, OBJECT);
-            $sql = "SELECT post_id, post_header FROM {$wpdb->prefix}ff_posts " . $since . " ";
+            $votes = $wpdb->get_results($sql, OBJECT);
 
-            foreach ($resultd as $key=>$post) {
-                if ($key == (count($resultd)-1)) {
+            if (count($votes) == 0) {
+                echo json_encode(0);
+                exit();
+            }
+
+            $sql = "SELECT post_id, post_header FROM {$wpdb->prefix}ff_posts WHERE ";
+
+            foreach ($votes as $key=>$post) {
+                if ($key == (count($votes)-1)) {
                     $sql.= "post_id='" . $post->item_id . "'";
                 } else {
+
                     $sql.= "post_id='" . $post->item_id . "' OR ";
                 }
             }
 
+            $sql.= "GROUP BY post_id";
+
             $result = $wpdb->get_results($sql, OBJECT);
 
             echo json_encode([
-                'votes' => json_encode($resultd),
+                'votes' => json_encode($votes),
                 'posts' => json_encode($result)
             ]);
         }
@@ -249,9 +245,8 @@ class Ff_Square_Public {
             exit("Fout");
         }
 
-        //Get comments for post
         $post_id = $_REQUEST['post_id'];
-        // WHERE post_id = " . $post_id
+
         $results['comments'] = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}ff_square_comments", OBJECT );
         $results['votes'] = $wpdb->get_results( "SELECT item_id, SUM(vote) as vote FROM {$wpdb->prefix}ff_square_votes GROUP BY item_id", OBJECT );
 
@@ -279,7 +274,8 @@ class Ff_Square_Public {
            'ip_address' => $this->GetIP(),
            'vote' => $vote,
            'item_id' => $item_id,
-           'type' => $type
+           'type' => $type,
+           'created_at' => time()
         ]);
 
         echo '1';

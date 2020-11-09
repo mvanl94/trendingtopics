@@ -184,12 +184,19 @@
                     action: "ffs_block_get",
                     block: 2,
                     after: $('.select-date').eq(0).val(),
+                    type: $('.select-type').eq(0).val(),
                     nonce: ff_square_ajax.block_get_nonce,
                 },
                 success: function(response) {
 
                     $('.ff-square-box-items').eq(1).html('');
 
+                    if (response == 0) {
+                        $('.ff-square-box-items').eq(1).append('<p>Geen berichten</p>');
+                        return false;
+                    }
+
+                    // console.log(JSON.parse(response['result']));
                     let votes = JSON.parse(response['votes']);
 
                     var block = [];
@@ -203,14 +210,17 @@
                         let vote = votes[votes.findIndex(x => x.item_id === item.post_id)];
 
                         block.push([parseInt(vote.vote),'<div class="ff-square-box-item"><p class="ff-square-box-item-vote">'
-                        + (vote.vote > 0 ? '+ ' + vote.vote : vote.vote) + ' stemmen op: ' + '<a href=#" data-id="' + item.post_id + '">' + item.post_header + '</a>'
+                        + '<span class="ff-square-item-vote-span-placeholder"><span class="ff-square-item-vote-placeholder ff-square-item-vote-'+ (vote.vote > 0 ? 'up' : 'down') + '">' + (vote.vote > 0 ? '+ ' + vote.vote : vote.vote) + '</span></span>' + '<a class="ff-square-item-header" href=#" data-id="' + item.post_id + '">' + item.post_header + '...</a>'
                         +  '</p></div>']);
 
                     });
 
-                    block.sort(function(a, b){
+                    block.sort(function(a, b) {
                         if(a[0]== b[0]) return 0;
-                        return a[0]< b[0]? 1: -1;
+                        if ($('.select-type').eq(0).val() == 0) {
+                            return a[0]< b[0]? 1: -1;
+                        }
+                        return a[0]> b[0]? 1: -1;
                     }).map(function(a) {
                         a.shift();
                     });
@@ -223,73 +233,83 @@
 
         loadBlock1();
 
+
+
         $('.select-date').initialize(function() {
             if (init == 0) {
                 loadBlock2();
-                loadBlock3();
+                // loadBlock3();
                 init = 1;
             }
 
-            $('.select-date').on('change', function() {
+            $('.select-type').on('change', function() {
                 if ($(this).index() == 1) {
                     loadBlock2();
                 } else {
-                    loadBlock3();
+                    // loadBlock3();
+                }
+            });
+
+            $('.select-date').on('change', function() {
+                if ($(this).index() == 2) {
+                    loadBlock2();
+                } else {
+                    // loadBlock3();
                 }
             });
         });
 
-        function loadBlock3()
-        {
-            jQuery.ajax({
-                type : "post",
-                dataType : "json",
-                url : ff_square_ajax.ajaxurl,
-                data : {
-                    action: "ffs_block_get",
-                    block: 3,
-                    after: $('.select-date').eq(1).val(),
-                    nonce: ff_square_ajax.block_get_nonce,
-                },
-                success: function(response) {
-
-                    $('.ff-square-box-items').eq(2).html('');
-
-                    let votes = JSON.parse(response['votes']);
-
-                    var block = [];
-
-                    $(JSON.parse(response['posts'])).each(function (key, item) {
-
-                        // if (key == votes.length) {
-                        //     return false;
-                        // }
-
-                        let vote = votes[votes.findIndex(x => x.item_id === item.post_id)];
-
-                        block.push([parseInt(vote.vote), '<div class="ff-square-box-item"><p class="ff-square-box-item-vote">'
-                        + (vote.vote > 0 ? '+ ' + vote.vote : vote.vote) + ' stemmen op: ' + '<a href=#" data-id="' + item.post_id + '">' + item.post_header + '</a>'
-                        +  '</p></div>']);
-
-
-                    });
-
-                    block.sort(function(a, b){
-                        if(a[0]== b[0]) return 0;
-                        return a[0]> b[0]? 1: -1;
-                    }).map(function(a) {
-                        a.shift();
-                    });
-
-                    $('.ff-square-box-items').eq(2).append(block.flat());
-                },
-            });
-
-            $('.ff-square-box-item-vote > a').on('click', function() {
-                jQuery('article[post-id="' + $(this).attr('data-id') + '"]').click();
-            });
-
-        }
+        // function loadBlock3()
+        // {
+        //     jQuery.ajax({
+        //         type : "post",
+        //         dataType : "json",
+        //         url : ff_square_ajax.ajaxurl,
+        //         data : {
+        //             action: "ffs_block_get",
+        //             block: 3,
+        //             after: $('.select-date').eq(1).val(),
+        //             nonce: ff_square_ajax.block_get_nonce,
+        //         },
+        //         success: function(response) {
+        //
+        //             $('.ff-square-box-items').eq(2).html('');
+        //
+        //             let votes = JSON.parse(response['votes']);
+        //
+        //             var block = [];
+        //
+        //             $(JSON.parse(response['posts'])).each(function (key, item) {
+        //
+        //                 // if (key == votes.length) {
+        //                 //     return false;
+        //                 // }
+        //
+        //                 let vote = votes[votes.findIndex(x => x.item_id === item.post_id)];
+        //
+        //                 block.push([parseInt(vote.vote), '<div class="ff-square-box-item"><p class="ff-square-box-item-vote">'
+        //                 + (vote.vote > 0 ? '+ ' + vote.vote : vote.vote) + ' stemmen op: ' + '<a href=#" data-id="' + item.post_id + '">' + item.post_header + '</a>'
+        //                 +  '</p></div>']);
+        //
+        //
+        //             });
+        //
+        //             block.sort(function(a, b){
+        //                 if(a[0]== b[0]) return 0;
+        //                 return a[0]> b[0]? 1: -1;
+        //             }).map(function(a) {
+        //                 a.shift();
+        //             });
+        //
+        //             $('.ff-square-box-items').eq(2).append(block.flat());
+        //         },
+        //     });
+        //
+        //     $('.ff-square-box-item-vote > a').on('click', function() {
+        //         jQuery('article[post-id="' + $(this).attr('data-id') + '"]').click();
+        //     });
+        //
+        // }
 
         $.initialize('.ff-item', function() {
 
