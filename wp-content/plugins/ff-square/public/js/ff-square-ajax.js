@@ -53,6 +53,7 @@
                 },
                 success: function(response) {
 
+                    console.log($(response));
                     var vote = $(response.votes)[0].vote;
                     if (vote > 0) {
                         vote = '+ ' + vote;
@@ -153,17 +154,21 @@
                 },
                 success: function(response) {
 
+                    console.log($(response));
                     $('.ff-square-box-items').eq(0).html('');
 
                     $(response).each(function (key, item) {
 
                         if (key %2 == 0) {
 
-                            let html = '<div class="ff-square-box-item">'
-                            + '<p class="ff-square-box-item-post"><a href="#" data-id="' + item.post_id + '">' + item.post_header.substring(0, 90) + '...</a></span>'
-                            + '<div><p class="ff-square-box-item-comment" data-item-id="' + item.comment.id + '">' + item.comment.substring(0, 190) + '...<span class="ff-square-box-item-time">' + prettyDate(item.created_at) + '</span></p></div>'
-                            + '</div>';
-                            $('.ff-square-box-items').eq(0).append(html);
+                            if (item.comment.id != null) {
+
+                                let html = '<div class="ff-square-box-item">'
+                                + '<p class="ff-square-box-item-post"><a href="#" data-id="' + item.post_id + '">' + item.post_header.substring(0, 90) + '...</a></span>'
+                                + '<div><p class="ff-square-box-item-comment" data-item-id="' + item.comment.id + '">' + item.comment.substring(0, 190) + '...<span class="ff-square-box-item-time">' + prettyDate(item.created_at) + '</span></p></div>'
+                                + '</div>';
+                                $('.ff-square-box-items').eq(0).append(html);
+                            }
                         }
                     });
 
