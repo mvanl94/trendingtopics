@@ -186,6 +186,9 @@ class Ff_Square {
         $this->loader->add_action("wp_ajax_ffs_block_get", $plugin_public, "ffs_block_get");
         $this->loader->add_action("wp_ajax_nopriv_ffs_block_get", $plugin_public, "ffs_block_get");
 
+        $this->loader->add_action("wp_ajax_ffs_fetch_post", $plugin_public, "ffs_fetch_post");
+        $this->loader->add_action("wp_ajax_nopriv_ffs_fetch_post", $plugin_public, "ffs_fetch_post");
+
         //Filters
         $this->loader->add_filter( 'the_content', $plugin_public ,'add_boxes', 10, 3);
 

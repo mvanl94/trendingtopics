@@ -145,6 +145,7 @@ class Ff_Square_Public {
             'comment_create_nonce' => wp_create_nonce("ffs_comment_create_nonce"),
             'block_get_nonce' => wp_create_nonce("ffs_block_get_nonce"),
             'comments_get_nonce' => wp_create_nonce("ffs_comments_get_nonce"),
+            'fetch_post_nonce' => wp_create_nonce("ffs_fetch_post_nonce"),
             'vote_nonce' => wp_create_nonce("ffs_vote_nonce"),
             'loggedin' => is_user_logged_in(),
         ]);
@@ -237,6 +238,23 @@ class Ff_Square_Public {
         exit();
     }
 
+    function ffs_fetch_post() {
+
+        global $wpdb;
+
+        if ( !wp_verify_nonce( $_REQUEST['nonce'], "ffs_fetch_post_nonce")) {
+            exit("Fout");
+        }
+
+        $post_id = $_REQUEST['post_id'];
+
+        $result = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}ff_posts WHERE post_id='" . $post_id . "'", OBJECT );
+
+        echo json_encode($result);
+
+        exit();
+    }
+
     function ffs_comments_get() {
 
         global $wpdb;
@@ -247,8 +265,8 @@ class Ff_Square_Public {
 
         $post_id = $_REQUEST['post_id'];
 
-        $results['comments'] = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}ff_square_comments", OBJECT );
-        $results['votes'] = $wpdb->get_results( "SELECT item_id, SUM(vote) as vote FROM {$wpdb->prefix}ff_square_votes GROUP BY item_id", OBJECT );
+        $results['comments'] = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}ff_square_comments WHERE post_id='" . $post_id . "'", OBJECT );
+        $results['votes'] = $wpdb->get_results( "SELECT item_id, SUM(vote) as vote FROM {$wpdb->prefix}ff_square_votes WHERE item_id='" . $post_id . "' GROUP BY item_id", OBJECT );
 
         echo json_encode($results);
 
