@@ -91,7 +91,31 @@ class Ff_Square_Public {
                     <option value="0">Upvotes</option>
                     <option value="2">Downvotes</option>
                     </select>
-                    <select class="select-date">
+                    <select id="votes" class="select-date">
+                    <option value="0">24 uur</option>
+                    <option value="1">1 week</option>
+                    <option value="2">1 maand</option>
+                    </select>
+                </div>
+                <div class="ff-square-box-items">
+
+                    <div class="sk-chase" style="width: 22px; margin-top:2px; height: 22px; margin-right:1em; display:block;">
+                              <div class="sk-chase-dot"></div>
+                              <div class="sk-chase-dot"></div>
+                              <div class="sk-chase-dot"></div>
+                              <div class="sk-chase-dot"></div>
+                              <div class="sk-chase-dot"></div>
+                              <div class="sk-chase-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="ff-square-box">
+                <div class="ff-square-box-header">
+
+                    <h5>Hot Topics</h5>
+                    <select id="hottopics" class="select-date">
                     <option value="0">24 uur</option>
                     <option value="1">1 week</option>
                     <option value="2">1 maand</option>
@@ -178,11 +202,45 @@ class Ff_Square_Public {
         }
 
         if ($_REQUEST['block'] == 1) {
-            $sql = "SELECT A.*,B.post_header FROM {$wpdb->prefix}ff_square_comments A LEFT JOIN (SELECT post_header,post_id FROM {$wpdb->prefix}ff_posts)B ON A.post_id=B.post_id ORDER BY A.created_at LIMIT 9";
-            echo json_encode($wpdb->get_results($sql, OBJECT));
+
+            $sql = "SELECT *
+            FROM {$wpdb->prefix}ff_square_comments
+            WHERE created_at>0
+            ORDER BY created_at
+            LIMIT 9";
+
+            $comments = $wpdb->get_results($sql, OBJECT);
+
+            if (count($comments) == 0) {
+                echo json_encode(0);
+                exit();
+            }
+
+            $sql = "SELECT * FROM {$wpdb->prefix}ff_posts WHERE ";
+
+            foreach ($comments as $key=>$comment) {
+                if ($key == (count($comments) - 1)) {
+                    $sql.= "post_id='" . $comment->post_id . "'";
+                } else {
+
+                    $sql.= "post_id='" . $comment->post_id . "' OR ";
+                }
+            }
+
+            // $sql.= "GROUP BY post_id";
+
+            // echo $sql;
+
+            $posts = $wpdb->get_results($sql, OBJECT);
+
+            foreach ($comments as $comment) {
+                $comment->created_at = date('Y-m-d H:m:s', $comment->created_at);
+            }
+            echo json_encode([
+                'comments' => json_encode($comments),
+                'posts' => json_encode($posts)
+            ]);
         }
-
-
 
         if ($_REQUEST['block'] == 2) {
 
@@ -197,15 +255,7 @@ class Ff_Square_Public {
             WHERE type='item' AND created_at>" . $date->getTimestamp() . "
             GROUP BY item_id
             HAVING vote " . ($_REQUEST['type'] == 0 ? '>' : '<' ) . " 0
-            ORDER BY vote " . ($_REQUEST['type'] == 0 ? 'DESC' : 'ASC' ) . "
-            LIMIT 7 ";
-        }
-
-        // if ($_REQUEST['block'] == 3) {
-        //     $sql = "SELECT item_id, SUM(vote) as vote FROM {$wpdb->prefix}ff_square_votes WHERE type='item' GROUP BY item_id having vote < 0 ORDER BY vote ASC LIMIT 7 ";
-        // }
-
-        if ($_REQUEST['block'] == 2 || $_REQUEST['block'] == 3) {
+            ORDER BY vote " . ($_REQUEST['type'] == 0 ? 'DESC' : 'ASC' );
 
             $votes = $wpdb->get_results($sql, OBJECT);
 
@@ -233,6 +283,47 @@ class Ff_Square_Public {
                 'votes' => json_encode($votes),
                 'posts' => json_encode($result)
             ]);
+        }
+
+        if ($_REQUEST['block'] == 3) {
+
+            switch ($_REQUEST['after']) {
+                case 0 : $date = (new \DateTime())->modify('-1 day'); break;
+                case 1 : $date = (new \DateTime())->modify('-1 week'); break;
+                case 2 : $date = (new \DateTime())->modify('-4 weeks'); break;
+            }
+
+            $sql = "SELECT *, COUNT(*) AS comments
+            FROM {$wpdb->prefix}ff_square_comments
+            WHERE created_at>" . $date->getTimestamp() . "
+            GROUP BY post_id
+            HAVING comments > 0
+            ORDER BY comments DESC
+            LIMIT 7";
+
+            $comments = $wpdb->get_results($sql, OBJECT);
+
+            $sql = "SELECT post_id, post_header FROM {$wpdb->prefix}ff_posts WHERE ";
+
+            foreach ($comments as $key=>$comment) {
+                if ($key == (count($comments)-1)) {
+                    $sql.= "post_id='" . $comment->post_id . "'";
+                } else {
+                    $sql.= "post_id='" . $comment->post_id . "' OR ";
+                }
+            }
+
+            $sql.= "GROUP BY post_id";
+
+            $posts = $wpdb->get_results($sql, OBJECT);
+
+            echo json_encode([
+                'comments' => json_encode($comments),
+                'posts' => json_encode($posts),
+                'timestamp' => $date->getTimestamp()
+            ]);
+
+
         }
 
         exit();
@@ -338,12 +429,14 @@ class Ff_Square_Public {
            'post_id' => $post_id,
            'comment' => $comment,
            'ip_address' => $this->GetIP(),
-           'post_owner' => $id
+           'post_owner' => $id,
+           'created_at' => time()
         ]);
 
         if (is_user_logged_in()) {
             echo json_encode([
                 'comment' => $comment,
+                'post_id' => $post_id,
                 'name' => $_REQUEST['name']
             ]);
         } else {

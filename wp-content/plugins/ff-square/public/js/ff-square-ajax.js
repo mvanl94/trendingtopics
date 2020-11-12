@@ -53,11 +53,15 @@
                 },
                 success: function(response) {
 
-                    console.log($(response));
-                    var vote = $(response.votes)[0].vote;
-                    if (vote > 0) {
-                        vote = '+ ' + vote;
+                    if ($(response.votes).length == 0) {
+                        var vote = 0;
+                    } else {
+                        var vote = $(response.votes)[0].vote;
+                        if (vote > 0) {
+                            vote = '+ ' + vote;
+                        }
                     }
+
                     card.find('.picture-item__inner').find('.vote-holder').find('h6').html(vote);
                     card.find('.picture-item__inner').find('.comments').find('h6').html($(response.comments).length + ' reacties');
 
@@ -154,22 +158,21 @@
                 },
                 success: function(response) {
 
-                    console.log($(response));
                     $('.ff-square-box-items').eq(0).html('');
 
-                    $(response).each(function (key, item) {
+                    var posts = {};
 
-                        if (key %2 == 0) {
+                    $(JSON.parse(response.posts)).each(function(key, item) {
+                        posts[item.post_id] = item;
+                    });
 
-                            if (item.comment.id != null) {
+                    $(JSON.parse(response.comments)).each(function (key, item) {
 
-                                let html = '<div class="ff-square-box-item">'
-                                + '<p class="ff-square-box-item-post"><a href="#" data-id="' + item.post_id + '">' + item.post_header.substring(0, 90) + '...</a></span>'
-                                + '<div><p class="ff-square-box-item-comment" data-item-id="' + item.comment.id + '">' + item.comment.substring(0, 190) + '...<span class="ff-square-box-item-time">' + prettyDate(item.created_at) + '</span></p></div>'
-                                + '</div>';
-                                $('.ff-square-box-items').eq(0).append(html);
-                            }
-                        }
+                        let html = '<div class="ff-square-box-item">'
+                        + '<p class="ff-square-box-item-post"><a href="#" data-id="' + item.post_id + '">' + posts[item.post_id].post_header.substring(0, 90) + '...</a></span>'
+                        + '<div><p class="ff-square-box-item-comment" data-item-id="' + item.comment.id + '">' + item.comment.substring(0, 190) + '...<span class="ff-square-box-item-time">' + prettyDate(item.created_at) + '</span></p></div>'
+                        + '</div>';
+                        $('.ff-square-box-items').eq(0).append(html);
                     });
 
                     $('.ff-square-box-item-post > a').on('click', function() {
@@ -240,9 +243,57 @@
             });
         }
 
-        loadBlock1();
+        function loadBlock3()
+        {
+            jQuery.ajax({
+                type : "post",
+                dataType : "json",
+                url : ff_square_ajax.ajaxurl,
+                data : {
+                    action: "ffs_block_get",
+                    block: 3,
+                    after: $('.select-date').eq(1).val(),
+                    nonce: ff_square_ajax.block_get_nonce,
+                },
+                success: function(response) {
 
-        $('.select-date').initialize(function() {
+                    $('.ff-square-box-items').eq(2).html('');
+
+                    var comments = {};
+
+                    $(JSON.parse(response.comments)).each(function(key, item) {
+
+                        comments[item.post_id] = item;
+                    });
+
+                    let block = [];
+
+                    $(JSON.parse(response.posts)).each(function(key,item) {
+
+                        block.push([parseInt(comments[item.post_id].comments), '<div class="ff-square-box-item"><p class="ff-square-box-item-vote">'
+                        + '<a class="ff-square-item-header" href=#" data-id="' + item.post_id + '"> '+ (key + 1) + '. '+ item.post_header + '...</a>'
+                        +  '</p></div>']);
+
+                    });
+
+                    block.sort(function(a, b) {
+                        if(a[0]== b[0]) return 0;
+                        return a[0]< b[0]? 1: -1;
+                    }).map(function(a) {
+                        a.shift();
+                    });
+
+
+                    $('.ff-square-box-items').eq(2).append(block.flat());
+                }
+            });
+        }
+
+        loadBlock1();
+        loadBlock3();
+
+        $('#votes').initialize(function() {
+
             if (init == 0) {
                 loadBlock2();
                 // loadBlock3();
@@ -257,12 +308,12 @@
                 }
             });
 
-            $('.select-date').on('change', function() {
-                if ($(this).index() == 2) {
-                    loadBlock2();
-                } else {
-                    // loadBlock3();
-                }
+            $('#hottopics').on('change', function() {
+                loadBlock3();
+            });
+
+            $('#votes').on('change', function() {
+                loadBlock2();
             });
         });
 

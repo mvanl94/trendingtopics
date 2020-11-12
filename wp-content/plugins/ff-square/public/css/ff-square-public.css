@@ -79,6 +79,7 @@
     border: 1px solid #f3f3f3;
     min-height: 240px;
     max-height: 240px;
+    overflow: hidden;
 
 }
 .ff-square-box-header {
