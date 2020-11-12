@@ -69,15 +69,21 @@ class Ff_Square_Public {
             <div class="ff-square-box">
                 <div class="ff-square-box-header">
                     <h5>Laatste Reacties</h5>
+                    <a class="btn collapse-block" aria-controls="block1">
+                    Bekijken
+                    </a>
                 </div>
-                <div class="ff-square-box-items">
-                    <div class="sk-chase" style="width: 22px; margin-top:2px; height: 22px; margin-right:1em; display:block;">
-                              <div class="sk-chase-dot"></div>
-                              <div class="sk-chase-dot"></div>
-                              <div class="sk-chase-dot"></div>
-                              <div class="sk-chase-dot"></div>
-                              <div class="sk-chase-dot"></div>
-                              <div class="sk-chase-dot"></div>
+                <div class="collapse block1">
+
+                    <div class="ff-square-box-items">
+                        <div class="sk-chase" style="width: 22px; margin-top:2px; height: 22px; margin-right:1em; display:block;">
+                                  <div class="sk-chase-dot"></div>
+                                  <div class="sk-chase-dot"></div>
+                                  <div class="sk-chase-dot"></div>
+                                  <div class="sk-chase-dot"></div>
+                                  <div class="sk-chase-dot"></div>
+                                  <div class="sk-chase-dot"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -85,27 +91,48 @@ class Ff_Square_Public {
         <div class="col-md-4">
             <div class="ff-square-box">
                 <div class="ff-square-box-header">
-
                     <h5>Meeste stemmen</h5>
-                    <select class="select-type">
+                    <select class="select-type desktop">
                     <option value="0">Upvotes</option>
                     <option value="2">Downvotes</option>
                     </select>
-                    <select id="votes" class="select-date">
+                    <select id="votes" class="select-date desktop">
                     <option value="0">24 uur</option>
                     <option value="1">1 week</option>
                     <option value="2">1 maand</option>
                     </select>
-                </div>
-                <div class="ff-square-box-items">
+                    <a class="btn collapse-block" aria-controls="block2">
+                    Bekijken
+                    </a>
 
-                    <div class="sk-chase" style="width: 22px; margin-top:2px; height: 22px; margin-right:1em; display:block;">
-                              <div class="sk-chase-dot"></div>
-                              <div class="sk-chase-dot"></div>
-                              <div class="sk-chase-dot"></div>
-                              <div class="sk-chase-dot"></div>
-                              <div class="sk-chase-dot"></div>
-                              <div class="sk-chase-dot"></div>
+
+                </div>
+
+                <div class="collapse block2">
+                    <div class="ff-square-box-header-mobile">
+                        <select class="select-type">
+                        <option value="0">Upvotes</option>
+                        <option value="2">Downvotes</option>
+                        </select>
+                        <select id="votes" class="select-date">
+                        <option value="0">24 uur</option>
+                        <option value="1">1 week</option>
+                        <option value="2">1 maand</option>
+                        </select>
+                    </div>
+
+
+
+                    <div class="ff-square-box-items">
+
+                        <div class="sk-chase" style="width: 22px; margin-top:2px; height: 22px; margin-right:1em; display:block;">
+                                  <div class="sk-chase-dot"></div>
+                                  <div class="sk-chase-dot"></div>
+                                  <div class="sk-chase-dot"></div>
+                                  <div class="sk-chase-dot"></div>
+                                  <div class="sk-chase-dot"></div>
+                                  <div class="sk-chase-dot"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -115,21 +142,40 @@ class Ff_Square_Public {
                 <div class="ff-square-box-header">
 
                     <h5>Hot Topics</h5>
-                    <select id="hottopics" class="select-date">
+                    <select id="hottopics" class="select-date desktop">
                     <option value="0">24 uur</option>
                     <option value="1">1 week</option>
                     <option value="2">1 maand</option>
                     </select>
+                    <a class="btn collapse-block" aria-controls="block3">
+                    Bekijken
+                    </a>
                 </div>
-                <div class="ff-square-box-items">
 
-                    <div class="sk-chase" style="width: 22px; margin-top:2px; height: 22px; margin-right:1em; display:block;">
-                              <div class="sk-chase-dot"></div>
-                              <div class="sk-chase-dot"></div>
-                              <div class="sk-chase-dot"></div>
-                              <div class="sk-chase-dot"></div>
-                              <div class="sk-chase-dot"></div>
-                              <div class="sk-chase-dot"></div>
+                <div class="collapse block3">
+                    <div class="ff-square-box-header-mobile">
+                        <select class="select-type">
+                        <option value="0">Upvotes</option>
+                        <option value="2">Downvotes</option>
+                        </select>
+                        <select id="votes" class="select-date">
+                        <option value="0">24 uur</option>
+                        <option value="1">1 week</option>
+                        <option value="2">1 maand</option>
+                        </select>
+                    </div>
+
+                    <div class="ff-square-box-items">
+
+
+                        <div class="sk-chase" style="width: 22px; margin-top:2px; height: 22px; margin-right:1em; display:block;">
+                                  <div class="sk-chase-dot"></div>
+                                  <div class="sk-chase-dot"></div>
+                                  <div class="sk-chase-dot"></div>
+                                  <div class="sk-chase-dot"></div>
+                                  <div class="sk-chase-dot"></div>
+                                  <div class="sk-chase-dot"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -151,6 +197,9 @@ class Ff_Square_Public {
 
         wp_register_style( 'ffs-fontawesome', 'https://use.fontawesome.com/releases/v5.15.1/css/all.css' );
         wp_enqueue_style( 'ffs-fontawesome' );
+
+
+
 	}
 
 	/**
@@ -159,6 +208,15 @@ class Ff_Square_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
+
+        wp_register_script( 'ffs-jquery', 'https://code.jquery.com/jquery-3.2.1.slim.min.js' );
+        wp_enqueue_script( 'ffs-jquery' );
+
+        wp_register_script( 'ffs-bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js' );
+        wp_enqueue_script( 'ffs-bootstrap' );
+
+        wp_register_script( 'ffs-popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js' );
+        wp_enqueue_script( 'ffs-popper' );
 
         wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/ff-square-initializer.js', array( 'jquery' ), $this->version, false );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/ff-square-public.js', array( 'jquery' ), $this->version, false );

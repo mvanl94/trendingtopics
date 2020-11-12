@@ -241,6 +241,11 @@
                     });
                 }
             });
+
+            $('.collapse-block').on('click', function() {
+                $('.' + $(this).attr('aria-controls')).collapse('toggle');
+            });
+
         }
 
         function loadBlock3()
