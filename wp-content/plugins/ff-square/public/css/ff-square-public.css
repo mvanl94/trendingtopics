@@ -37,7 +37,9 @@
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 768px) {
 
-
+    .ff-square-box-items {
+        padding-bottom: 26px;
+    }
 
     .collapse-block {
         float: right;
@@ -87,17 +89,25 @@
 }
 .ff-square-box-items {
     overflow-y: scroll;
-    height: 190px;
+    height: 240px;
     padding: 10px;
 }
 .ff-square-box-item {
     padding-bottom: 0.3em;
+}
+.fa-thumbs-up {
+    color : #0fc15f;
+}
+.fa-thumbs-down {
+    color :#dd1e45;
 }
 .ff-square-box-item-post {
     margin-bottom: 0;
     font-size: 14px;
     font-weight: bold;
     line-height: 16px;
+    overflow-y: hidden;
+    height: 16px;
 }
 .ff-square-box-item-vote {
     margin-bottom: 0;
@@ -132,7 +142,7 @@
 .ff-square-box {
     border-radius: 5px;
     border: 1px solid #f3f3f3;
-    max-height: 240px;
+    max-height: 300px;
     overflow: hidden;
 
 }

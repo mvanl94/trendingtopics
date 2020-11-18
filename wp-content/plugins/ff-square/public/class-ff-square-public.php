@@ -66,7 +66,7 @@ class Ff_Square_Public {
 
         $html = '<div class="row">
         <div class="col-md-4">
-            <div class="ff-square-box">
+            <div class="ff-square-box latest-comments">
                 <div class="ff-square-box-header">
                     <h5>Laatste Reacties</h5>
                     <a class="btn collapse-block" aria-controls="block1">
@@ -89,14 +89,14 @@ class Ff_Square_Public {
             </div>
         </div>
         <div class="col-md-4">
-            <div class="ff-square-box">
+            <div id="votes" class="ff-square-box">
                 <div class="ff-square-box-header">
                     <h5>Meeste stemmen</h5>
                     <select class="select-type desktop">
                     <option value="0">Upvotes</option>
                     <option value="2">Downvotes</option>
                     </select>
-                    <select id="votes" class="select-date desktop">
+                    <select class="select-date desktop">
                     <option value="0">24 uur</option>
                     <option value="1">1 week</option>
                     <option value="2">1 maand</option>
@@ -110,11 +110,11 @@ class Ff_Square_Public {
 
                 <div class="collapse block2">
                     <div class="ff-square-box-header-mobile">
-                        <select class="select-type">
+                        <select class="select-type mobile">
                         <option value="0">Upvotes</option>
                         <option value="2">Downvotes</option>
                         </select>
-                        <select id="votes" class="select-date">
+                        <select class="select-date mobile">
                         <option value="0">24 uur</option>
                         <option value="1">1 week</option>
                         <option value="2">1 maand</option>
@@ -138,11 +138,11 @@ class Ff_Square_Public {
             </div>
         </div>
         <div class="col-md-4">
-            <div class="ff-square-box">
+            <div id="hottopics" class="ff-square-box">
                 <div class="ff-square-box-header">
 
                     <h5>Hot Topics</h5>
-                    <select id="hottopics" class="select-date desktop">
+                    <select class="select-date desktop">
                     <option value="0">24 uur</option>
                     <option value="1">1 week</option>
                     <option value="2">1 maand</option>
@@ -154,11 +154,7 @@ class Ff_Square_Public {
 
                 <div class="collapse block3">
                     <div class="ff-square-box-header-mobile">
-                        <select class="select-type">
-                        <option value="0">Upvotes</option>
-                        <option value="2">Downvotes</option>
-                        </select>
-                        <select id="votes" class="select-date">
+                        <select class="select-date mobile">
                         <option value="0">24 uur</option>
                         <option value="1">1 week</option>
                         <option value="2">1 maand</option>
@@ -361,6 +357,11 @@ class Ff_Square_Public {
 
             $comments = $wpdb->get_results($sql, OBJECT);
 
+            if (count($comments) == 0) {
+                echo json_encode(0);
+                exit();
+            }
+
             $sql = "SELECT post_id, post_header FROM {$wpdb->prefix}ff_posts WHERE ";
 
             foreach ($comments as $key=>$comment) {
@@ -414,7 +415,15 @@ class Ff_Square_Public {
 
         $post_id = $_REQUEST['post_id'];
 
-        $results['comments'] = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}ff_square_comments WHERE post_id='" . $post_id . "'", OBJECT );
+        $comments = $wpdb->get_results(
+            "SELECT user_nicename, comment
+            FROM {$wpdb->prefix}ff_square_comments
+            LEFT JOIN (SELECT id, user_nicename FROM {$wpdb->prefix}users) {$wpdb->prefix}users
+            ON {$wpdb->prefix}ff_square_comments.post_owner = {$wpdb->prefix}users.id
+                    WHERE post_id='" . $post_id . "'"
+        , OBJECT );
+
+        $results['comments'] = $comments;
         $results['votes'] = $wpdb->get_results( "SELECT item_id, SUM(vote) as vote FROM {$wpdb->prefix}ff_square_votes WHERE item_id='" . $post_id . "' GROUP BY item_id", OBJECT );
 
         echo json_encode($results);

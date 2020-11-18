@@ -67,15 +67,15 @@
 
                     $(response.comments).each(function (key, item) {
                         let html = '<div class="ff-square-comment" comment-id="' + item.id + '">'
-                        + '<span style="display:inline-block;" class="vote"><i class="fas fa-plus-square"> </i></span>';
+                        + '<span style="display:inline-block;" class="vote"><i class="fas fa-thumbs-up"> </i></span>';
 
                         if ($(response.votes)[item.id]) {
                             html+= '<span style="display:inline-block; font-weight: 600;" class="vote-holder"> ' + $(response.votes)[item.id].vote +' </span>'
                         } else {
                             html+= '<span style="display:inline-block; font-weight: 600;" class="vote-holder">0</span>'
                         }
-                        html+= '<span style="display:inline-block;" class="vote"><i class="fas fa-minus-square"> </i></span>'
-                        + '<b>' + item.name + '</b></a><span>' + item.comment + '</span>'
+                        html+= '<span style="display:inline-block;" class="vote"><i class="fas fa-thumbs-down"> </i></span>'
+                        + '<b>' + item.user_nicename + '</b></a><span>' + item.comment + '</span>'
                         + '</div>';
                         $('li[post-id="' + post_id + '"] > div > div > div > .ff-square-comments-list').append(html);
                     });
@@ -111,7 +111,6 @@
                 }
 
                 var vote = (jQuery(this).index() == 0 ? 1 : -1);
-
 
                 jQuery.ajax({
                     type : "post",
@@ -160,19 +159,29 @@
 
                     $('.ff-square-box-items').eq(0).html('');
 
+                    if (response == 0) {
+                        $('.ff-square-box-items').eq(0).append('<p>Geen berichten</p>');
+                        return false;
+                    }
+
                     var posts = {};
 
                     $(JSON.parse(response.posts)).each(function(key, item) {
                         posts[item.post_id] = item;
                     });
 
+                    let list = [];
+
                     $(JSON.parse(response.comments)).each(function (key, item) {
 
                         let html = '<div class="ff-square-box-item">'
                         + '<p class="ff-square-box-item-post"><a href="#" data-id="' + item.post_id + '">' + posts[item.post_id].post_header.substring(0, 90) + '...</a></span>'
-                        + '<div><p class="ff-square-box-item-comment" data-item-id="' + item.comment.id + '">' + item.comment.substring(0, 190) + '...<span class="ff-square-box-item-time">' + prettyDate(item.created_at) + '</span></p></div>'
+                        + '<div><p class="ff-square-box-item-comment" data-item-id="' + item.comment.id + '">' + item.comment.substring(0, 140) + '...<span class="ff-square-box-item-time">' + prettyDate(item.created_at) + '</span></p></div>'
                         + '</div>';
                         $('.ff-square-box-items').eq(0).append(html);
+
+                        list.push(item.post_id);
+
                     });
 
                     $('.ff-square-box-item-post > a').on('click', function() {
@@ -182,8 +191,21 @@
             });
         }
 
-        function loadBlock2()
+        function loadBlock2(date, type)
         {
+
+            if (date == '') {
+                var date = 0;
+            } else {
+                var date = date.val();
+            }
+
+            if (type == '') {
+                var type = 0;
+            } else {
+                var type = type.val();
+            }
+
             jQuery.ajax({
                 type : "post",
                 dataType : "json",
@@ -191,8 +213,8 @@
                 data : {
                     action: "ffs_block_get",
                     block: 2,
-                    after: $('.select-date').eq(0).val(),
-                    type: $('.select-type').eq(0).val(),
+                    after: date,
+                    type: type,
                     nonce: ff_square_ajax.block_get_nonce,
                 },
                 success: function(response) {
@@ -204,7 +226,6 @@
                         return false;
                     }
 
-                    // console.log(JSON.parse(response['result']));
                     let votes = JSON.parse(response['votes']);
 
                     var block = [];
@@ -245,11 +266,17 @@
             $('.collapse-block').on('click', function() {
                 $('.' + $(this).attr('aria-controls')).collapse('toggle');
             });
-
         }
 
-        function loadBlock3()
+        function loadBlock3(select)
         {
+
+            if (select == '') {
+                var date = 0;
+            } else {
+                var date = select.val();
+            }
+
             jQuery.ajax({
                 type : "post",
                 dataType : "json",
@@ -257,12 +284,17 @@
                 data : {
                     action: "ffs_block_get",
                     block: 3,
-                    after: $('.select-date').eq(1).val(),
+                    after: date,
                     nonce: ff_square_ajax.block_get_nonce,
                 },
                 success: function(response) {
 
                     $('.ff-square-box-items').eq(2).html('');
+
+                    if (response == 0) {
+                        $('.ff-square-box-items').eq(2).append('<p>Geen hot topics</p>');
+                        return false;
+                    }
 
                     var comments = {};
 
@@ -272,6 +304,7 @@
                     });
 
                     let block = [];
+                    let posts = [];
 
                     $(JSON.parse(response.posts)).each(function(key,item) {
 
@@ -279,6 +312,7 @@
                         + '<a class="ff-square-item-header" href=#" data-id="' + item.post_id + '"> '+ (key + 1) + '. '+ item.post_header + '...</a>'
                         +  '</p></div>']);
 
+                        posts.push(item.post_id);
                     });
 
                     block.sort(function(a, b) {
@@ -290,44 +324,48 @@
 
 
                     $('.ff-square-box-items').eq(2).append(block.flat());
+
+                    $('.ff-slideshow-media').initialize(function() {
+                        $(posts).each(function (key, item) {
+                            loadSlide(item, block[key]);
+                        });
+                    });
                 }
             });
         }
 
         loadBlock1();
-        loadBlock3();
 
         $('#votes').initialize(function() {
 
             if (init == 0) {
-                loadBlock2();
-                // loadBlock3();
+
+                loadBlock2('', '');
+                loadBlock3('');
+
                 init = 1;
             }
 
-            $('.select-type').on('change', function() {
-                if ($(this).index() == 1) {
-                    loadBlock2();
-                } else {
-                    // loadBlock3();
+            $('#hottopics select').on('change', function() {
+                loadBlock3($(this));
+            });
+
+            $('#votes select').on('change', function() {
+                if ($(this).hasClass('desktop')) {
+                    loadBlock2($('#votes .select-date.desktop'), $('#votes .select-type.desktop'));
                 }
-            });
-
-            $('#hottopics').on('change', function() {
-                loadBlock3();
-            });
-
-            $('#votes').on('change', function() {
-                loadBlock2();
+                if ($(this).hasClass('mobile')) {
+                    loadBlock2($('#votes .select-date.mobile'), $('#votes .select-type.mobile'));
+                }
             });
         });
 
         $.initialize('.ff-item', function() {
 
             let html = '<div class="square-box"><div class="ff-item-bar" style="text-align:center; ">'
-            + '<div class="ff-square-bar-item vote" style=" float:left;"><h6><i class="fas fa-plus-square"></i></h6></div>'
+            + '<div class="ff-square-bar-item vote" style=" float:left;"><h6><i class="fas fa-thumbs-up"></i></h6></div>'
             + '<div class="ff-square-bar-item vote-holder"><h6></h6></div>'
-            + '<div class="ff-square-bar-item vote" style=" float:right; "><h6><i class="fas fa-minus-square"></i></h6></div>'
+            + '<div class="ff-square-bar-item vote" style=" float:right; "><h6><i class="fas fa-thumbs-down"></i></h6></div>'
             + '</div>'
             + '<div class="ff-item-bar" style="text-align:center; ">'
             + '<div class="ff-square-bar-item comments"><h6></h6></div>'
@@ -398,10 +436,10 @@
                             }
 
                             let html = '<div class="ff-square-comment" comment-id="' + response.id + '">'
-                            + '<span style="display:inline-block;"class="vote"><i class="fas fa-plus-square"></i></span>'
+                            + '<span style="display:inline-block;"class="vote"><i class="fas fa-thumbs-up"></i></span>'
                             + '<span style="display:inline-block; font-weight: 600;" class="vote-holder">0</span>'
-                            + '<span style="display:inline-block;" class="vote"><i class="fas fa-minus-square"></i></span>'
-                            + '<b>' + response.name + '</b></a><span>' + response.comment + '</span>'
+                            + '<span style="display:inline-block;" class="vote"><i class="fas fa-thumbs-down"></i></span>'
+                            + '<b>' + response.user_nicename + '</b></a><span>' + response.comment + '</span>'
                             + '</div>';
                             card.parents('li').find('.ff-square-comments-list').append(html);
 
@@ -536,15 +574,15 @@
 
                     $(response.comments).each(function (key, item) {
                         let html = '<div class="ff-square-comment" comment-id="' + item.id + '">'
-                        + '<span style="display:inline-block;" class="vote"><i class="fas fa-plus-square"> </i></span>';
+                        + '<span style="display:inline-block;" class="vote"><i class="fas fa-thumbs-up"> </i></span>';
 
                         if ($(response.votes)[item.id]) {
                             html+= '<span style="display:inline-block; font-weight: 600;" class="vote-holder"> ' + $(response.votes)[item.id].vote +' </span>'
                         } else {
                             html+= '<span style="display:inline-block; font-weight: 600;" class="vote-holder">0</span>'
                         }
-                        html+= '<span style="display:inline-block;" class="vote"><i class="fas fa-minus-square"> </i></span>'
-                        + '<b>' + item.name + '</b></a><span>' + item.comment + '</span>'
+                        html+= '<span style="display:inline-block;" class="vote"><i class="fas fa-thumbs-down"> </i></span>'
+                        + '<b>' + item.user_nicename + '</b></a><span>' + item.comment + '</span>'
                         + '</div>';
 
                         $('li[post-id="' + post_id + '"] > div > div > div > .ff-square-comments-list').append(html);
