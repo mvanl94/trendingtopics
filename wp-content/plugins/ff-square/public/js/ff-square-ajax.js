@@ -195,7 +195,7 @@
         {
 
             if (date == '') {
-                var date = 0;
+                var date = 2;
             } else {
                 var date = date.val();
             }
@@ -272,7 +272,7 @@
         {
 
             if (select == '') {
-                var date = 0;
+                var date = 2;
             } else {
                 var date = select.val();
             }

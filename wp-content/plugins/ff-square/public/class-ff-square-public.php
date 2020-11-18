@@ -97,9 +97,10 @@ class Ff_Square_Public {
                     <option value="2">Downvotes</option>
                     </select>
                     <select class="select-date desktop">
-                    <option value="0">24 uur</option>
+                    <option value="2" selected="selected">1 maand</option>
                     <option value="1">1 week</option>
-                    <option value="2">1 maand</option>
+                    <option value="0">24 uur</option>
+
                     </select>
                     <a class="btn collapse-block" aria-controls="block2">
                     Bekijken
@@ -115,9 +116,9 @@ class Ff_Square_Public {
                         <option value="2">Downvotes</option>
                         </select>
                         <select class="select-date mobile">
-                        <option value="0">24 uur</option>
+                        <option value="2" selected="selected">1 maand</option>
                         <option value="1">1 week</option>
-                        <option value="2">1 maand</option>
+                        <option value="0">24 uur</option>
                         </select>
                     </div>
 
@@ -143,9 +144,9 @@ class Ff_Square_Public {
 
                     <h5>Hot Topics</h5>
                     <select class="select-date desktop">
-                    <option value="0">24 uur</option>
+                    <option value="2" selected="selected">1 maand</option>
                     <option value="1">1 week</option>
-                    <option value="2">1 maand</option>
+                    <option value="0">24 uur</option>
                     </select>
                     <a class="btn collapse-block" aria-controls="block3">
                     Bekijken
@@ -155,9 +156,9 @@ class Ff_Square_Public {
                 <div class="collapse block3">
                     <div class="ff-square-box-header-mobile">
                         <select class="select-date mobile">
-                        <option value="0">24 uur</option>
+                        <option value="2" selected="selected">1 maand</option>
                         <option value="1">1 week</option>
-                        <option value="2">1 maand</option>
+                        <option value="0">24 uur</option>
                         </select>
                     </div>
 
