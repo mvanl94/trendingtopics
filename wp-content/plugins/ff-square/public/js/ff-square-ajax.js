@@ -5,6 +5,13 @@
     let ffitems = 50;
     var init = 0;
 
+    function stripHTML(dirtyString) {
+  var container = document.createElement('div');
+  var text = document.createTextNode(dirtyString);
+  container.appendChild(text);
+  return container.innerHTML; // innerHTML will be a xss safe string
+}
+
     function prettyDate(time){
 
         let d = new Date();
@@ -53,16 +60,34 @@
                 },
                 success: function(response) {
 
-                    if ($(response.votes).length == 0) {
-                        var vote = 0;
-                    } else {
-                        var vote = $(response.votes)[0].vote;
-                        if (vote > 0) {
-                            vote = '+ ' + vote;
+                    // if ($(response.votes).length == 0) {
+                    //     var vote = 0;
+                    // } else {
+                    //     var vote = $(response.votes)[0].vote;
+                    //     if (vote > 0) {
+                    //         vote = '+ ' + vote;
+                    //     }
+                    // }
+                    // if ($(response.votes).length > 0) {
+                    //     card.find('.picture-item__inner').find('.vote-holder').eq(0).find('h6').html($(response.votes)[0].upvotes);
+                    //     card.find('.picture-item__inner').find('.vote-holder').eq(1).find('h6').html($(response.votes)[0].downvotes);
+                    // } else {
+                    if ($(response.votes).length > 0) {
+                        if ($(response.votes)[0].upvotes) {
+                            card.find('.picture-item__inner').find('.vote-holder').eq(0).find('h6').html('+ ' + $(response.votes)[0].upvotes);
+                        } else {
+                            card.find('.picture-item__inner').find('.vote-holder').eq(0).find('h6').html(0);
                         }
+                        if ($(response.votes)[0].downvotes) {
+                            card.find('.picture-item__inner').find('.vote-holder').eq(1).find('h6').html('- ' + $(response.votes)[0].downvotes);
+                        } else {
+                            card.find('.picture-item__inner').find('.vote-holder').eq(1).find('h6').html(0);
+                        }
+                    } else {
+                        card.find('.picture-item__inner').find('.vote-holder').eq(0).find('h6').html(0);
+                        card.find('.picture-item__inner').find('.vote-holder').eq(1).find('h6').html(0);
                     }
 
-                    card.find('.picture-item__inner').find('.vote-holder').find('h6').html(vote);
                     card.find('.picture-item__inner').find('.comments').find('h6').html($(response.comments).length + ' reacties');
 
                     $(response.comments).each(function (key, item) {
@@ -110,7 +135,7 @@
                     var item_id = jQuery(this).parents('.ff-square-comment').attr('comment-id');
                 }
 
-                var vote = (jQuery(this).index() == 0 ? 1 : -1);
+                var vote = ($(this).parent().index() == 0 ? 1 : -1);
 
                 jQuery.ajax({
                     type : "post",
@@ -125,6 +150,9 @@
                     },
                     success: function(response) {
 
+                        if (!response) {
+                            return false;
+                        }
                         if (type == 'comment') {
                             var cvote = parseInt(item.siblings('.vote-holder').html());
                             cvote+= vote;
@@ -135,8 +163,10 @@
                             var cvote = parseInt(item.siblings('.vote-holder').find('h6').html().replace(' ', ''));
                             cvote+= vote;
                             if (cvote > 0) { cvote = "+ " + cvote; }
-                            item.siblings('.vote-holder').find('h6').html(cvote);
+                            item.siblings('.vote-holder').eq(0).find('h6').html(cvote);
                         }
+
+
                     }
 
                 });
@@ -175,18 +205,24 @@
                     $(JSON.parse(response.comments)).each(function (key, item) {
 
                         let html = '<div class="ff-square-box-item">'
-                        + '<p class="ff-square-box-item-post"><a href="#" data-id="' + item.post_id + '">' + posts[item.post_id].post_header.substring(0, 90) + '...</a></span>'
+                        + '<p class="ff-square-box-item-post"><a href="#" data-id="' + item.post_id + '">' + posts[item.post_id].post_header.substring(0, 90).replace(/\\/g,'') + '...</a></span>'
                         + '<div><p class="ff-square-box-item-comment" data-item-id="' + item.comment.id + '">' + item.comment.substring(0, 140) + '...<span class="ff-square-box-item-time">' + prettyDate(item.created_at) + '</span></p></div>'
                         + '</div>';
                         $('.ff-square-box-items').eq(0).append(html);
 
                         list.push(item.post_id);
 
+                        //Moet kunnen opnene zonder dat de cards geladen zijn
+                        //Dus card create net zoals de andere blokken
+                        // $.initialize('article[post-id="' + item.post_id + '"]', function() {
+                        //     $('.ff-square-box-item-post > a').on('click', function() {
+                        //         $('article[post-id="' + item.post_id + '"]').click();
+                        //     });
+                        // });
+
                     });
 
-                    $('.ff-square-box-item-post > a').on('click', function() {
-                        jQuery('article[post-id="' + $(this).attr('data-id') + '"]').click();
-                    });
+
                 }
             });
         }
@@ -236,7 +272,7 @@
                         let vote = votes[votes.findIndex(x => x.item_id === item.post_id)];
 
                         block.push([parseInt(vote.vote),'<div class="ff-square-box-item"><p class="ff-square-box-item-vote">'
-                        + '<span class="ff-square-item-vote-span-placeholder"><span class="ff-square-item-vote-placeholder ff-square-item-vote-'+ (vote.vote > 0 ? 'up' : 'down') + '">' + (vote.vote > 0 ? '+ ' + vote.vote : vote.vote) + '</span></span>' + '<a class="ff-square-item-header" href=#" data-id="' + item.post_id + '">' + item.post_header + '...</a>'
+                        + '<span class="ff-square-item-vote-span-placeholder"><span class="ff-square-item-vote-placeholder ff-square-item-vote-'+ (vote.vote > 0 ? 'up' : 'down') + '">' + (vote.vote > 0 ? '+ ' + vote.vote : vote.vote) + '</span></span>' + '<a class="ff-square-item-header" href=#" data-id="' + item.post_id + '">' + item.post_header.replace(/\\/g, '') + '...</a>'
                         +  '</p></div>']);
 
                         posts.push(item.post_id);
@@ -309,7 +345,8 @@
                     $(JSON.parse(response.posts)).each(function(key,item) {
 
                         block.push([parseInt(comments[item.post_id].comments), '<div class="ff-square-box-item"><p class="ff-square-box-item-vote">'
-                        + '<a class="ff-square-item-header" href=#" data-id="' + item.post_id + '"> '+ (key + 1) + '. '+ item.post_header + '...</a>'
+                        + '<span class="ff-square-item-vote-span-placeholder" style="float:right; text-align:center;"><span class="ff-square-item-vote-placeholder ff-square-item-vote-up">4</span></span>'
+                        + '<a class="ff-square-item-header" href=#" data-id="' + item.post_id + '"> '+ item.post_header.replace(/\\/g, '') + '...</a>'
                         +  '</p></div>']);
 
                         posts.push(item.post_id);
@@ -362,11 +399,11 @@
 
         $.initialize('.ff-item', function() {
 
-            let html = '<div class="square-box"><div class="ff-item-bar" style="text-align:center; ">'
-            + '<div class="ff-square-bar-item vote" style=" float:left;"><h6><i class="fas fa-thumbs-up"></i></h6></div>'
-            + '<div class="ff-square-bar-item vote-holder"><h6></h6></div>'
-            + '<div class="ff-square-bar-item vote" style=" float:right; "><h6><i class="fas fa-thumbs-down"></i></h6></div>'
-            + '</div>'
+            let html = '<div class="square-box"><div class="ff-item-bar row" style="text-align:center; ">'
+            + '<div class="col-6"><div class="ff-square-bar-item vote" style=" float:left;"><h6><i class="fas fa-thumbs-up"></i></h6></div>'
+            + '<div class="ff-square-bar-item vote-holder"><h6></h6></div></div>'
+            + '<div class="col-6"><div class="ff-square-bar-item vote" style=" float:right; "><h6><i class="fas fa-thumbs-down"></i></h6></div>'
+            + '<div class="ff-square-bar-item vote-holder"><h6></h6></div></div></div>'
             + '<div class="ff-item-bar" style="text-align:center; ">'
             + '<div class="ff-square-bar-item comments"><h6></h6></div>'
             + '<div class="ff-share-wrapper"><i class="ff-icon-share"></i><div class="ff-share-popup"><a href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.instagram.com%2Fp%2FCG11rWbgOzp%2F" class="ff-fb-share" target="_blank" rel="noreferrer">Facebook</a><a href="https://twitter.com/share?url=https%3A%2F%2Fwww.instagram.com%2Fp%2FCG11rWbgOzp%2F" class="ff-tw-share" target="_blank" rel="noreferrer">Twitter</a><a href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fwww.instagram.com%2Fp%2FCG11rWbgOzp%2F&amp;media=https%3A%2F%2Fscontent-muc2-1.cdninstagram.com%2Fv%2Ft51.29350-15%2F122586207_266242274816010_6979763166844425091_n.jpg%3F_nc_cat%3D107%26ccb%3D2%26_nc_sid%3D8ae9d6%26_nc_ohc%3DBIkLmwUUaU4AX_-3mve%26_nc_ht%3Dscontent-muc2-1.cdninstagram.com%26oh%3D1f3e0d8d9b0dd6e71540fc38f11438e8%26oe%3D5FBDC27A" class="ff-pin-share" target="_blank" rel="noreferrer">Pinterest</a><a href="https://www.linkedin.com/cws/share?url=https%3A%2F%2Fwww.instagram.com%2Fp%2FCG11rWbgOzp%2F" class="ff-li-share" target="_blank" rel="noreferrer">Linkedin</a><a href="mailto:?subject=&amp;body=https%3A%2F%2Fwww.instagram.com%2Fp%2FCG11rWbgOzp%2F" class="ff-email-share">Email</a></div></div>'
@@ -404,7 +441,7 @@
 
             if (slide.index() == (ffitems - 1)) {
 
-                $(".ff-square-commentbox-button").click( function(e) {
+                $('.ff-slideshow-media').find(".ff-square-commentbox-button").click( function(e) {
 
                     e.preventDefault();
                     let card = jQuery(this);
@@ -439,7 +476,7 @@
                             + '<span style="display:inline-block;"class="vote"><i class="fas fa-thumbs-up"></i></span>'
                             + '<span style="display:inline-block; font-weight: 600;" class="vote-holder">0</span>'
                             + '<span style="display:inline-block;" class="vote"><i class="fas fa-thumbs-down"></i></span>'
-                            + '<b>' + response.user_nicename + '</b></a><span>' + response.comment + '</span>'
+                            + '<b>' + response.name + '</b></a><span>' + response.comment + '</span>'
                             + '</div>';
                             card.parents('li').find('.ff-square-comments-list').append(html);
 
@@ -481,7 +518,7 @@
             + '<h6></h6>'
             + '<a rel="noreferrer" href="https://www.youtube.com/user/NUnl" class="ff-nickname" target="_blank">NU.nl</a>'
             + '<div class="ff-content not-empty">'
-            + '<h4><a rel="noreferrer" href="' + post.post_permalink + '" target="_blank">' + post.post_header + '</a></h4>'
+            + '<h4><a rel="noreferrer" href="' + post.post_permalink + '" target="_blank">' + post.post_header.replace(/\\/g, '') + '</a></h4>'
             + post.post_text
             + '</div>'
             + '<div class="ff-item-bar" style="text-align:center; ">'
@@ -508,17 +545,15 @@
             return html;
         }
 
-        function loadSlide(post, a)
+        function loadSlide(post_id, a)
         {
-            var post_id = post;
-
             jQuery.ajax({
                 type : "post",
                 dataType : "json",
                 url : ff_square_ajax.ajaxurl,
                 data : {
                     action: "ffs_fetch_post",
-                    post_id: post,
+                    post_id: post_id,
                     nonce: ff_square_ajax.fetch_post_nonce,
                 },
                 success: function(response) {
@@ -549,6 +584,54 @@
                     });
 
                     loadComments(post_id);
+
+                    $.initialize('li[post-id="' + post_id + '"] > div > div.ff-item-cont > div.ff-comments-list > div.ff-square-commentbox > button', function() {
+
+                        $(this).on('click', function(e) {
+
+                            e.preventDefault();
+                            let card = jQuery(this);
+
+                            jQuery.ajax({
+                                type : "post",
+                                dataType : "json",
+                                url : ff_square_ajax.ajaxurl,
+                                data : {
+                                    action: "ffs_comment_create",
+                                    post_id : card.parents('li').attr('post-id'),
+                                    comment : card.siblings('textarea').val(),
+                                    name: card.siblings('input[name="name"]').val(),
+                                    website: card.siblings('input[name="website"]').val(),
+                                    email: card.siblings('input[name="email"]').val(),
+                                    remember: card.siblings('input[name="remember"]').val(),
+                                    nonce: ff_square_ajax.comment_create_nonce,
+                                },
+                                success: function(response) {
+
+                                    if (response == -1) {
+                                        jQuery('.ff-square-commentbox').html('Er bestaat al een account met dit emailadres. Log in op het account om een bericht te plaatsen.');
+                                        return false;
+                                    }
+
+                                    if (response == 0) {
+                                        jQuery('.ff-square-commentbox').html('We hebben uw een mail gestuurd. Verifieer uw email om het bericht te plaatsen.');
+                                        return false;
+                                    }
+
+                                    let html = '<div class="ff-square-comment" comment-id="' + response.id + '">'
+                                    + '<span style="display:inline-block;"class="vote"><i class="fas fa-thumbs-up"></i></span>'
+                                    + '<span style="display:inline-block; font-weight: 600;" class="vote-holder">0</span>'
+                                    + '<span style="display:inline-block;" class="vote"><i class="fas fa-thumbs-down"></i></span>'
+                                    + '<b>' + response.name + '</b></a><span>' + response.comment + '</span>'
+                                    + '</div>';
+                                    card.parents('li').find('.ff-square-comments-list').append(html);
+
+
+                                    initVote();
+                                }
+                            });
+                        });
+                    });
                 }
             });
         }

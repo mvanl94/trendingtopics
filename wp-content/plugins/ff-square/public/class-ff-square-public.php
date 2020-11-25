@@ -233,19 +233,20 @@ class Ff_Square_Public {
 	}
 
     function GetIP() {
-        foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key)
-        {
-            if (array_key_exists($key, $_SERVER) === true)
-            {
-                foreach (array_map('trim', explode(',', $_SERVER[$key])) as $ip)
-                {
-                    if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false)
-                    {
-                        return $ip;
-                    }
-                }
-            }
-        }
+        // foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key)
+        // {
+        //     if (array_key_exists($key, $_SERVER) === true)
+        //     {
+        //         foreach (array_map('trim', explode(',', $_SERVER[$key])) as $ip)
+        //         {
+        //             if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false)
+        //             {
+        //                 return $ip;
+        //             }
+        //         }
+        //     }
+        // }
+        return $_SERVER['REMOTE_ADDR'];
     }
 
     function ffs_block_get()
@@ -425,7 +426,7 @@ class Ff_Square_Public {
         , OBJECT );
 
         $results['comments'] = $comments;
-        $results['votes'] = $wpdb->get_results( "SELECT item_id, SUM(vote) as vote FROM {$wpdb->prefix}ff_square_votes WHERE item_id='" . $post_id . "' GROUP BY item_id", OBJECT );
+        $results['votes'] = $wpdb->get_results( "SELECT item_id,count(case when vote =1 then 1 else NULL end) as upvotes, count(case when vote =-1 then 1 else NULL end) as downvotes FROM {$wpdb->prefix}ff_square_votes WHERE item_id='" . $post_id . "' GROUP BY item_id", OBJECT );
 
         echo json_encode($results);
 
@@ -444,18 +445,24 @@ class Ff_Square_Public {
         $type = $_REQUEST['type'];
         $vote = $_REQUEST['vote'];
 
+
         //Check if this ip address already voted on this item
+        $ip_address = $this->GetIP();
+        $sql = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "ff_square_votes WHERE item_id='". $item_id. "'");
 
-        //Else
-        $wpdb->insert($wpdb->prefix . 'ff_square_votes', [
-           'ip_address' => $this->GetIP(),
-           'vote' => $vote,
-           'item_id' => $item_id,
-           'type' => $type,
-           'created_at' => time()
-        ]);
+        if (count($sql) == 0) {
+            $wpdb->insert($wpdb->prefix . 'ff_square_votes', [
+               'ip_address' => $this->GetIP(),
+               'vote' => $vote,
+               'item_id' => $item_id,
+               'type' => $type,
+               'created_at' => time()
+            ]);
 
-        echo '1';
+            echo '1';
+        } else {
+            echo '0';
+        }
 
         exit();
     }
@@ -472,16 +479,28 @@ class Ff_Square_Public {
         if (is_user_logged_in()) {
 
             $id = get_current_user_id();
+            $name = get_current_user();
         } else {
 
             //Create new user with email etc.
+            $id = register_new_user($_REQUEST['email'], $_REQUEST['email']);
+            $user = get_user_by('id', $id);
             $id = wp_insert_user([
-                'user_login' => $_REQUEST['name'],
+                'user_login' => $_REQUEST['email'],
                 'display_name' => $_REQUEST['name'],
+                'user_nicename' => $_REQUEST['name'],
                 'user_email' => $_REQUEST['email'],
                 'user_url' => $_REQUEST['website'],
                 'user_pass' => wp_generate_password(12)
             ]);
+            wp_update_user([
+                'id' => $id,
+                'user_nicename' => $_REQUEST['name'],
+                'display_name' => $_REQUEST['name'],
+                'user_url' => $_REQUEST['website']
+            ]);
+
+            $name = $_REQUEST['name'];
 
             if (count($id->errors) > 0) {
                 echo -1;
@@ -491,21 +510,24 @@ class Ff_Square_Public {
 
         //Create comment function
         $post_id = $_REQUEST['post_id'];
-        $comment = $_REQUEST['comment'];
+        $comment = strip_tags($_REQUEST['comment']);
+        $ip_address = ($this->GetIP() == '' ? $this->GetIP() : '');
 
-        $wpdb->insert($wpdb->prefix . 'ff_square_comments', [
-           'post_id' => $post_id,
-           'comment' => $comment,
-           'ip_address' => $this->GetIP(),
-           'post_owner' => $id,
-           'created_at' => time()
-        ]);
+
+        $wpdb->get_results(
+            'INSERT INTO ' . $wpdb->prefix . 'ff_square_comments SET
+            post_id="' . $post_id . '",
+            comment="' . $comment . '",
+            ip_address="' . $ip_address . '",
+            post_owner="' . $id . '",
+            created_at=' . time());
+
 
         if (is_user_logged_in()) {
             echo json_encode([
                 'comment' => $comment,
                 'post_id' => $post_id,
-                'name' => $_REQUEST['name']
+                'name' => $name
             ]);
         } else {
             echo 0;
