@@ -485,14 +485,7 @@ class Ff_Square_Public {
             //Create new user with email etc.
             $id = register_new_user($_REQUEST['email'], $_REQUEST['email']);
             $user = get_user_by('id', $id);
-            $id = wp_insert_user([
-                'user_login' => $_REQUEST['email'],
-                'display_name' => $_REQUEST['name'],
-                'user_nicename' => $_REQUEST['name'],
-                'user_email' => $_REQUEST['email'],
-                'user_url' => $_REQUEST['website'],
-                'user_pass' => wp_generate_password(12)
-            ]);
+
             wp_update_user([
                 'id' => $id,
                 'user_nicename' => $_REQUEST['name'],
