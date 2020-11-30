@@ -315,8 +315,6 @@
                 + '<p>Registreer om uw reactie te plaatsen of klik <a href="/wp-login.php">hier</a>om in te loggen</p>'
                 + '<input type="text" name="name" placeholder="Naam" required/>'
                 + '<input type="email" name="email" placeholder="Email" required/>'
-                + '<input type="text" name="website" placeholder="Website" required/>'
-                + '<label class="ff-square-label"><input type="checkbox" name="remember" placeholder="Website" required/>Mijn naam, email opslaan</label>'
                 + '<button class="ff-square-commentbox-button">Reactie plaatsen</button>'
                 + '</div>';
             }
