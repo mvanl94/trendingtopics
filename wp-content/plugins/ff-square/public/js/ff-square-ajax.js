@@ -435,6 +435,7 @@
             } else {
                 html+= '<p>Uw e-mailadres wordt niet gepubliceerd</p>'
                 + '<textarea class="ff-square-commentbox-textarea" placeholder="Reactie..." required/>'
+                + '<p>Registreer om uw reactie te plaatsen of klik <a href="/wp-login.php">hier</a>om in te loggen</p>'
                 + '<input type="text" name="name" placeholder="Naam" required/>'
                 + '<input type="email" name="email" placeholder="Email" required/>'
                 + '<input type="text" name="website" placeholder="Website" required/>'
