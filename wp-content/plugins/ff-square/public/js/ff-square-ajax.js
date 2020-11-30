@@ -60,18 +60,6 @@
                 },
                 success: function(response) {
 
-                    // if ($(response.votes).length == 0) {
-                    //     var vote = 0;
-                    // } else {
-                    //     var vote = $(response.votes)[0].vote;
-                    //     if (vote > 0) {
-                    //         vote = '+ ' + vote;
-                    //     }
-                    // }
-                    // if ($(response.votes).length > 0) {
-                    //     card.find('.picture-item__inner').find('.vote-holder').eq(0).find('h6').html($(response.votes)[0].upvotes);
-                    //     card.find('.picture-item__inner').find('.vote-holder').eq(1).find('h6').html($(response.votes)[0].downvotes);
-                    // } else {
                     if ($(response.votes).length > 0) {
                         if ($(response.votes)[0].upvotes) {
                             card.find('.picture-item__inner').find('.vote-holder').eq(0).find('h6').html('+ ' + $(response.votes)[0].upvotes);
@@ -377,6 +365,10 @@
             });
         }
 
+        $.initialize('.ff-slideshow-media > li', function() {
+            initSlide($(this));
+        });
+
         loadBlock1();
 
         $('#votes').initialize(function() {
@@ -422,6 +414,55 @@
             $(this).find('.picture-item__inner').append(html);
         });
 
+        $.initialize('.ff-square-commentbox-button', function(e) {
+
+            let button = $(this);
+
+            $(this).on('click', function(e) {
+
+                e.preventDefault();
+
+                jQuery.ajax({
+                    type : "post",
+                    dataType : "json",
+                    url : ff_square_ajax.ajaxurl,
+                    data : {
+                        action: "ffs_comment_create",
+                        post_id : button.parents('li').attr('post-id'),
+                        comment : button.siblings('textarea').val(),
+                        name: button.siblings('input[name="name"]').val(),
+                        website: button.siblings('input[name="website"]').val(),
+                        email: button.siblings('input[name="email"]').val(),
+                        remember: button.siblings('input[name="remember"]').val(),
+                        nonce: ff_square_ajax.comment_create_nonce,
+                    },
+                    success: function(response) {
+
+                        if (response == -1) {
+                            jQuery('.ff-square-commentbox').html('Er bestaat al een account met dit emailadres. Log in op het account om een bericht te plaatsen.');
+                            return false;
+                        }
+
+                        if (response == 0) {
+                            jQuery('.ff-square-commentbox').html('We hebben uw een mail gestuurd. Verifieer uw email om het bericht te plaatsen.');
+                            return false;
+                        }
+
+                        let html = '<div class="ff-square-comment" comment-id="' + response.id + '">'
+                        + '<span style="display:inline-block;"class="vote"><i class="fas fa-thumbs-up"></i></span>'
+                        + '<span style="display:inline-block; font-weight: 600;" class="vote-holder">0</span>'
+                        + '<span style="display:inline-block;" class="vote"><i class="fas fa-thumbs-down"></i></span>'
+                        + '<b>' + response.name + '</b></a><span>' + response.comment + '</span>'
+                        + '</div>';
+                        button.parents('li').find('.ff-square-comments-list').append(html);
+
+                        initVote($(button.find('.picture-item__inner').find('.vote')[0]));
+                        initVote($(button.find('.picture-item__inner').find('.vote')[1]));
+                    }
+                });
+            });
+        });
+
         function initSlide(slide) {
 
             let html = '<div class="ff-square-comments-list"></div>'
@@ -446,61 +487,8 @@
 
             slide.find('.ff-comments-list').append(html);
 
-            if (slide.index() == (ffitems - 1)) {
-
-                $('.ff-slideshow-media').find(".ff-square-commentbox-button").click( function(e) {
-
-                    e.preventDefault();
-                    let card = jQuery(this);
-
-                    jQuery.ajax({
-                        type : "post",
-                        dataType : "json",
-                        url : ff_square_ajax.ajaxurl,
-                        data : {
-                            action: "ffs_comment_create",
-                            post_id : card.parents('li').attr('post-id'),
-                            comment : card.siblings('textarea').val(),
-                            name: card.siblings('input[name="name"]').val(),
-                            website: card.siblings('input[name="website"]').val(),
-                            email: card.siblings('input[name="email"]').val(),
-                            remember: card.siblings('input[name="remember"]').val(),
-                            nonce: ff_square_ajax.comment_create_nonce,
-                        },
-                        success: function(response) {
-
-                            if (response == -1) {
-                                jQuery('.ff-square-commentbox').html('Er bestaat al een account met dit emailadres. Log in op het account om een bericht te plaatsen.');
-                                return false;
-                            }
-
-                            if (response == 0) {
-                                jQuery('.ff-square-commentbox').html('We hebben uw een mail gestuurd. Verifieer uw email om het bericht te plaatsen.');
-                                return false;
-                            }
-
-                            let html = '<div class="ff-square-comment" comment-id="' + response.id + '">'
-                            + '<span style="display:inline-block;"class="vote"><i class="fas fa-thumbs-up"></i></span>'
-                            + '<span style="display:inline-block; font-weight: 600;" class="vote-holder">0</span>'
-                            + '<span style="display:inline-block;" class="vote"><i class="fas fa-thumbs-down"></i></span>'
-                            + '<b>' + response.name + '</b></a><span>' + response.comment + '</span>'
-                            + '</div>';
-                            card.parents('li').find('.ff-square-comments-list').append(html);
-
-
-                            initVote();
-                        }
-                    })
-
-                });
-            }
+            //comment button is initialized in other function
         }
-
-        $.initialize('.ff-slideshow-media > li', function() {
-            initSlide($(this));
-        });
-
-
 
         function createSlide(post)
         {
@@ -598,54 +586,58 @@
                         $('.ff-nav-prev').css('display', 'block');
                     });
 
-
-                    $.initialize('li[post-id="' + post_id + '"] > div > div.ff-item-cont > div.ff-comments-list > div.ff-square-commentbox > button', function() {
-
-                        $(this).on('click', function(e) {
-
-                            e.preventDefault();
-                            let card = jQuery(this);
-
-                            jQuery.ajax({
-                                type : "post",
-                                dataType : "json",
-                                url : ff_square_ajax.ajaxurl,
-                                data : {
-                                    action: "ffs_comment_create",
-                                    post_id : card.parents('li').attr('post-id'),
-                                    comment : card.siblings('textarea').val(),
-                                    name: card.siblings('input[name="name"]').val(),
-                                    website: card.siblings('input[name="website"]').val(),
-                                    email: card.siblings('input[name="email"]').val(),
-                                    remember: card.siblings('input[name="remember"]').val(),
-                                    nonce: ff_square_ajax.comment_create_nonce,
-                                },
-                                success: function(response) {
-
-                                    if (response == -1) {
-                                        jQuery('.ff-square-commentbox').html('Er bestaat al een account met dit emailadres. Log in op het account om een bericht te plaatsen.');
-                                        return false;
-                                    }
-
-                                    if (response == 0) {
-                                        jQuery('.ff-square-commentbox').html('We hebben uw een mail gestuurd. Verifieer uw email om het bericht te plaatsen.');
-                                        return false;
-                                    }
-
-                                    let html = '<div class="ff-square-comment" comment-id="' + response.id + '">'
-                                    + '<span style="display:inline-block;"class="vote"><i class="fas fa-thumbs-up"></i></span>'
-                                    + '<span style="display:inline-block; font-weight: 600;" class="vote-holder">0</span>'
-                                    + '<span style="display:inline-block;" class="vote"><i class="fas fa-thumbs-down"></i></span>'
-                                    + '<b>' + response.name + '</b></a><span>' + response.comment + '</span>'
-                                    + '</div>';
-                                    card.parents('li').find('.ff-square-comments-list').append(html);
-
-
-                                    initVote();
-                                }
-                            });
-                        });
-                    });
+                    // if (!cardExists) {
+                    //
+                    //     //comment button
+                    //     $.initialize('li[post-id="' + post_id + '"] > div > div.ff-item-cont > div.ff-comments-list > div.ff-square-commentbox > button', function() {
+                    //
+                    //         $(this).on('click', function(e) {
+                    //
+                    //             e.preventDefault();
+                    //
+                    //             let card = jQuery(this);
+                    //
+                    //             jQuery.ajax({
+                    //                 type : "post",
+                    //                 dataType : "json",
+                    //                 url : ff_square_ajax.ajaxurl,
+                    //                 data : {
+                    //                     action: "ffs_comment_create",
+                    //                     post_id : card.parents('li').attr('post-id'),
+                    //                     comment : card.siblings('textarea').val(),
+                    //                     name: card.siblings('input[name="name"]').val(),
+                    //                     website: card.siblings('input[name="website"]').val(),
+                    //                     email: card.siblings('input[name="email"]').val(),
+                    //                     remember: card.siblings('input[name="remember"]').val(),
+                    //                     nonce: ff_square_ajax.comment_create_nonce,
+                    //                 },
+                    //                 success: function(response) {
+                    //
+                    //                     if (response == -1) {
+                    //                         jQuery('.ff-square-commentbox').html('Er bestaat al een account met dit emailadres. Log in op het account om een bericht te plaatsen.');
+                    //                         return false;
+                    //                     }
+                    //
+                    //                     if (response == 0) {
+                    //                         jQuery('.ff-square-commentbox').html('We hebben uw een mail gestuurd. Verifieer uw email om het bericht te plaatsen.');
+                    //                         return false;
+                    //                     }
+                    //
+                    //                     let html = '<div class="ff-square-comment" comment-id="' + response.id + '">'
+                    //                     + '<span style="display:inline-block;"class="vote"><i class="fas fa-thumbs-up"></i></span>'
+                    //                     + '<span style="display:inline-block; font-weight: 600;" class="vote-holder">0</span>'
+                    //                     + '<span style="display:inline-block;" class="vote"><i class="fas fa-thumbs-down"></i></span>'
+                    //                     + '<b>' + response.name + '</b></a><span>' + response.comment + '</span>'
+                    //                     + '</div>';
+                    //                     card.parents('li').find('.ff-square-comments-list').append(html);
+                    //
+                    //
+                    //                     initVote($(card.find('.picture-item__inner').find('.vote')[0]));
+                    //                     initVote($(card.find('.picture-item__inner').find('.vote')[1]));                                }
+                    //             });
+                    //         });
+                    //     });
+                    // }
                 }
             });
         }
