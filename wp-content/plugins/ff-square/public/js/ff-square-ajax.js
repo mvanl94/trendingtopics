@@ -351,7 +351,7 @@
                     $(JSON.parse(response.posts)).each(function(key,item) {
 
                         block.push([parseInt(comments[item.post_id].comments), '<div class="ff-square-box-item"><p class="ff-square-box-item-vote">'
-                        + '<span class="ff-square-item-vote-span-placeholder" style="float:right; text-align:center;"><span class="ff-square-item-vote-placeholder ff-square-item-vote-up">4</span></span>'
+                        + '<span class="ff-square-item-vote-span-placeholder" style="float:right;"><span class="ff-square-item-vote-placeholder ff-square-item-vote-up" style=" text-align:center;">'+ comments[item.post_id].comments +'</span></span>'
                         + '<a class="ff-square-item-header" href="#" data-id="' + item.post_id + '"> '+ item.post_header.replace(/\\/g, '') + '...</a>'
                         +  '</p></div>']);
 
