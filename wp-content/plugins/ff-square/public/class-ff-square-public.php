@@ -480,6 +480,7 @@ class Ff_Square_Public {
 
             $id = get_current_user_id();
             $name = get_current_user();
+
         } else {
 
             //Create new user with email etc.
@@ -504,7 +505,7 @@ class Ff_Square_Public {
         //Create comment function
         $post_id = $_REQUEST['post_id'];
         $comment = strip_tags($_REQUEST['comment']);
-        $ip_address = ($this->GetIP() == '' ? $this->GetIP() : '');
+        $ip_address = $this->GetIP();
 
 
         $wpdb->get_results(

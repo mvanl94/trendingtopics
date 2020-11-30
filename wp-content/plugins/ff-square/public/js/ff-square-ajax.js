@@ -187,6 +187,8 @@
                 },
                 success: function(response) {
 
+
+
                     $('.ff-square-box-items').eq(0).html('');
 
                     if (response == 0) {
@@ -201,27 +203,31 @@
                     });
 
                     let list = [];
+                    var block = [];
+
+                    // console.log("POSTS", posts);
 
                     $(JSON.parse(response.comments)).each(function (key, item) {
 
                         let html = '<div class="ff-square-box-item">'
-                        + '<p class="ff-square-box-item-post"><a href="#" data-id="' + item.post_id + '">' + posts[item.post_id].post_header.substring(0, 90).replace(/\\/g,'') + '...</a></span>'
+                        + '<p class="ff-square-box-item-post"><a class="ff-square-item-header" href="#" data-id="' + item.post_id + '">' + posts[item.post_id].post_header.substring(0, 90).replace(/\\/g,'') + '...</a></span>'
                         + '<div><p class="ff-square-box-item-comment" data-item-id="' + item.comment.id + '">' + item.comment.substring(0, 140) + '...<span class="ff-square-box-item-time">' + prettyDate(item.created_at) + '</span></p></div>'
                         + '</div>';
+
+                        block[item.post_id] = html;
+
                         $('.ff-square-box-items').eq(0).append(html);
 
                         list.push(item.post_id);
-
-                        //Moet kunnen opnene zonder dat de cards geladen zijn
-                        //Dus card create net zoals de andere blokken
-                        // $.initialize('article[post-id="' + item.post_id + '"]', function() {
-                        //     $('.ff-square-box-item-post > a').on('click', function() {
-                        //         $('article[post-id="' + item.post_id + '"]').click();
-                        //     });
-                        // });
-
                     });
 
+                    list = $.unique(list);
+
+                    $('.ff-slideshow-media').initialize(function() {
+                        $(list).each(function (key, item) {
+                            loadSlide(1, item, block[item]);
+                        });
+                    });
 
                 }
             });
@@ -272,7 +278,7 @@
                         let vote = votes[votes.findIndex(x => x.item_id === item.post_id)];
 
                         block.push([parseInt(vote.vote),'<div class="ff-square-box-item"><p class="ff-square-box-item-vote">'
-                        + '<span class="ff-square-item-vote-span-placeholder"><span class="ff-square-item-vote-placeholder ff-square-item-vote-'+ (vote.vote > 0 ? 'up' : 'down') + '">' + (vote.vote > 0 ? '+ ' + vote.vote : vote.vote) + '</span></span>' + '<a class="ff-square-item-header" href=#" data-id="' + item.post_id + '">' + item.post_header.replace(/\\/g, '') + '...</a>'
+                        + '<span class="ff-square-item-vote-span-placeholder"><span class="ff-square-item-vote-placeholder ff-square-item-vote-'+ (vote.vote > 0 ? 'up' : 'down') + '">' + (vote.vote > 0 ? '+ ' + vote.vote : vote.vote) + '</span></span>' + '<a class="ff-square-item-header" href="#" data-id="' + item.post_id + '">' + item.post_header.replace(/\\/g, '') + '...</a>'
                         +  '</p></div>']);
 
                         posts.push(item.post_id);
@@ -293,7 +299,7 @@
 
                     $('.ff-slideshow-media').initialize(function() {
                         $(posts).each(function (key, item) {
-                            loadSlide(item, block[key]);
+                            loadSlide(2, item, block[key]);
                         });
                     });
                 }
@@ -346,7 +352,7 @@
 
                         block.push([parseInt(comments[item.post_id].comments), '<div class="ff-square-box-item"><p class="ff-square-box-item-vote">'
                         + '<span class="ff-square-item-vote-span-placeholder" style="float:right; text-align:center;"><span class="ff-square-item-vote-placeholder ff-square-item-vote-up">4</span></span>'
-                        + '<a class="ff-square-item-header" href=#" data-id="' + item.post_id + '"> '+ item.post_header.replace(/\\/g, '') + '...</a>'
+                        + '<a class="ff-square-item-header" href="#" data-id="' + item.post_id + '"> '+ item.post_header.replace(/\\/g, '') + '...</a>'
                         +  '</p></div>']);
 
                         posts.push(item.post_id);
@@ -364,7 +370,7 @@
 
                     $('.ff-slideshow-media').initialize(function() {
                         $(posts).each(function (key, item) {
-                            loadSlide(item, block[key]);
+                            loadSlide(3, item, block[key]);
                         });
                     });
                 }
@@ -545,7 +551,7 @@
             return html;
         }
 
-        function loadSlide(post_id, a)
+        function loadSlide(blockid, post_id, a)
         {
             jQuery.ajax({
                 type : "post",
@@ -558,10 +564,14 @@
                 },
                 success: function(response) {
 
-                    var post = createSlide(response[0]);
+                    //Check if card/post already exists otherwise add
+                    if ($('li[post-id="' + post_id + '"]').length == 0 ) {
+                        var post = createSlide(response[0]);
+                        $('.ff-slideshow-media').append(post);
+                        loadComments(post_id);
+                    }
 
-                    $('.ff-slideshow-media').append(post);
-
+                    //Dom-element specific event
                     $('.ff-square-item-header').on('click', function() {
                         let post_id = $(this).attr('data-id');
 
@@ -583,7 +593,6 @@
                         $('.ff-nav-prev').css('display', 'block');
                     });
 
-                    loadComments(post_id);
 
                     $.initialize('li[post-id="' + post_id + '"] > div > div.ff-item-cont > div.ff-comments-list > div.ff-square-commentbox > button', function() {
 
