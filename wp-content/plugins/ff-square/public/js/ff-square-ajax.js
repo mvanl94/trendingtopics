@@ -92,73 +92,7 @@
                         + '</div>';
                         $('li[post-id="' + post_id + '"] > div > div > div > .ff-square-comments-list').append(html);
                     });
-
-                    initVote($(card.find('.picture-item__inner').find('.vote')[0]));
-                    initVote($(card.find('.picture-item__inner').find('.vote')[1]));
-
-                    $('li[post-id="' + post_id + '"] > div > div > div > .ff-square-comments-list').find('.vote').each(function(item) {
-                        initVote($(this));
-                    });
-
-
                 }
-            });
-        }
-
-
-
-        function initVote(btn)
-        {
-            btn.on('click', function(e) {
-
-                e.stopImmediatePropagation();
-
-                let item = jQuery(this);
-
-                if (jQuery(this).parents('.ff-item').length) {
-                    var type = 'item';
-                    var item_id = jQuery(this).parents('.ff-item').attr('post-id');
-                } else {
-                    var type = 'comment';
-                    var item_id = jQuery(this).parents('.ff-square-comment').attr('comment-id');
-                }
-
-                var vote = ($(this).parent().index() == 0 ? 1 : -1);
-
-                jQuery.ajax({
-                    type : "post",
-                    dataType : "json",
-                    url : ff_square_ajax.ajaxurl,
-                    data : {
-                        action: "ffs_vote",
-                        vote: vote,
-                        type: type,
-                        item_id : item_id,
-                        nonce: ff_square_ajax.vote_nonce,
-                    },
-                    success: function(response) {
-
-                        if (!response) {
-                            return false;
-                        }
-                        if (type == 'comment') {
-                            var cvote = parseInt(item.siblings('.vote-holder').html());
-                            cvote+= vote;
-                            item.siblings('.vote-holder').html(cvote);
-                        }
-                        if (type == 'item') {
-
-                            var cvote = parseInt(item.siblings('.vote-holder').find('h6').html().replace(' ', ''));
-                            cvote+= vote;
-                            if (cvote > 0) { cvote = "+ " + cvote; }
-                            item.siblings('.vote-holder').eq(0).find('h6').html(cvote);
-                        }
-
-
-                    }
-
-                });
-                return false;
             });
         }
 
@@ -366,7 +300,28 @@
         }
 
         $.initialize('.ff-slideshow-media > li', function() {
-            initSlide($(this));
+
+            let html = '<div class="ff-square-comments-list"></div>'
+            + '<div class="ff-square-commentbox">'
+            + '<h3>Reageren</h3>';
+
+            if (ff_square_ajax.loggedin) {
+                html+= '<textarea class="ff-square-commentbox-textarea" placeholder="Reactie..." required/>'
+                + '<button class="ff-square-commentbox-button">Reactie plaatsen</button>'
+                + '</div>';
+            } else {
+                html+= '<p>Uw e-mailadres wordt niet gepubliceerd</p>'
+                + '<textarea class="ff-square-commentbox-textarea" placeholder="Reactie..." required/>'
+                + '<p>Registreer om uw reactie te plaatsen of klik <a href="/wp-login.php">hier</a>om in te loggen</p>'
+                + '<input type="text" name="name" placeholder="Naam" required/>'
+                + '<input type="email" name="email" placeholder="Email" required/>'
+                + '<input type="text" name="website" placeholder="Website" required/>'
+                + '<label class="ff-square-label"><input type="checkbox" name="remember" placeholder="Website" required/>Mijn naam, email opslaan</label>'
+                + '<button class="ff-square-commentbox-button">Reactie plaatsen</button>'
+                + '</div>';
+            }
+
+            $(this).find('.ff-comments-list').append(html);
         });
 
         loadBlock1();
@@ -414,6 +369,64 @@
             $(this).find('.picture-item__inner').append(html);
         });
 
+        $.initialize('.vote', function(e) {
+
+            $(this).on('click', function(e) {
+
+                e.stopImmediatePropagation();
+
+                let item = jQuery(this);
+
+                if (jQuery(this).parents('.ff-item').length) {
+
+                    var type = 'item';
+                    var item_id = jQuery(this).parents('.ff-item').attr('post-id');
+                    var vote = ($(this).parent().index() == 0 ? 1 : -1);
+
+                } else {
+                    var type = 'comment';
+                    var item_id = $(this).parents('.ff-square-comment').attr('comment-id');
+                    var vote = ($(this).index() == 0 ? 1 : -1);
+                }
+
+
+                jQuery.ajax({
+                    type : "post",
+                    dataType : "json",
+                    url : ff_square_ajax.ajaxurl,
+                    data : {
+                        action: "ffs_vote",
+                        vote: vote,
+                        type: type,
+                        item_id : item_id,
+                        nonce: ff_square_ajax.vote_nonce,
+                    },
+                    success: function(response) {
+
+                        if (!response) {
+                            return false;
+                        }
+                        if (type == 'comment') {
+                            var cvote = parseInt(item.siblings('.vote-holder').html());
+                            cvote+= vote;
+                            item.siblings('.vote-holder').html(cvote);
+                        }
+                        if (type == 'item') {
+
+                            var cvote = parseInt(item.siblings('.vote-holder').find('h6').html().replace(' ', ''));
+                            cvote+= vote;
+                            if (cvote > 0) { cvote = "+ " + cvote; }
+                            item.siblings('.vote-holder').eq(0).find('h6').html(cvote);
+                        }
+
+
+                    }
+
+                });
+                return false;
+            });
+        });
+
         $.initialize('.ff-square-commentbox-button', function(e) {
 
             let button = $(this);
@@ -454,41 +467,12 @@
                         + '<span style="display:inline-block;" class="vote"><i class="fas fa-thumbs-down"></i></span>'
                         + '<b>' + response.name + '</b></a><span>' + response.comment + '</span>'
                         + '</div>';
-                        button.parents('li').find('.ff-square-comments-list').append(html);
 
-                        initVote($(button.find('.picture-item__inner').find('.vote')[0]));
-                        initVote($(button.find('.picture-item__inner').find('.vote')[1]));
+                        button.parents('li').find('.ff-square-comments-list').append(html);
                     }
                 });
             });
         });
-
-        function initSlide(slide) {
-
-            let html = '<div class="ff-square-comments-list"></div>'
-            + '<div class="ff-square-commentbox">'
-            + '<h3>Reageren</h3>';
-
-            if (ff_square_ajax.loggedin) {
-                html+= '<textarea class="ff-square-commentbox-textarea" placeholder="Reactie..." required/>'
-                + '<button class="ff-square-commentbox-button">Reactie plaatsen</button>'
-                + '</div>';
-            } else {
-                html+= '<p>Uw e-mailadres wordt niet gepubliceerd</p>'
-                + '<textarea class="ff-square-commentbox-textarea" placeholder="Reactie..." required/>'
-                + '<p>Registreer om uw reactie te plaatsen of klik <a href="/wp-login.php">hier</a>om in te loggen</p>'
-                + '<input type="text" name="name" placeholder="Naam" required/>'
-                + '<input type="email" name="email" placeholder="Email" required/>'
-                + '<input type="text" name="website" placeholder="Website" required/>'
-                + '<label class="ff-square-label"><input type="checkbox" name="remember" placeholder="Website" required/>Mijn naam, email opslaan</label>'
-                + '<button class="ff-square-commentbox-button">Reactie plaatsen</button>'
-                + '</div>';
-            }
-
-            slide.find('.ff-comments-list').append(html);
-
-            //comment button is initialized in other function
-        }
 
         function createSlide(post)
         {
@@ -585,59 +569,6 @@
                         $('.ff-nav-next').css('display', 'block');
                         $('.ff-nav-prev').css('display', 'block');
                     });
-
-                    // if (!cardExists) {
-                    //
-                    //     //comment button
-                    //     $.initialize('li[post-id="' + post_id + '"] > div > div.ff-item-cont > div.ff-comments-list > div.ff-square-commentbox > button', function() {
-                    //
-                    //         $(this).on('click', function(e) {
-                    //
-                    //             e.preventDefault();
-                    //
-                    //             let card = jQuery(this);
-                    //
-                    //             jQuery.ajax({
-                    //                 type : "post",
-                    //                 dataType : "json",
-                    //                 url : ff_square_ajax.ajaxurl,
-                    //                 data : {
-                    //                     action: "ffs_comment_create",
-                    //                     post_id : card.parents('li').attr('post-id'),
-                    //                     comment : card.siblings('textarea').val(),
-                    //                     name: card.siblings('input[name="name"]').val(),
-                    //                     website: card.siblings('input[name="website"]').val(),
-                    //                     email: card.siblings('input[name="email"]').val(),
-                    //                     remember: card.siblings('input[name="remember"]').val(),
-                    //                     nonce: ff_square_ajax.comment_create_nonce,
-                    //                 },
-                    //                 success: function(response) {
-                    //
-                    //                     if (response == -1) {
-                    //                         jQuery('.ff-square-commentbox').html('Er bestaat al een account met dit emailadres. Log in op het account om een bericht te plaatsen.');
-                    //                         return false;
-                    //                     }
-                    //
-                    //                     if (response == 0) {
-                    //                         jQuery('.ff-square-commentbox').html('We hebben uw een mail gestuurd. Verifieer uw email om het bericht te plaatsen.');
-                    //                         return false;
-                    //                     }
-                    //
-                    //                     let html = '<div class="ff-square-comment" comment-id="' + response.id + '">'
-                    //                     + '<span style="display:inline-block;"class="vote"><i class="fas fa-thumbs-up"></i></span>'
-                    //                     + '<span style="display:inline-block; font-weight: 600;" class="vote-holder">0</span>'
-                    //                     + '<span style="display:inline-block;" class="vote"><i class="fas fa-thumbs-down"></i></span>'
-                    //                     + '<b>' + response.name + '</b></a><span>' + response.comment + '</span>'
-                    //                     + '</div>';
-                    //                     card.parents('li').find('.ff-square-comments-list').append(html);
-                    //
-                    //
-                    //                     initVote($(card.find('.picture-item__inner').find('.vote')[0]));
-                    //                     initVote($(card.find('.picture-item__inner').find('.vote')[1]));                                }
-                    //             });
-                    //         });
-                    //     });
-                    // }
                 }
             });
         }
@@ -661,12 +592,24 @@
                         $('li[post-id="' + post_id + '"] > div > div > div > .ff-square-comments-list').append('Wees de eerste die een reactie achterlaat!');
                     }
 
+                    let votes = {}
+
+                    $(response.votes).each(function (key, item) {
+                        votes[item.item_id] = item;
+                    });
+
                     $(response.comments).each(function (key, item) {
-                        let html = '<div class="ff-square-comment" comment-id="' + item.id + '">'
+
+                        let html = '<div class="ff-square-comment" comment-id="' + item.comment_id + '">'
                         + '<span style="display:inline-block;" class="vote"><i class="fas fa-thumbs-up"> </i></span>';
 
-                        if ($(response.votes)[item.id]) {
-                            html+= '<span style="display:inline-block; font-weight: 600;" class="vote-holder"> ' + $(response.votes)[item.id].vote +' </span>'
+                        console.log(votes[item.post_id]);
+
+                        if (votes[item.post_id] != null) {
+
+                            let vote = (parseInt(votes[item.post_id].upvotes) - parseInt(votes[item.post_id].downvotes));
+                            console.log(vote);
+                            html+= '<span style="display:inline-block; font-weight: 600;" class="vote-holder"> ' + vote +' </span>'
                         } else {
                             html+= '<span style="display:inline-block; font-weight: 600;" class="vote-holder">0</span>'
                         }

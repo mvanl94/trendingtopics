@@ -418,7 +418,7 @@ class Ff_Square_Public {
         $post_id = $_REQUEST['post_id'];
 
         $comments = $wpdb->get_results(
-            "SELECT user_nicename, comment
+            "SELECT user_nicename, comment, comment_id, post_id
             FROM {$wpdb->prefix}ff_square_comments
             LEFT JOIN (SELECT id, user_nicename FROM {$wpdb->prefix}users) {$wpdb->prefix}users
             ON {$wpdb->prefix}ff_square_comments.post_owner = {$wpdb->prefix}users.id
@@ -448,7 +448,7 @@ class Ff_Square_Public {
 
         //Check if this ip address already voted on this item
         $ip_address = $this->GetIP();
-        $sql = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "ff_square_votes WHERE item_id='". $item_id. "'");
+        $sql = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "ff_square_votes WHERE item_id='". $item_id. "' AND ip_address='" . $ip_address . "'");
 
         if (count($sql) == 0) {
             $wpdb->insert($wpdb->prefix . 'ff_square_votes', [
