@@ -490,8 +490,8 @@ class Ff_Square_Public {
             wp_update_user([
                 'id' => $id,
                 'user_nicename' => $_REQUEST['name'],
-                'display_name' => $_REQUEST['name'],
-                'user_url' => $_REQUEST['website']
+                'display_name' => $_REQUEST['name']
+                // 'user_url' => $_REQUEST['website']
             ]);
 
             $name = $_REQUEST['name'];
