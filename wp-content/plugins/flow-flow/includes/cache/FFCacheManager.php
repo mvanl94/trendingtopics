@@ -168,10 +168,18 @@ class FFCacheManager implements FFCache{
 	}
 
 	protected function getGetFilters(){
+
 		$args[] = FFDB::conn()->parse('stream.stream_id = ?s', $this->stream->getId());
 		$args[] = FFDB::conn()->parse('cach.enabled = 1');
 		$args[] = FFDB::conn()->parse('cach.boosted = \'nope\'');
+
 		if ($this->stream->showOnlyMediaPosts()) $args[] = "post.image_url IS NOT NULL";
+
+        //Added
+        $args[] = "post.post_text <> ''";
+        $args[] = "post.post_header <> ''";
+        $args[] = "post.image_url <> ''";
+
 		if (isset($_REQUEST['hash']))
 			if (isset($_REQUEST['recent'])){
 				$args[] = FFDB::conn()->parse('post.creation_index > ?s', $this->decodeHash($_REQUEST['hash']));
