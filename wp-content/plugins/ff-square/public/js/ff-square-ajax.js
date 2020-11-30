@@ -564,18 +564,22 @@
                 },
                 success: function(response) {
 
+                    var cardExists = 0;
+
                     //Check if card/post already exists otherwise add
                     if ($('li[post-id="' + post_id + '"]').length == 0 ) {
                         var post = createSlide(response[0]);
                         $('.ff-slideshow-media').append(post);
                         loadComments(post_id);
+                    } else {
+                        cardExists = 1;
                     }
 
                     //Dom-element specific event
                     $('.ff-square-item-header').on('click', function() {
                         let post_id = $(this).attr('data-id');
 
-                        if ($('li[post-id="' + $(this).attr('data-id') + '"]').length > 1) {
+                        if (cardExists) {
                             $('article[post-id="' + $(this).attr('data-id') + '"]').eq(0).click();
                         } else {
                             $('li[post-id="' + $(this).attr('data-id') + '"]').addClass('ff-current').addClass('ff-show');
