@@ -64,7 +64,7 @@ class Ff_Square_Public {
             return $content;
         }
 
-        $html = '<div class="row">
+        $html = '<div class="row" style="margin:0;">
         <div class="col-md-4">
             <div class="ff-square-box latest-comments">
                 <div class="ff-square-box-header">
@@ -418,12 +418,16 @@ class Ff_Square_Public {
         $post_id = $_REQUEST['post_id'];
 
         $comments = $wpdb->get_results(
-            "SELECT user_nicename, comment, comment_id, post_id
+            "SELECT user_nicename, comment, comment_id, post_id, created_at
             FROM {$wpdb->prefix}ff_square_comments
             LEFT JOIN (SELECT id, user_nicename FROM {$wpdb->prefix}users) {$wpdb->prefix}users
             ON {$wpdb->prefix}ff_square_comments.post_owner = {$wpdb->prefix}users.id
                     WHERE post_id='" . $post_id . "'"
         , OBJECT );
+
+        foreach ($comments as $comment) {
+            $comment->created_at = date('Y-m-d H:m:s', $comment->created_at);
+        }
 
         $results['comments'] = $comments;
         $results['votes'] = $wpdb->get_results( "SELECT item_id,count(case when vote =1 then 1 else NULL end) as upvotes, count(case when vote =-1 then 1 else NULL end) as downvotes FROM {$wpdb->prefix}ff_square_votes WHERE item_id='" . $post_id . "' GROUP BY item_id", OBJECT );

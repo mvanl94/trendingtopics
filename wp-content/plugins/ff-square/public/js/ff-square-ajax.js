@@ -18,18 +18,19 @@
         var date = new Date((time || "").replace(/-/g,"/").replace(/[TZ]/g," ")),
         diff = ((d.getTime() + (d.getTimezoneOffset()*60000) - date.getTime()) / 1000),
         day_diff = Math.floor(diff / 86400);
+
         if ( isNaN(day_diff) || day_diff < 0 || day_diff >= 31 )
         return;
 
         return day_diff == 0 && (
-            diff < 60 && "just now" ||
-            diff < 120 && "1 min ago" ||
-            diff < 3600 && Math.floor( diff / 60 ) + " mins ago" ||
-            diff < 7200 && "1 hour ago" ||
-            diff < 86400 && Math.floor( diff / 3600 ) + " hours ago") ||
-            day_diff == 1 && "Yesterday" ||
-            day_diff < 7 && day_diff + " days ago" ||
-            day_diff < 31 && Math.ceil( day_diff / 7 ) + " week ago";
+            diff < 60 && "Zojuist" ||
+            diff < 120 && "1 minuut geleden" ||
+            diff < 3600 && Math.floor( diff / 60 ) + " minuten geleden" ||
+            diff < 7200 && "1 uur geleden" ||
+            diff < 86400 && Math.floor( diff / 3600 ) + " uren geleden") ||
+            day_diff == 1 && "Gisteren" ||
+            day_diff < 7 && day_diff + " dagen geleden" ||
+            day_diff < 31 && Math.ceil( day_diff / 7 ) + " weken geleden";
         }
 
 
@@ -79,7 +80,11 @@
                     card.find('.picture-item__inner').find('.comments').find('h6').html($(response.comments).length + ' reacties');
 
                     $(response.comments).each(function (key, item) {
+
                         let html = '<div class="ff-square-comment" comment-id="' + item.id + '">'
+                        + '<div class="ff-square-comment-header"><b class="ff-square-comment-username">' + item.user_nicename + '</b><span class="ff-square-comment-timestamp">' + prettyDate(item.created_at) + '</span></div>'
+                        + '<div class="ff-square-comment-body"><span class="ff-square-comment-text">' + item.comment + '</span></div>'
+                        + '<div class="ff-square-comment-footer">'
                         + '<span style="display:inline-block;" class="vote"><i class="fas fa-thumbs-up"> </i></span>';
 
                         if ($(response.votes)[item.id]) {
@@ -88,10 +93,12 @@
                             html+= '<span style="display:inline-block; font-weight: 600;" class="vote-holder">0</span>'
                         }
                         html+= '<span style="display:inline-block;" class="vote"><i class="fas fa-thumbs-down"> </i></span>'
-                        + '<b>' + item.user_nicename + '</b></a><span>' + item.comment + '</span>'
-                        + '</div>';
+                        + '</div></div>';
+
                         $('li[post-id="' + post_id + '"] > div > div > div > .ff-square-comments-list').append(html);
                     });
+
+                    $('li[post-id="' + post_id + '"] > div > div > div > .ff-square-comments-list > h4').append(' (' + $(response.comments).length + ')');
                 }
             });
         }
@@ -301,7 +308,7 @@
 
         $.initialize('.ff-slideshow-media > li', function() {
 
-            let html = '<div class="ff-square-comments-list"></div>'
+            let html = '<div class="ff-square-comments-list"><h4 class="ff-square-comments-header">Reacties</h4></div>'
             + '<div class="ff-square-commentbox">'
             + '<h3>Reageren</h3>';
 
@@ -320,6 +327,7 @@
             }
 
             $(this).find('.ff-comments-list').append(html);
+
         });
 
         loadBlock1();
@@ -378,12 +386,12 @@
                 if (jQuery(this).parents('.ff-item').length) {
 
                     var type = 'item';
-                    var item_id = jQuery(this).parents('.ff-item').attr('post-id');
+                    var item_id = jQuery(this).parent().parents('.ff-item').attr('post-id');
                     var vote = ($(this).parent().index() == 0 ? 1 : -1);
 
                 } else {
                     var type = 'comment';
-                    var item_id = $(this).parents('.ff-square-comment').attr('comment-id');
+                    var item_id = $(this).parent().parents('.ff-square-comment').attr('comment-id');
                     var vote = ($(this).index() == 0 ? 1 : -1);
                 }
 
@@ -459,12 +467,15 @@
                             return false;
                         }
 
+                        //HIER
                         let html = '<div class="ff-square-comment" comment-id="' + response.id + '">'
-                        + '<span style="display:inline-block;"class="vote"><i class="fas fa-thumbs-up"></i></span>'
+                        + '<div class="ff-square-comment-header"><b class="ff-square-comment-username">' + response.name + '</b><span class="ff-square-comment-timestamp">' + prettyDate(response.created_at) + '</span></div>'
+                        + '<div class="ff-square-comment-body"><span class="ff-square-comment-text">' + response.comment + '</span></div>'
+                        + '<div class="ff-square-comment-footer">'
+                        + '<span style="display:inline-block;" class="vote"><i class="fas fa-thumbs-up"> </i></span>'
                         + '<span style="display:inline-block; font-weight: 600;" class="vote-holder">0</span>'
                         + '<span style="display:inline-block;" class="vote"><i class="fas fa-thumbs-down"></i></span>'
-                        + '<b>' + response.name + '</b></a><span>' + response.comment + '</span>'
-                        + '</div>';
+                        + '</div></div>';
 
                         button.parents('li').find('.ff-square-comments-list').append(html);
                     }
@@ -513,7 +524,7 @@
             + '<span class="flaticon-share2"></span>'
             + '</div>'
             + '</div>'
-            + '<div class="ff-comments-list"><div class="ff-comments-list-inner"><div class="ff-slide-loader"><span>Loading...</span></div></div></div>';
+            + '<div class="ff-comments-list"><h4 class="ff-square-comments-header">Reacties</h4><div class="ff-comments-list-inner"><div class="ff-slide-loader"><span>Loading...</span></div></div></div>';
             + '</div>'
             + '<div class="square-box"></div>'
             + '</div>'
@@ -599,24 +610,26 @@
                     $(response.comments).each(function (key, item) {
 
                         let html = '<div class="ff-square-comment" comment-id="' + item.comment_id + '">'
+                        + '<div class="ff-square-comment-header"><b class="ff-square-comment-username">' + item.user_nicename + '</b><span class="ff-square-comment-timestamp">' + prettyDate(item.created_at) + '</span></div>'
+                        + '<div class="ff-square-comment-body"><span class="ff-square-comment-text">' + item.comment + '</span></div>'
+                        + '<div class="ff-square-comment-footer">'
                         + '<span style="display:inline-block;" class="vote"><i class="fas fa-thumbs-up"> </i></span>';
-
-                        console.log(votes[item.post_id]);
 
                         if (votes[item.post_id] != null) {
 
                             let vote = (parseInt(votes[item.post_id].upvotes) - parseInt(votes[item.post_id].downvotes));
-                            console.log(vote);
                             html+= '<span style="display:inline-block; font-weight: 600;" class="vote-holder"> ' + vote +' </span>'
                         } else {
                             html+= '<span style="display:inline-block; font-weight: 600;" class="vote-holder">0</span>'
                         }
                         html+= '<span style="display:inline-block;" class="vote"><i class="fas fa-thumbs-down"> </i></span>'
-                        + '<b>' + item.user_nicename + '</b></a><span>' + item.comment + '</span>'
-                        + '</div>';
+                        + '</a>'
+                        + '</div></div>';
 
                         $('li[post-id="' + post_id + '"] > div > div > div > .ff-square-comments-list').append(html);
                     });
+
+                    $('li[post-id="' + post_id + '"] > div > div > div > .ff-square-comments-list > h4').append(' (' + $(response.comments).length + ')');
                 }
             });
         }
