@@ -430,7 +430,7 @@ class Ff_Square_Public {
         }
 
         $results['comments'] = $comments;
-        $results['votes'] = $wpdb->get_results( "SELECT item_id,count(case when vote =1 then 1 else NULL end) as upvotes, count(case when vote =-1 then 1 else NULL end) as downvotes FROM {$wpdb->prefix}ff_square_votes WHERE item_id='" . $post_id . "' GROUP BY item_id", OBJECT );
+        $results['votes'] = $wpdb->get_results( "SELECT item_id, SUM(vote) as vote FROM {$wpdb->prefix}ff_square_votes WHERE item_id='" . $post_id . "' GROUP BY item_id", OBJECT );
 
         echo json_encode($results);
 
