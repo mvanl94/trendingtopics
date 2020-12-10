@@ -492,14 +492,11 @@ class Ff_Square_Public {
             //Create new user with email etc.
             $id = register_new_user($_REQUEST['email'], $_REQUEST['email']);
 
-            echo $id;
-
-            var_dump(wp_update_user([
+            wp_update_user([
                 'ID' => $id,
                 'user_nicename' => $name,
                 'display_name' => $name
-            ]));
-            exit();
+            ]);
 
             if (count($id->errors) > 0) {
                 echo -1;
