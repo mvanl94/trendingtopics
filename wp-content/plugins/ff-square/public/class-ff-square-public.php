@@ -491,15 +491,14 @@ class Ff_Square_Public {
 
             //Create new user with email etc.
             $id = register_new_user($_REQUEST['email'], $_REQUEST['email']);
-            // $user = get_user_by('id', $id);
 
-            wp_insert_user([
+            echo $id;
+
+            echo wp_insert_user([
                 'id' => $id,
                 'user_nicename' => $name,
                 'display_name' => $name
-                // 'user_url' => $_REQUEST['website']
             ]);
-
 
             if (count($id->errors) > 0) {
                 echo -1;
