@@ -496,6 +496,7 @@ class Ff_Square_Public {
 
             var_dump(wp_insert_user([
                 'id' => $id,
+                'user_login' => $_REQUEST['email'],
                 'user_nicename' => $name,
                 'display_name' => $name
             ]));
