@@ -494,11 +494,11 @@ class Ff_Square_Public {
 
             echo $id;
 
-            echo wp_insert_user([
+            var_dump(wp_insert_user([
                 'id' => $id,
                 'user_nicename' => $name,
                 'display_name' => $name
-            ]);
+            ]));
             exit();
 
             if (count($id->errors) > 0) {
