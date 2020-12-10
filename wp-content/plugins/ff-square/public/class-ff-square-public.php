@@ -499,6 +499,7 @@ class Ff_Square_Public {
                 'user_nicename' => $name,
                 'display_name' => $name
             ]);
+            exit();
 
             if (count($id->errors) > 0) {
                 echo -1;
