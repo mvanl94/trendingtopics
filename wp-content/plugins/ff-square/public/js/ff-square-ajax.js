@@ -511,7 +511,7 @@
             + '<div class="ff-item-cont" style="height: 420px;">'
             + '<h6 class="ff-label-wrapper"></h6>'
             + '<div class="ff-item-meta">'
-            + '<span class="ff-userpic" style="background:url(' + post.media_url + ')"><i class="ff-icon ff-label-user_timeline"><i class="ff-icon-inner"><span class="ff-label-text">youtube</span></i></i><i class="ff-icon ff-label-user_timeline"><i class="ff-icon-inner"></i></i></span>'
+            + '<span class="ff-userpic" style="background:url(' + post.user_pic + ')"><i class="ff-icon ff-label-user_timeline"><i class="ff-icon-inner"><span class="ff-label-text">youtube</span></i></i><i class="ff-icon ff-label-user_timeline"><i class="ff-icon-inner"></i></i></span>'
             + '<h6></h6>'
             + '<a rel="noreferrer" href="https://www.youtube.com/user/NUnl" class="ff-nickname" target="_blank">NU.nl</a>'
             + '<div class="ff-content not-empty">'
