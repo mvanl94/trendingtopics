@@ -258,6 +258,7 @@ display: none;
 }
 .ff-square-commentbox textarea,input {
     color: black !important;
+    /* asd */
 }
 .ff-share-wrapper {
     position: absolute !important;
