@@ -2,8 +2,40 @@
 * All of the CSS for your public-facing functionality should be
 * included in this file.
 */
-body {
-    width:13px !important;
+.ff-slideshow span.ff-nav-close {
+    right: unset !important;
+    left: 0;
+}
+.ff-img-holder {
+    width: 100% !important;
+}
+.ff-slide-wrapper .ff-img-holder img {
+    width: 100% !important;
+}
+.ff-slideshow li.ff-show {
+    max-width:100% !important;
+    width:100% !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+}
+.ff-slideshow .ff-item-cont {
+    width: 100% !important;
+    height: 100vh !important;
+    overflow-y: scroll;
+}
+.ff-media-wrapper  {
+    width: 60%;
+    max-width:60% !important;
+    height: 100vh !important;
+}
+.ff-slide-wrapper {
+    max-height: 100vh !important;
+    height: 100vh !important;
+
+}
+.ff-item-cont {
+    max-height: 100vh !important;
+    height: 100vh !important;
 }
 .mg-breadcrumb-section {
     display:none !important;
