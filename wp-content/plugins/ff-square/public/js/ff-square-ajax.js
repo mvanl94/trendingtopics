@@ -536,7 +536,7 @@
             + '<span class="flaticon-share2"></span>'
             + '</div>'
             + '</div>'
-            + '<div class="ff-comments-list"><h4 class="ff-square-comments-header">Reacties</h4><div class="ff-comments-list-inner"><div class="ff-slide-loader"><span>Loading...</span></div></div></div>';
+            + '<div class="ff-comments-list"><div class="ff-comments-list-inner"><div class="ff-slide-loader"><span>Loading...</span></div></div></div>';
             + '</div>'
             + '<div class="square-box"></div>'
             + '</div>'
@@ -610,7 +610,7 @@
                     let vote = ($(response.votes).length > 0 ? '+ ' + $(response.votes).length : $(response.votes).length);
 
                     if ($(response.comments).length == 0) {
-                        $('li[post-id="' + post_id + '"] > div > div > div > .ff-square-comments-list').append('Wees de eerste die een reactie achterlaat!');
+                        $('li[post-id="' + post_id + '"] > div > div > div > .ff-square-comments-list').append('<p class="ff-square-comments-header">Wees de eerste die een reactie achterlaat!</p>');
                     }
 
                     let votes = {}
