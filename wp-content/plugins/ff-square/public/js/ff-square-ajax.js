@@ -150,16 +150,18 @@
 
                     $(JSON.parse(response.comments)).each(function (key, item) {
 
-                        let html = '<div class="ff-square-box-item">'
-                        + '<p class="ff-square-box-item-post"><a class="ff-square-item-header" href="#" data-id="' + item.post_id + '">' + posts[item.post_id].post_header.substring(0, 90).replace(/\\/g,'') + '...</a></span>'
-                        + '<div><p class="ff-square-box-item-comment" data-item-id="' + item.comment.id + '">' + item.comment.substring(0, 110) + '...<span class="ff-square-box-item-time">' + prettyDate(item.created_at) + '</span></p></div>'
-                        + '</div>';
+                        if (posts[item.post_id] != null) {
+                            let html = '<div class="ff-square-box-item">'
+                            + '<p class="ff-square-box-item-post"><a class="ff-square-item-header" href="#" data-id="' + item.post_id + '">' + posts[item.post_id].post_header.substring(0, 90).replace(/\\/g,'') + '...</a></span>'
+                            + '<div><p class="ff-square-box-item-comment" data-item-id="' + item.comment.id + '">' + item.comment.substring(0, 110) + '...<span class="ff-square-box-item-time">' + prettyDate(item.created_at) + '</span></p></div>'
+                            + '</div>';
 
-                        block[item.post_id] = html;
+                            block[item.post_id] = html;
 
-                        $('.ff-square-box-items').eq(0).append(html);
+                            $('.ff-square-box-items').eq(0).append(html);
 
-                        list.push(item.post_id);
+                            list.push(item.post_id);
+                        }
                     });
 
                     list = $.unique(list);
