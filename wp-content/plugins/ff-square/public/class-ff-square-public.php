@@ -195,28 +195,9 @@ class Ff_Square_Public {
         wp_register_style( 'ffs-fontawesome', 'https://use.fontawesome.com/releases/v5.15.1/css/all.css' );
         wp_enqueue_style( 'ffs-fontawesome' );
 
-        add_filter('login_redirect', 'redirect_previous_page', 10, 1);
-
 
 
 	}
-
-    function redirect_previous_page( $redirect_to ){
-        global $user;
-
-        $request = $_SERVER["HTTP_REFERER"];
-
-        if ( in_array( $user->roles[0], array( 'administrator') ) ) {
-
-            return admin_url();
-
-        } elseif ( in_array( $user->roles[0], array( 'subscriber') ) ) {
-
-            return $request;
-        }
-
-        return $redirect_to;
-    }
 
 	/**
 	 * Register the JavaScript for the public-facing side of the site.
