@@ -324,7 +324,9 @@
 
             let html = '<div class="ff-square-comments-list"><h4 class="ff-square-comments-header">Reacties</h4></div>'
             + '<div class="ff-square-commentbox">'
-            + '<h3>Reageren</h3>';
+            + '<h3>Reageren</h3>'
+            + '<p><a href="/wp-login.php">Login</a> of maak een account aan om te reageren.</p>';
+
 
             if (ff_square_ajax.loggedin) {
                 html+= '<textarea class="ff-square-commentbox-textarea" placeholder="Reactie..." required/>'
@@ -333,7 +335,6 @@
             } else {
                 html+= '<p>Uw e-mailadres wordt niet gepubliceerd</p>'
                 + '<textarea class="ff-square-commentbox-textarea" placeholder="Reactie..." required/>'
-                + '<p>Registreer om uw reactie te plaatsen of klik <a href="/wp-login.php">hier</a>om in te loggen</p>'
                 + '<input type="text" name="name" placeholder="Naam" required/>'
                 + '<input type="email" name="email" placeholder="Email" required/>'
                 + '<button class="ff-square-commentbox-button">Reactie plaatsen</button>'
