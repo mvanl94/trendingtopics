@@ -21,6 +21,7 @@
 .ff-slideshow .ff-item-cont {
     width: 100% !important;
     height: 100vh !important;
+    max-height: 100vh !important;
     overflow-y: scroll;
 }
 .ff-media-wrapper  {
@@ -33,10 +34,7 @@
     height: 100vh !important;
 
 }
-.ff-item-cont {
-    max-height: 100vh !important;
-    height: 100vh !important;
-}
+
 .mg-breadcrumb-section {
     display:none !important;
 }
