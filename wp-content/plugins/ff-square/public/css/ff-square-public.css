@@ -181,15 +181,8 @@ box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
     overflow-y: scroll;
     background: rgb(255,255,255);
     height: 240px;
-
-/* Hide scrollbar for IE, Edge and Firefox */
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-
 }
-.ff-square-box-items::-webkit-scrollbar {
-display: none;
-}
+
 .ff-square-box-item:nth-child(even) {
     background-color: #f6f6f6c4;
 }
