@@ -18,6 +18,10 @@
 .ff-nav-prev {
     display: none !important;
 }
+.ff-square-fastack {
+    line-height: 1.7em!important;
+}
+
 .ff-nav-next {
     display: none !important;
 }
