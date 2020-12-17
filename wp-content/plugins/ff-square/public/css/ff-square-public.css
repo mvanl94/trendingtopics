@@ -107,6 +107,15 @@ box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 768px) {
 
+    .ff-item-cont {
+        overflow: visible !important;
+    }
+    .ff-slide-wrapper {
+        overflow-y: scroll !important;
+    }
+    .ff-slideshow-media {
+        overflow-y: visible !important;
+    }
     .ff-square-box-items {
         padding-bottom: 26px;
     }
