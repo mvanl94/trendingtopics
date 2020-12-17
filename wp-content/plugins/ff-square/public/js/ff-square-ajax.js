@@ -521,7 +521,7 @@
             + '<a rel="noreferrer" href="https://www.youtube.com/user/NUnl" class="ff-nickname" target="_blank">NU.nl</a>'
             + '<div class="ff-content not-empty">'
             + '<h4><a rel="noreferrer" href="' + post.post_permalink + '" target="_blank">' + post.post_header.replace(/\\/g, '') + '</a></h4>'
-            + post.post_text
+            + post.post_text.replace(/\\/g, '')
             + '</div>'
             + '<div class="ff-item-bar" style="text-align:center; ">'
             + '<div class="ff-square-bar-item comments">'
