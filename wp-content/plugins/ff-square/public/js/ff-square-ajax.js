@@ -161,6 +161,8 @@
                             $('.ff-square-box-items').eq(0).append(html);
 
                             list.push(item.post_id);
+                        } else {
+                            console.log(item.post_id, posts[item.post_id].post_header, posts[item.post_id]);
                         }
                     });
 
