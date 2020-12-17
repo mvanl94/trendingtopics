@@ -313,7 +313,7 @@ box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
 }
 .ff-square-commentbox textarea,input {
     color: black !important;
-    /* asd */
+    max-width: 400px;
 }
 .ff-share-wrapper {
     position: absolute !important;
@@ -331,6 +331,9 @@ box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
 }
 .like-button-holder {
     background-color:#3c3c3c;
+}
+.ff-square-commentbox-button {
+    display:block;
 }
 .like-button-holder:hover {
     cursor: default;
