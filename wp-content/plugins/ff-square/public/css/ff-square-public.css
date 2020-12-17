@@ -21,7 +21,10 @@
 .ff-square-fastack {
     line-height: 1.7em!important;
 }
-
+a:focus {
+    outline: 0 !important;
+    text-decoration: none !important;
+}
 .ff-nav-next {
     display: none !important;
 }
