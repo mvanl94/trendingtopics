@@ -143,7 +143,7 @@ box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
         font-size: 12px;
         height: 30px;
         display: inline-block;
-        background: #4984ff;
+        background: #363636;
         margin-right: 5px;
         border-radius: 3px;
         color: #fff;
@@ -175,6 +175,7 @@ box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
     overflow:hidden;
     font-size: 15px;
     margin-left: 5px;
+    color: #363636 !important;
 }
 .ff-square-box-items {
     overflow-y: scroll;
@@ -251,7 +252,7 @@ display: none;
     /* display:flex; */
     /* justify-content: space-between; */
     line-height: 30px;
-    background: #4984ff;
+    background: #363636;
     padding: 10px;
     display: block;
     border-radius: 3px 3px 0 0;
@@ -330,7 +331,24 @@ display: none;
     display: inline-block;
 }
 .ff-square-bar-item i {
-    font-size: 20px;
+    font-size: 24px;
+}
+.like-button-right:hover {
+    background-color: #4a4a4a;
+}
+.like-button-holder {
+    background-color:#3c3c3c;
+}
+.like-button-holder:hover {
+    cursor: default;
+}
+.like-button {
+    padding-top:10px;
+    padding-bottom:10px;
+    height:inherit;
+}
+.like-button-left:hover {
+    background-color: #4a4a4a;
 }
 .fa-minus-square {
     font-weight: 100;
@@ -381,7 +399,7 @@ h6.ff-item-bar {
     color: #fff;
 }
 .ff-item-bar:first-of-type {
-    background-color: #4984ff;
+    background-color: #363636;
 }
 .ff-slideshow .ff-comments-list {
     display: block !important;

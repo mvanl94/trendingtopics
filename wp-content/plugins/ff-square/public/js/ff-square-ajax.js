@@ -375,10 +375,10 @@
 
         $.initialize('.ff-item', function() {
 
-            let html = '<div class="square-box"><div class="ff-item-bar row" style="text-align:center; ">'
-            + '<div class="col-4"><div class="ff-square-bar-item vote"><h6><i class="fas fa-thumbs-up"></i></h6></div></div>'
-            + '<div class="col-4"><div class="ff-square-bar-item vote-holder"><h6></h6></div></div>'
-            + '<div class="col-4"><div class="ff-square-bar-item vote"><h6><i class="fas fa-thumbs-down"></i></h6></div></div></div>'
+            let html = '<div class="square-box"><div class="ff-item-bar row" style="text-align:center; border-top:0px; padding:0px;">'
+            + '<div class="col-4 like-button like-button-left"><div class="ff-square-bar-item vote"><h6><i class="fas fa-thumbs-up"></i></h6></div></div>'
+            + '<div class="col-4 like-button like-button-holder"><div class="ff-square-bar-item vote-holder"><h6></h6></div></div>'
+            + '<div class="col-4 like-button like-button-right"><div class="ff-square-bar-item vote"><h6><i class="fas fa-thumbs-down"></i></h6></div></div></div>'
             + '<div class="ff-item-bar" style="text-align:center; ">'
             + '<div class="ff-square-bar-item comments"><h6></h6></div>'
             + '<div class="ff-share-wrapper"><i class="ff-icon-share"></i><div class="ff-share-popup"><a href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.instagram.com%2Fp%2FCG11rWbgOzp%2F" class="ff-fb-share" target="_blank" rel="noreferrer">Facebook</a><a href="https://twitter.com/share?url=https%3A%2F%2Fwww.instagram.com%2Fp%2FCG11rWbgOzp%2F" class="ff-tw-share" target="_blank" rel="noreferrer">Twitter</a><a href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fwww.instagram.com%2Fp%2FCG11rWbgOzp%2F&amp;media=https%3A%2F%2Fscontent-muc2-1.cdninstagram.com%2Fv%2Ft51.29350-15%2F122586207_266242274816010_6979763166844425091_n.jpg%3F_nc_cat%3D107%26ccb%3D2%26_nc_sid%3D8ae9d6%26_nc_ohc%3DBIkLmwUUaU4AX_-3mve%26_nc_ht%3Dscontent-muc2-1.cdninstagram.com%26oh%3D1f3e0d8d9b0dd6e71540fc38f11438e8%26oe%3D5FBDC27A" class="ff-pin-share" target="_blank" rel="noreferrer">Pinterest</a><a href="https://www.linkedin.com/cws/share?url=https%3A%2F%2Fwww.instagram.com%2Fp%2FCG11rWbgOzp%2F" class="ff-li-share" target="_blank" rel="noreferrer">Linkedin</a><a href="mailto:?subject=&amp;body=https%3A%2F%2Fwww.instagram.com%2Fp%2FCG11rWbgOzp%2F" class="ff-email-share">Email</a></div></div>'
