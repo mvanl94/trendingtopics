@@ -264,7 +264,7 @@ box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
     border-radius: 3px;
 }
 .ff-square-box-header select:hover {
-    background: #2d6ff7;
+    background: #D5D3DA;
     color: white;
     font-weight: 700;
     cursor:pointer;
