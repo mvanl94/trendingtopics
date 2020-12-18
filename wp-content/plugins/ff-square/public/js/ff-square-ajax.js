@@ -324,7 +324,12 @@
             });
         }
 
-        $.initialize('.ff-slideshow-media > li', function() {
+        //
+        $('.ff-slideshow').initialize(function() {
+            $(this).append('<ul class="ff-square-slideshow-media"></ul>');
+        });
+
+        $.initialize('.ff-slideshow > ul > li', function() {
 
             let html = '<div class="ff-square-comments-list"><h4 class="ff-square-comments-header">Reacties</h4></div>'
             + '<div class="ff-square-commentbox">'
@@ -337,10 +342,10 @@
                 + '</div>';
             } else {
                 html+= '<p><a href="/wp-login.php">Login</a> of maak een account aan om te reageren.</p>'
-                + '<p>Uw e-mailadres wordt niet gepubliceerd</p>'
                 + '<textarea class="ff-square-commentbox-textarea" placeholder="Reactie..." required/>'
                 + '<input type="text" name="name" placeholder="Naam" required/>'
                 + '<input type="email" name="email" placeholder="Email" required/>'
+                + '<p>Uw e-mailadres wordt niet gepubliceerd</p>'
                 + '<button class="ff-square-commentbox-button">Reactie plaatsen</button>'
                 + '</div>';
             }
@@ -348,6 +353,7 @@
             $(this).find('.ff-comments-list').append(html);
 
         });
+
 
         loadBlock1();
 
@@ -567,7 +573,7 @@
                     //Check if card/post already exists otherwise add
                     if ($('li[post-id="' + post_id + '"]').length == 0 ) {
                         var post = createSlide(response[0]);
-                        $('.ff-slideshow-media').append(post);
+                        $('.ff-square-slideshow-media').append(post);
                         loadComments(post_id);
                     } else {
                         cardExists = 1;
