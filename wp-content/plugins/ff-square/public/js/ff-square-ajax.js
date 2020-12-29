@@ -15,9 +15,12 @@
     function prettyDate(time){
 
         let d = new Date();
-        var date = new Date((time || "").replace(/-/g,"/").replace(/[TZ]/g," ")),
+        // d.toLocaleString('nl-NL', { timeZone: 'Europe/Amsterdam' });
+        var date = new Date((time || "").toLocaleString('nl-NL', { timeZone: 'Europe/Amsterdam' }).replace(/-/g,"/").replace(/[TZ]/g," ")),
         diff = ((d.getTime() + (d.getTimezoneOffset()*60000) - date.getTime()) / 1000),
         day_diff = Math.floor(diff / 86400);
+
+        console.log(diff, day_diff, date);
 
         if ( isNaN(day_diff) || day_diff < 0 || day_diff >= 31 )
         return;
@@ -27,7 +30,7 @@
             diff < 120 && "1 minuut geleden" ||
             diff < 3600 && Math.floor( diff / 60 ) + " minuten geleden" ||
             diff < 7200 && "1 uur geleden" ||
-            diff < 86400 && Math.floor( diff / 3600 ) + " uren geleden") ||
+            diff < 86400 && Math.floor( diff / 3600 ) + " uur geleden") ||
             day_diff == 1 && "Gisteren" ||
             day_diff < 7 && day_diff + " dagen geleden" ||
             day_diff < 31 && Math.ceil( day_diff / 7 ) + " weken geleden";
@@ -97,7 +100,7 @@
                         // card.find('.picture-item__inner').find('.vote-holder').eq(1).find('h6').html(0);
                     }
 
-                    card.find('.picture-item__inner').find('.comments').find('h6').html($(response.comments).length + ' reacties');
+                    card.find('.picture-item__inner').find('.comments').find('h6').html($(response.comments).length + ((($(response.comments).length > 1) || ($(response.comments).length == 0)) ? ' reacties' : ' reactie'));
 
                     $(response.comments).each(function (key, item) {
 

@@ -420,7 +420,7 @@ class Ff_Square_Public {
         , OBJECT );
 
         foreach ($comments as $comment) {
-            $comment->created_at = date('Y-m-d H:m:s', $comment->created_at);
+            $comment->created_at = date('Y-m-d H:i:s', $comment->created_at);
         }
 
         $results['comments'] = $comments;
@@ -468,6 +468,7 @@ class Ff_Square_Public {
     function ffs_comment_create() {
 
         global $wpdb;
+				date_default_timezone_set('Europe/London');
 
         if (!wp_verify_nonce($_REQUEST['nonce'], "ffs_comment_create_nonce")) {
             exit("Fout");
@@ -517,7 +518,7 @@ class Ff_Square_Public {
                 'comment' => $comment,
                 'post_id' => $post_id,
                 'name' => $name,
-								'created_at' => strval(time())
+								'created_at' => date('Y-m-d H:i:s', time())
             ]);
         } else {
             echo 0;

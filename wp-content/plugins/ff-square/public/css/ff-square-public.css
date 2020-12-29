@@ -32,8 +32,15 @@
 /* Mobile */
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 768px) {
+  .wrapper {
+    overflow-x: hidden;
+  }
   .ff-item {
     min-width: 100% !important;
+  }
+  .ff-square-bar-item i {
+    font-size: 18px;
+    line-height: 24px;
   }
   .ff-stream-wrapper {
     /* margin-left: 0px !important; */
