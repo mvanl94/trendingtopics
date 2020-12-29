@@ -2,6 +2,209 @@
 * All of the CSS for your public-facing functionality should be
 * included in this file.
 */
+
+/* Nieuwe layout */
+
+/* Voor specifiek deskotp */
+@media only screen and (min-width: 768px) {
+
+  .ff-item {
+    min-width: calc(33% - 10px) !important;
+  }
+  .ff-stream-wrapper {
+    margin-left: 20px !important;
+  }
+  .ff-square-box-wrapper {
+    margin:0;
+    padding-left: 20px;
+  }
+  .ff-square-box {
+    width: calc(33% - 10px) !important;
+
+  }
+  .ff-initial-image {
+    max-width: 120px;
+  }
+}
+
+/* einde desktop */
+
+/* Mobile */
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 768px) {
+  .ff-item {
+    min-width: 100% !important;
+  }
+  .ff-stream-wrapper {
+    /* margin-left: 0px !important; */
+  }
+  .ff-square-box-wrapper {
+    margin-right: 15px;
+    padding: 20px;
+    padding-bottom: 0px !important;
+  }
+  .ff-square-box-header {
+    background: #fff;
+  }
+  .ff-square-box-header .btn {
+    margin-right: 15px;
+    background: #fff !important;
+    color: black !important;
+  }
+  .ff-square-box-header-mobile {
+    background: #fff !important;
+  }
+  .ff-square-box {
+    width: 100%;
+  }
+  .ff-stream {
+    padding-top: 0 !important;
+    background: #fff !important;
+  }
+  .ff-img-holder {
+    border-radius: 0px !important;
+  }
+  .picture-item__inner {
+    border-radius: 0px !important;
+    box-shadow: none !important;
+    /* height: 230px !important; */
+  }
+  .mg-card-box {
+    padding-right: 0px !important;
+  }
+  .padding-20 {
+    padding: 0 !important;
+    padding-left: 15px !important;
+  }
+}
+
+/* end mobile */
+.ff-stream-wrapper {
+  margin-top:0 !important;
+}
+.ff-stream .ff-header {
+  display:none;
+}
+.ff-stream .ff-img-holder {
+  max-width: 25% !important;
+  float:left;
+  display: inline-block;
+  /* max-height: 250px !important; */
+  /* height: auto; */
+  background: #fff;
+  padding:10px;
+  border-radius: 5px !important;
+  background: #fff !important;
+}
+.ff-stream .ff-initial-image {
+  height: 60px;
+  width: 100%;
+  max-height: 60px;
+}
+.ff-img-holder {
+  /* border-radius: 5px !important; */
+}
+.ff-stream .ff-initial-image {
+  border-radius: 3px !important;
+}
+.ff-stream .picture-item__inner {
+  border-radius: 5px !important;
+  /* height: 230px !important; */
+}
+.ff-stream .ff-item h4 {
+  display: inline-block;
+  max-width: 75% !important;
+  float:left;
+  margin: 0!important;
+  padding: 10px !important;
+  max-height: 55px !important;
+  overflow: hidden;
+}
+.ff-stream .ff-content {
+  display:none;
+  margin: 0!important;
+  max-width: 75% !important;
+  padding: 10px !important;
+  padding-top: 0 !important;
+  overflow: hidden;
+  white-space: nowrap;
+  max-height: 40px !important;
+  padding-bottom: 0 !important;
+}
+
+.ff-stream .ff-item-meta {
+  margin: 0 !important;
+    width: 300px !important;
+    float: left !important;
+    text-align: left !important;
+    position: absolute !important;
+left: 25% !important;
+bottom: 0 !important;
+}
+.reaction-bar {
+  /* padding: 20px 0 0 0 !important; */
+}
+.vote-bar {
+  top: 10px;
+
+  position: relative;
+    width: 50%;
+    float:left !important;
+
+}
+.ff-square-bar-item i {
+  font-size: 20px;
+}
+.ff-item-bar:first-of-type {
+  background: none !important;
+}
+.like-button-holder {
+  background: none !important;
+}
+.vote-holder h6 {
+  color: black !important;
+}
+.ff-item-bar {
+  border-top: none !important;
+    width: 49%;
+    position: relative;
+    top: 10px;
+    margin-right: 0px !important;
+    display: inline-block;
+}
+.ff-stream .ff-item-meta .ff-nickname {
+  padding-left:10px !important;
+}
+.comments h6 {
+  font-size:16px !important;
+}
+.ff-item-meta h6 {
+  display: none;
+}
+.ff-stream .ff-userpic {
+  display:none !important;
+}
+.ff-share-wrapper {
+  display: none;
+}
+.ff-stream .square-box {
+  display:block;
+  position:relative;
+  padding: 10px;
+    height: 100%;
+    padding-bottom: 20px;
+}
+/* Einde */
+.wrapper {
+  background: #f1f1f1 !important;
+}
+.mg-card-box {
+  box-shadow: none !important;
+  background: #f1f1f1 !important;
+}
+.ff-stream {
+  background: #f1f1f1 !important;
+}
 .ff-slideshow span.ff-nav-close {
     right: unset !important;
     left: 0;
@@ -74,11 +277,6 @@ a:focus {
     color: blue;
 }
 
-.ff-square-box {
-    -webkit-box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.05);
--moz-box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.05);
-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
-}
 .ff-square-item-vote-up {
     background: #70ec70;
 }
@@ -181,6 +379,7 @@ box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
     overflow-y: scroll;
     background: rgb(255,255,255);
     height: 240px;
+    border-radius: 3px;
 }
 
 .ff-square-box-item:nth-child(even) {
@@ -236,22 +435,31 @@ box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
 
 .ff-square-box {
     border-radius: 5px;
-    border: 1px solid #f3f3f3;
+    /* border: 1px solid #f3f3f3; */
     max-height: 300px;
     overflow: hidden;
-
+    display: inline-block;
+    margin-right:5px;
 }
+
+/* .ff-square-box {
+    -webkit-box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.05);
+-moz-box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.05);
+box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
+} */
 .ff-square-box-header {
     /* display:flex; */
     /* justify-content: space-between; */
     line-height: 30px;
-    background: #363636;
-    padding: 10px;
+    /* background: #363636; */
+    padding: 10px 0px 10px 10px;
     display: block;
     border-radius: 3px 3px 0 0;
     color :white;
 }
-
+.ff-square-box-header select:first-of-type {
+  margin-right:0px !important;
+}
 .ff-square-box-header select {
     float:right;
     border: none !important;
@@ -259,7 +467,7 @@ box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
     font-size: 12px;
     height:30px;
     display: inline-block;
-    background: #f4f4f4;
+    background: #fff;
     margin-right: 5px;
     border-radius: 3px;
 }
@@ -273,7 +481,7 @@ box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
     line-height: 30px;
     margin-bottom: 0;
     display: inline-block;
-    color: white;
+    color: black;
 }
 
 .ff-square-item-vote-span-placeholder {
@@ -319,6 +527,7 @@ box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
     overflow-y: hidden;
     position: fixed;
     top: 0;
+    z-index: -1;
     left: 0;
 }
 .ff-square-commentbox textarea,input {
@@ -339,8 +548,9 @@ box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
     font-size: 24px;
 }
 .like-button-right:hover {
-    background-color: #4a4a4a;
-}
+  background-color: #f5f5f5;
+      border-radius: 3px;
+    }
 .like-button-holder {
     background-color:#3c3c3c;
 }
@@ -356,9 +566,11 @@ box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
     padding-top:10px;
     padding-bottom:10px;
     height:inherit;
+    background-color: #f3f3f3;
+    border-radius: 3px;
 }
 .like-button-left:hover {
-    background-color: #4a4a4a;
+  background-color: #f5f5f5;
 }
 .fa-minus-square {
     font-weight: 100;

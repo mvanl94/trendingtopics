@@ -33,7 +33,6 @@
             day_diff < 31 && Math.ceil( day_diff / 7 ) + " weken geleden";
         }
 
-
         var observer = new MutationObserver(function(mutations) {
             mutations.forEach(function(mutation) {
                 if (mutation.attributeName === "class") {
@@ -41,6 +40,15 @@
                     if (attributeValue.indexOf(' in') > -1) {
                         initCard($(mutation.target));
                     }
+                }
+                if (mutation.attributeName === "style") {
+                    var attributeValue = $(mutation.target).prop(mutation.attributeName);
+                    // $(mutation.target).css('min-height', '100px');
+                    // $(mutation.target).css('transform', '100px');
+                    // console.log(attributeValue, mutation.target, $(mutation.target).index(), attributeValue.transform);
+                    // $(mutation.target).css('transform').replace('')
+                    // $(mutation.target).css({"transform": "translate3d(0px, " + -15 + "px, 0px)"});
+
                 }
             });
         });
@@ -332,21 +340,21 @@
         $.initialize('.ff-slideshow > ul > li', function() {
 
             let html = '<div class="ff-square-comments-list"><h4 class="ff-square-comments-header">Reacties</h4></div>'
-            + '<div class="ff-square-commentbox">'
-            + '<h3>Reageren</h3>';
+            + '<div class="ff-square-commentbox row">'
+            + '<div class="col-md-12"><h3>Reageren</h3></div>';
 
 
             if (ff_square_ajax.loggedin) {
-                html+= '<textarea class="ff-square-commentbox-textarea" placeholder="Reactie..." required/>'
-                + '<button class="ff-square-commentbox-button">Reactie plaatsen</button>'
+                html+= '<div class="col-md-12"><textarea class="ff-square-commentbox-textarea" placeholder="Reactie..." required/></div>'
+                + '<div class="col-md-12"><button class="ff-square-commentbox-button">Reactie plaatsen</button></div>'
                 + '</div>';
             } else {
-                html+= '<p><a href="/wp-login.php">Login</a> of maak een account aan om te reageren.</p>'
-                + '<textarea class="ff-square-commentbox-textarea" placeholder="Reactie..." required/>'
-                + '<input type="text" name="name" placeholder="Naam" required/>'
-                + '<input type="email" name="email" placeholder="Email" required/>'
-                + '<p>Uw e-mailadres wordt niet gepubliceerd</p>'
-                + '<button class="ff-square-commentbox-button">Reactie plaatsen</button>'
+                html+= '<div class="col-md-12"><p><a href="/wp-login.php">Login</a> of maak een account aan om te reageren.</p></div>'
+                + '<div class="col-md-12"><textarea class="ff-square-commentbox-textarea" placeholder="Reactie..." required/></div>'
+                + '<div class="col-md-12"><input type="text" name="name" placeholder="Naam" required/></div>'
+                + '<div class="col-md-12"><input type="email" name="email" placeholder="Email" required/></div>'
+                + '<div class="col-md-12"><p>Uw e-mailadres wordt niet gepubliceerd</p></div>'
+                + '<div class="col-md-12"><button class="ff-square-commentbox-button">Reactie plaatsen</button></div>'
                 + '</div>';
             }
 
@@ -383,11 +391,11 @@
 
         $.initialize('.ff-item', function() {
 
-            let html = '<div class="square-box"><div class="ff-item-bar row" style="text-align:center; border-top:0px; padding:0px;">'
-            + '<div class="col-4 like-button like-button-left"><div class="ff-square-bar-item vote"><h6><i class="fas fa-thumbs-up"></i></h6></div></div>'
+            let html = '<div class="square-box"><div class="ff-item-bar row vote-bar" style="text-align:center; border-top:0px; padding:0px;">'
+            + '<div class="col-4 like-button like-button-left vote"><div class="ff-square-bar-item"><h6><i class="fas fa-thumbs-up"></i></h6></div></div>'
             + '<div class="col-4 like-button like-button-holder"><div class="ff-square-bar-item vote-holder"><h6></h6></div></div>'
-            + '<div class="col-4 like-button like-button-right"><div class="ff-square-bar-item vote"><h6><i class="fas fa-thumbs-down"></i></h6></div></div></div>'
-            + '<div class="ff-item-bar" style="text-align:center; ">'
+            + '<div class="col-4 like-button like-button-right vote"><div class="ff-square-bar-item"><h6><i class="fas fa-thumbs-down"></i></h6></div></div></div>'
+            + '<div class="ff-item-bar reaction-bar" style="text-align:center; ">'
             + '<div class="ff-square-bar-item comments"><h6></h6></div>'
             + '<div class="ff-share-wrapper"><i class="ff-icon-share"></i><div class="ff-share-popup"><a href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.instagram.com%2Fp%2FCG11rWbgOzp%2F" class="ff-fb-share" target="_blank" rel="noreferrer">Facebook</a><a href="https://twitter.com/share?url=https%3A%2F%2Fwww.instagram.com%2Fp%2FCG11rWbgOzp%2F" class="ff-tw-share" target="_blank" rel="noreferrer">Twitter</a><a href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fwww.instagram.com%2Fp%2FCG11rWbgOzp%2F&amp;media=https%3A%2F%2Fscontent-muc2-1.cdninstagram.com%2Fv%2Ft51.29350-15%2F122586207_266242274816010_6979763166844425091_n.jpg%3F_nc_cat%3D107%26ccb%3D2%26_nc_sid%3D8ae9d6%26_nc_ohc%3DBIkLmwUUaU4AX_-3mve%26_nc_ht%3Dscontent-muc2-1.cdninstagram.com%26oh%3D1f3e0d8d9b0dd6e71540fc38f11438e8%26oe%3D5FBDC27A" class="ff-pin-share" target="_blank" rel="noreferrer">Pinterest</a><a href="https://www.linkedin.com/cws/share?url=https%3A%2F%2Fwww.instagram.com%2Fp%2FCG11rWbgOzp%2F" class="ff-li-share" target="_blank" rel="noreferrer">Linkedin</a><a href="mailto:?subject=&amp;body=https%3A%2F%2Fwww.instagram.com%2Fp%2FCG11rWbgOzp%2F" class="ff-email-share">Email</a></div></div>'
             + '</div></div>';
@@ -396,8 +404,18 @@
                 attributes: true
             });
 
+            // observer.observe($(this).find('.ff-initial-image')[0], {
+            //     attributes: true
+            // });
+
+
+
             $(this).find('.picture-item__inner').append(html);
+
+
+
         });
+
 
         $.initialize('.vote', function(e) {
 
@@ -411,7 +429,8 @@
 
                     var type = 'item';
                     var item_id = jQuery(this).parent().parents('.ff-item').attr('post-id');
-                    var vote = ($(this).parent().index() == 0 ? 1 : -1);
+                    var vote = ($(this).index() == 0 ? 1 : -1);
+                    console.log($(this), $(this).index());
 
                 } else {
                     var type = 'comment';
@@ -470,7 +489,7 @@
                     data : {
                         action: "ffs_comment_create",
                         post_id : button.parents('li').attr('post-id'),
-                        comment : button.siblings('textarea').val(),
+                        comment : $('.ff-current textarea').val(),
                         name: button.siblings('input[name="name"]').val(),
                         website: button.siblings('input[name="website"]').val(),
                         email: button.siblings('input[name="email"]').val(),

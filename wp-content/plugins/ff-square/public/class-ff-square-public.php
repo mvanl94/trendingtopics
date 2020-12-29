@@ -64,11 +64,10 @@ class Ff_Square_Public {
             return $content;
         }
 
-        $html = '<div class="row" style="margin:0;">
-        <div class="col-md-4">
+        $html = '<div class="ff-square-box-wrapper">
             <div class="ff-square-box latest-comments">
                 <div class="ff-square-box-header">
-                    <h5>Laatste Reacties</h5>
+                    <h5><i class="fas fa-comments" style="color:#2c6ff6; margin-right:0.5em;"></i>Laatste Reacties</h5>
                     <a class="btn collapse-block" aria-controls="block1">
                     Bekijken
                     </a>
@@ -87,11 +86,9 @@ class Ff_Square_Public {
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
             <div id="votes" class="ff-square-box">
                 <div class="ff-square-box-header">
-                    <h5>Meeste stemmen</h5>
+                    <h5><i class="fas fa-chart-line" style="color:#24ca24; margin-right:0.5em;"></i>Meeste stemmen</h5>
                     <select class="select-type desktop">
                     <option value="0">Upvotes</option>
                     <option value="2">Downvotes</option>
@@ -137,12 +134,10 @@ class Ff_Square_Public {
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
             <div id="hottopics" class="ff-square-box">
                 <div class="ff-square-box-header">
 
-                    <h5>Hot Topics</h5>
+                    <h5><i class="fas fa-fire" style="color:orange; margin-right:0.5em;"></i>Hot Topics</h5>
                     <select class="select-date desktop">
                     <option value="2" selected="selected">1 maand</option>
                     <option value="1">1 week</option>
@@ -176,7 +171,6 @@ class Ff_Square_Public {
                     </div>
                 </div>
             </div>
-        </div>
 
         </div>';
 
@@ -262,7 +256,7 @@ class Ff_Square_Public {
             $sql = "SELECT *
             FROM {$wpdb->prefix}ff_square_comments
             WHERE created_at>0
-            ORDER BY created_at
+            ORDER BY created_at DESC
             LIMIT 9";
 
             $comments = $wpdb->get_results($sql, OBJECT);
@@ -509,7 +503,6 @@ class Ff_Square_Public {
         $comment = strip_tags($_REQUEST['comment']);
         $ip_address = $this->GetIP();
 
-
         $wpdb->get_results(
             'INSERT INTO ' . $wpdb->prefix . 'ff_square_comments SET
             post_id="' . $post_id . '",
@@ -523,7 +516,8 @@ class Ff_Square_Public {
             echo json_encode([
                 'comment' => $comment,
                 'post_id' => $post_id,
-                'name' => $name
+                'name' => $name,
+								'created_at' => strval(time())
             ]);
         } else {
             echo 0;
