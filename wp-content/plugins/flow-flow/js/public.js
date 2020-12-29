@@ -1687,7 +1687,7 @@ window.FF_DEBUG = -1 !== location.href.indexOf("debug=1"), Array.prototype.find 
                 g ? (i = (t = {
                     width: g[4] || g[0],
                     height: g[5] || g[1]
-                }).width && t.height ? T._calcImageProportion(S, t) : 0, v.css("minHeight", i)) : v.length && (g = v.data("size")) && (i = (t = {
+                }).width && t.height ? T._calcImageProportion(S, t) : 0, v.css("minHeight", '80px')) : v.length && (g = v.data("size")) && (i = (t = {
                     width: g.width,
                     height: g.height
                 }).width && t.height ? T._calcImageProportion(S, t) : 0, v.css("minHeight", i)), ("grid" === I || y) && (d = u.find(y ? ".ff-overlay-wrapper" : ".ff-item-cont"), a = u.find(".ff-content"), l = d.find("> h4"), c = d.children(), y && (c = c.not(".ff-overlay")), "label1" === T.streamOpts["icon-style"] && u.is(".ff-meta-first") || (c = c.not(".ff-label-wrapper")), f = parseInt(c.first().css("marginTop")), h = parseInt(c.last().css("marginBottom")), r = .07 * S, p = (c.length - 1) * r + f + h, o = l.length ? l.height() : 0, (s = (x || i || v.height()) - ("ad" === u.data("type") ? 0 : (v.length && !y ? k : 0) + o + C + 44) - p) < 21 && (s = 20 <= s ? 20 : o ? 0 : s < 0 ? 21 + s - r : s), w = {
@@ -1925,7 +1925,8 @@ window.FF_DEBUG = -1 !== location.href.indexOf("debug=1"), Array.prototype.find 
                             height: n[5]
                         },
                         r = a._calcImageProportion(a.colWidth - a._itemMargin, o);
-                    i.find(".ff-img-holder img").css("minHeight", r)
+                    i.find(".ff-img-holder img").css("minHeight", '80px')
+                    // i.find(".ff-img-holder img").css("minHeight", r)
                 }
             }), this.itemCss.width = this.colWidth - this._itemMargin), a.sort())
         }, _.prototype.layout = function() {

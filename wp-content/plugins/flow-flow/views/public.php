@@ -129,7 +129,7 @@ $js_opts['token'] = ($admin && $moderation) ? $context['token'] : '';
                 'token':  '<?php echo $js_opts['token']; ?>'
             };
 
-            console.log( data )
+            // console.log( data )
 
             var isMobile = /android|blackBerry|iphone|ipad|ipod|opera mini|iemobile/i.test( navigator.userAgent );
 
