@@ -25,6 +25,10 @@
   .ff-initial-image {
     max-width: 120px;
   }
+  .ff-current .ff-img-holder {
+    display: contents !important;
+    min-height:100% !important;
+  }
 }
 
 /* einde desktop */
