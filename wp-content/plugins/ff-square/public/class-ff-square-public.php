@@ -60,6 +60,9 @@ class Ff_Square_Public {
 	 */
     public function add_boxes($content)
     {
+				if (is_single()) {
+					return false;
+				}
         if (strpos('[ff]', $content) == -1) {
             return $content;
         }
@@ -184,8 +187,10 @@ class Ff_Square_Public {
 	 */
 	public function enqueue_styles() {
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/ff-square-public.css', array(), $this->version, 'all' );
-
+			if (is_single()) {
+				return false;
+			}
+				wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/ff-square-public.css', array(), $this->version, 'all' );
         wp_register_style( 'ffs-fontawesome', 'https://use.fontawesome.com/releases/v5.15.1/css/all.css' );
         wp_enqueue_style( 'ffs-fontawesome' );
 
@@ -200,6 +205,9 @@ class Ff_Square_Public {
 	 */
 	public function enqueue_scripts() {
 
+				if (is_single()) {
+						return false;
+				}
         wp_register_script( 'ffs-jquery', 'https://code.jquery.com/jquery-3.2.1.slim.min.js' );
         wp_enqueue_script( 'ffs-jquery' );
 
@@ -210,7 +218,7 @@ class Ff_Square_Public {
         wp_enqueue_script( 'ffs-popper' );
 
         wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/ff-square-initializer.js', array( 'jquery' ), $this->version, false );
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/ff-square-public.js', array( 'jquery' ), $this->version, false );
+				wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/ff-square-public.js', array( 'jquery' ), $this->version, false );
 
         wp_register_script( 'ff_square', plugin_dir_url( __FILE__ ) . 'js/ff-square-ajax.js', array('jquery'), filemtime(plugin_dir_path( __FILE__ ) . 'js/ff-square-ajax.js'), false );
         wp_localize_script( 'ff_square', 'ff_square_ajax', [
@@ -221,6 +229,7 @@ class Ff_Square_Public {
             'fetch_post_nonce' => wp_create_nonce("ffs_fetch_post_nonce"),
             'vote_nonce' => wp_create_nonce("ffs_vote_nonce"),
             'loggedin' => is_user_logged_in(),
+						'user' => wp_get_current_user()
         ]);
 
         wp_enqueue_script( 'ff_square' );
@@ -478,7 +487,7 @@ class Ff_Square_Public {
         if (is_user_logged_in()) {
 
             $id = get_current_user_id();
-            $name = get_current_user();
+            $name = wp_get_current_user()->user_nicename;
 
         } else {
 
@@ -518,7 +527,7 @@ class Ff_Square_Public {
                 'comment' => $comment,
                 'post_id' => $post_id,
                 'name' => $name,
-								'created_at' => date('Y-m-d H:i:s', time())
+				'created_at' => date('Y-m-d H:i:s', time())
             ]);
         } else {
             echo 0;
