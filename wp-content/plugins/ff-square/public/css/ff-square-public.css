@@ -3,6 +3,13 @@
 * included in this file.
 */
 
+/* Hide timer */
+.heacent {
+    display:none;
+}
+.ff-btn {
+    display:none;
+}
 /* Nieuwe layout */
 
 /* Voor specifiek deskotp */
@@ -22,6 +29,11 @@
     width: calc(33% - 10px) !important;
 
   }
+
+  .ff-stream .ff-item-meta {
+
+      width: 300px !important;
+}
   .ff-initial-image {
     max-width: 120px;
   }
@@ -49,8 +61,13 @@
   .ff-stream-wrapper {
     /* margin-left: 0px !important; */
   }
+  .ff-stream .ff-item-meta {
+      width: calc(100vw - 30%) !important;
+  }
   .ff-square-box-wrapper {
     margin-right: 15px;
+    background-color: #fff;
+    margin-bottom: -20px;
     padding: 20px;
     padding-bottom: 0px !important;
   }
@@ -70,6 +87,7 @@
   }
   .ff-stream {
     padding-top: 0 !important;
+    width: 100vw;
     background: #fff !important;
   }
   .ff-img-holder {
@@ -90,14 +108,39 @@
 }
 
 /* end mobile */
+.ff-square-slide-vote-bar {
+    background-color: #fff;
+}
+.ff-square-card-meta {
+  width: 100%;
+    display: inline-block;
+    padding-left: 10px;
+    position: absolute;
+    bottom: 18px;
+}
+.ff-slide-wrapper .ff-square-slide-vote-bar {
+    padding-top: 15px;
+}
+.ff-slide-wrapper .ff-square-slide-vote-bar .col-md-4 {
+    padding-left:0px !important;
+}
+.ff-slide-wrapper .like-button {
+    display: inline-block;
+    background-color: #fff;
+    text-align: center;
+}
+.ff-slide-wrapper .ff-item-meta h6 {
+    display:block;
+}
 .ff-stream-wrapper {
   margin-top:0 !important;
 }
 .ff-stream .ff-header {
   display:none;
 }
+
 .ff-stream .ff-img-holder {
-  max-width: 25% !important;
+  max-width: 30% !important;
   float:left;
   display: inline-block;
   /* max-height: 250px !important; */
@@ -106,6 +149,9 @@
   padding:10px;
   border-radius: 5px !important;
   background: #fff !important;
+}
+.ff-square-card-vote-bar {
+    width: 100%;
 }
 .ff-stream .ff-initial-image {
   height: 60px;
@@ -122,9 +168,12 @@
   border-radius: 5px !important;
   /* height: 230px !important; */
 }
+
 .ff-stream .ff-item h4 {
+    font-size: 15px !important;
+    font-weight: 500 !important;
   display: inline-block;
-  max-width: 75% !important;
+  max-width: 70% !important;
   float:left;
   margin: 0!important;
   padding: 10px !important;
@@ -134,7 +183,7 @@
 .ff-stream .ff-content {
   display:none;
   margin: 0!important;
-  max-width: 75% !important;
+  max-width: 70% !important;
   padding: 10px !important;
   padding-top: 0 !important;
   overflow: hidden;
@@ -145,26 +194,70 @@
 
 .ff-stream .ff-item-meta {
   margin: 0 !important;
-    width: 300px !important;
     float: left !important;
     text-align: left !important;
     position: absolute !important;
-left: 25% !important;
+left: 30% !important;
 bottom: 0 !important;
 }
 .reaction-bar {
   /* padding: 20px 0 0 0 !important; */
 }
+.ff-item:hover {
+  background-color: #fff !important;
+}
+.picture-item__inner:hover:before {
+
+  background-color: #fff !important;
+}
+.ff-square-comments-card {
+  display: none;
+  width: 100%;
+  overflow-y: scroll;
+  position: relative;
+  z-index: 1;
+  padding-bottom: 20px;
+  border-radius: 0 0 3px 3px;
+}
+.ff-square-comments-card .ff-square-comment {
+  z-index: 1;
+
+}
+
+li .vote-bar {
+  display: none !important;
+}
+.vote-bar h6 {
+  display: block !important;
+  line-height: 14px;
+  font-size: 14px;
+}
+.vote-bar .ff-square-bar-item i {
+  font-size: 14px;
+}
+
+.vote-bar .like-button {
+  padding: 3px !important;
+  min-width: 40px;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+}
 .vote-bar {
+  position: absolute;
+    float: right !important;
+    right: 30px;
+    bottom: 10px;
+}
+/* .vote-bar {
   top: 10px;
 
   position: relative;
     width: 50%;
     float:left !important;
 
-}
+} */
 .ff-square-bar-item i {
-  font-size: 20px;
+  font-size: 16px;
 }
 .ff-item-bar:first-of-type {
   background: none !important;
@@ -206,15 +299,18 @@ bottom: 0 !important;
     padding-bottom: 20px;
 }
 /* Einde */
+.mg-headwidget .navbar-wp {
+    background: #286FB4 !important;
+}
 .wrapper {
-  background: #f1f1f1 !important;
+  background: #E2F0F9 !important;
 }
 .mg-card-box {
   box-shadow: none !important;
-  background: #f1f1f1 !important;
+  background: #E2F0F9 !important;
 }
 .ff-stream {
-  background: #f1f1f1 !important;
+  background: #E2F0F9 !important;
 }
 .ff-slideshow span.ff-nav-close {
     right: unset !important;
@@ -225,6 +321,8 @@ bottom: 0 !important;
 }
 .ff-img-holder {
     width: 100% !important;
+    height: 120px;
+    padding-right: 0px !important;
 }
 .ff-slide-wrapper .ff-img-holder img {
     width: 100% !important;
@@ -383,6 +481,7 @@ a:focus {
 .ff-square-item-header {
     overflow:hidden;
     font-size: 15px;
+    font-weight: 500;
     margin-left: 5px;
     color: #363636 !important;
 }
@@ -421,8 +520,12 @@ a:focus {
     overflow:hidden;
     line-height: 18px;
 }
+.ff-square-notice {
+    color: black;
+    padding: 10px;
+}
 .ff-square-box-item-vote a {
-    font-weight: 700;
+    font-weight: 500;
     color: #2d6ff7;
 }
 .ff-square-box-item-comment {
@@ -511,7 +614,9 @@ box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
 .ff-slideshow .ff-content.not-empty:first-of-type {
     display:block;
 }
-.ff-slideshow .ff-content.not-empty:not(:first-of-type) {
+/* .ff-slideshow .ff-content.not-empty:not(:nth-child(2)) {
+} */
+.ff-slideshow .ff-content.not-empty:not(:nth-of-type(2)) {
     display: none !important;
 }
 .ff-item-meta .ff-item-bar {
@@ -608,7 +713,7 @@ box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
 .ff-square-comment span {
     margin-right: 3px;
     line-height: 5px;
-    font-size: 12px;
+    font-size: 14px;
 }
 .ff-square-comment span:last-child {
     margin-right: 6px;
