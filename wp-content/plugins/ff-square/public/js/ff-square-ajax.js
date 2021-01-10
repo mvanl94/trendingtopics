@@ -68,22 +68,6 @@
             });
         });
 
-        //Infinite Scroll
-        $(window).scroll(function() {
-
-            var top_of_element = $(".ff-loadmore-wrapper").offset().top - 100;
-            var bottom_of_element = $(".ff-loadmore-wrapper").offset().top + $(".ff-loadmore-wrapper").outerHeight();
-            var bottom_of_screen = $(window).scrollTop() + $(window).innerHeight();
-            var top_of_screen = $(window).scrollTop();
-
-            if ((bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element)){
-
-                if ($('.ff-btn').css('opacity') == 1) {
-                    $('.ff-btn').click();
-                }
-            }
-        });
-
         function initCard(card)
         {
             let post_id = card.attr('post-id');
@@ -206,7 +190,7 @@
                     });
 
                     $('.ff-square-card-meta').on('click', function(e) {
-                        
+
                         e.stopImmediatePropagation();
 
                         let card = $(this).parents('article');
@@ -452,6 +436,22 @@
                 //
                 $('.ff-slideshow').initialize(function() {
                     $(this).append('<ul class="ff-square-slideshow-media"></ul>');
+
+                    //Infinite Scroll
+                    $(window).scroll(function() {
+
+                        var top_of_element = $(".ff-loadmore-wrapper").offset().top - 100;
+                        var bottom_of_element = $(".ff-loadmore-wrapper").offset().top + $(".ff-loadmore-wrapper").outerHeight();
+                        var bottom_of_screen = $(window).scrollTop() + $(window).innerHeight();
+                        var top_of_screen = $(window).scrollTop();
+
+                        if ((bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element)){
+
+                            if ($('.ff-btn').css('opacity') == 1) {
+                                $('.ff-btn').click();
+                            }
+                        }
+                    });
                 });
 
                 $.initialize('.ff-slideshow > ul > li', function() {
