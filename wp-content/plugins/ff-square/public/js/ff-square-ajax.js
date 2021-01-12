@@ -139,7 +139,7 @@
                             html+= '<span style="display:inline-block; font-weight: 600;" class="vote-holder">0</span>'
                         }
                         html+= '<span style="display:inline-block;" class="vote"><i class="fas fa-thumbs-down"> </i></span>'
-                        + '<div class="ff-square-comment-header"><b class="ff-square-comment-username">' + item.user_nicename + '</b><span class="ff-square-comment-timestamp">' + prettyDate(item.created_at) + '</span></div>'
+                        + '<div class="ff-square-comment-header"><b class="ff-square-comment-username">' + item.user_nicename + '</b><span class="ff-square-comment-button" data-user-id="' + item.ID + '">Geef respect</span><span class="ff-square-comment-timestamp">' + prettyDate(item.created_at) + '</span></div>'
                         + '</div></div>';
 
                         $('li[post-id="' + post_id + '"] > div > div > div > .ff-square-comments-list').append(html);
@@ -147,6 +147,40 @@
                         //Html voor reacties onder card
                         card.find('.picture-item__inner').find('.ff-square-comments-card').append(html);
 
+                    });
+
+                    $('.ff-square-comment-button').on('click', function(e) {
+
+                        e.stopImmediatePropagation();
+
+                        let button = $(this);
+                        let receiver = $(this).attr('data-user-id');
+
+                        jQuery.ajax({
+                            type : "post",
+                            dataType : "json",
+                            url : ff_square_ajax.ajaxurl,
+                            data : {
+                                action: "ffs_respect",
+                                receiver : receiver,
+                                nonce: ff_square_ajax.respect_nonce,
+                            },
+                            success: function(response) {
+
+                                //Respect already given
+                                if (response == 0) {
+
+                                }
+                                //Success
+                                if (response == 1) {
+                                    button.hide();
+                                }
+                                //User not logged in
+                                if (response == -1) {
+
+                                }
+                            }
+                        });
                     });
 
                     $('.ff-square-card-respond').on('click', function(e) {
@@ -249,13 +283,13 @@
                             var posts = {};
 
                             $(JSON.parse(response.posts)).each(function(key, item) {
+                                console.log(item);
                                 posts[item.post_id] = item;
                             });
 
                             let list = [];
                             var block = [];
 
-                            // console.log("POSTS", posts);
 
                             $(JSON.parse(response.comments)).each(function (key, item) {
 
@@ -657,9 +691,9 @@
 
                                 //Dit voegt het niet toe bij de card en de slide
                                 if (button.parents('li').length) {
-                                    button.closest('.ff-square-comments-list').append(html);
+                                    button.parents('li').closest('.ff-square-comments-list').append(html);
                                 } else {
-                                    button.closest('.ff-square-comments-list').find('h6').after(html);
+                                    button.parents('.ff-item').find('.ff-square-comments-list').find('h6').eq(1).after(html);
                                 }
 
                                 //Een reactie per gebruiker?

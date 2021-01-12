@@ -177,6 +177,9 @@ class Ff_Square {
         $this->loader->add_action("wp_ajax_ffs_comment_create", $plugin_public, "ffs_comment_create");
         $this->loader->add_action("wp_ajax_nopriv_ffs_comment_create", $plugin_public, "ffs_comment_create");
 
+		$this->loader->add_action("wp_ajax_ffs_respect", $plugin_public, "ffs_respect");
+        $this->loader->add_action("wp_ajax_nopriv_ffs_respect", $plugin_public, "ffs_respect");
+
         $this->loader->add_action("wp_ajax_ffs_comments_get", $plugin_public, "ffs_comments_get");
         $this->loader->add_action("wp_ajax_nopriv_ffs_comments_get", $plugin_public, "ffs_comments_get");
 

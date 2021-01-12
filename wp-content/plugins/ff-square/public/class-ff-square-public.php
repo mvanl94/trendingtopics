@@ -218,7 +218,7 @@ class Ff_Square_Public {
         wp_enqueue_script( 'ffs-popper' );
 
         wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/ff-square-initializer.js', array( 'jquery' ), $this->version, false );
-				wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/ff-square-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/ff-square-public.js', array( 'jquery' ), $this->version, false );
 
         wp_register_script( 'ff_square', plugin_dir_url( __FILE__ ) . 'js/ff-square-ajax.js', array('jquery'), filemtime(plugin_dir_path( __FILE__ ) . 'js/ff-square-ajax.js'), false );
         wp_localize_script( 'ff_square', 'ff_square_ajax', [
@@ -227,9 +227,10 @@ class Ff_Square_Public {
             'block_get_nonce' => wp_create_nonce("ffs_block_get_nonce"),
             'comments_get_nonce' => wp_create_nonce("ffs_comments_get_nonce"),
             'fetch_post_nonce' => wp_create_nonce("ffs_fetch_post_nonce"),
+			'respect_nonce' => wp_create_nonce("ffs_respect_nonce"),
             'vote_nonce' => wp_create_nonce("ffs_vote_nonce"),
             'loggedin' => is_user_logged_in(),
-						'user' => wp_get_current_user()
+			'user' => wp_get_current_user()
         ]);
 
         wp_enqueue_script( 'ff_square' );
@@ -287,8 +288,6 @@ class Ff_Square_Public {
             }
 
             // $sql.= "GROUP BY post_id";
-
-            // echo $sql;
 
             $posts = $wpdb->get_results($sql, OBJECT);
 
@@ -421,10 +420,10 @@ class Ff_Square_Public {
         $post_id = $_REQUEST['post_id'];
 
         $comments = $wpdb->get_results(
-            "SELECT user_nicename, comment, comment_id, post_id, created_at
+            "SELECT ID, user_nicename, comment, comment_id, post_id, created_at
             FROM {$wpdb->prefix}ff_square_comments
-            LEFT JOIN (SELECT id, user_nicename FROM {$wpdb->prefix}users) {$wpdb->prefix}users
-            ON {$wpdb->prefix}ff_square_comments.post_owner = {$wpdb->prefix}users.id
+            LEFT JOIN (SELECT ID, user_nicename FROM {$wpdb->prefix}users) {$wpdb->prefix}users
+            ON {$wpdb->prefix}ff_square_comments.post_owner = {$wpdb->prefix}users.ID
                     WHERE post_id='" . $post_id . "'"
         , OBJECT );
 
@@ -473,6 +472,42 @@ class Ff_Square_Public {
 
         exit();
     }
+
+	//
+	function ffs_respect()
+	{
+		global $wpdb;
+
+		if ( !wp_verify_nonce( $_REQUEST['nonce'], "ffs_respect_nonce")) {
+            exit("Fout");
+        }
+
+		if (is_user_logged_in()) {
+
+			//Check if respect is already given
+			$wpdb->get_results(
+				'SELECT * FROM ' . $wpdb->prefix . 'ff_square_respect WHERE
+				sender_id=' . get_current_user_id() . ' AND
+				receiver_id=' . $_REQUEST['receiver']);
+
+			if ($wpdb->num_rows) {
+				echo 0;
+			} else {
+
+				$wpdb->get_results(
+					'INSERT INTO ' . $wpdb->prefix . 'ff_square_respect SET
+					sender_id="' . get_current_user_id() . '",
+					receiver_id="' . $_REQUEST['receiver'] . '",
+					created_at=' . time());
+
+				echo 1;
+			}
+		} else {
+			echo -1;
+		}
+
+		exit();
+	}
 
 	//Als comment geplaatst wordt dan moeten alle mensen die op dit item gereageerd
 	//hebben een notificatie ontvangen per mail

@@ -160,6 +160,17 @@
   width: 100%;
   max-height: 60px;
 }
+.ff-square-comment-button {
+    font-size: 12px;
+    padding: 5px;
+    font-weight: bold;
+    border-radius: 3px;
+    color: dimgrey;
+}
+.ff-square-comment-button:hover {
+    background-color: #d4d4d4;
+    cursor: pointer;
+}
 .ff-img-holder {
   /* border-radius: 5px !important; */
 }
