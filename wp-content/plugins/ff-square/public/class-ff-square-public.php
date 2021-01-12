@@ -474,6 +474,33 @@ class Ff_Square_Public {
         exit();
     }
 
+	//Als comment geplaatst wordt dan moeten alle mensen die op dit item gereageerd
+	//hebben een notificatie ontvangen per mail
+	function sendNotifcation($post_id, $comment, $name)
+	{
+		global $wpdb;
+
+		$headers[] = 'Content-type: text/html';
+
+		//Get post
+		$post = $wpdb->get_results('SELECT * FROM ' . $wpdb->prefix . 'ff_posts WHERE post_id="' . $post_id . '"');
+		//Get all users by post_id
+		$users = $wpdb->get_results('SELECT post_owner FROM ' . $wpdb->prefix . 'ff_square_comments WHERE post_id="' . $post_id . '"');
+
+		foreach ($users as $user) {
+			//Send notification to all but logged in user
+			if (get_current_user_id() != $user->post_owner) {
+
+				$us = $wpdb->get_results('SELECT * FROM ' . $wpdb->prefix . 'users WHERE ID=' . $user->post_owner);
+
+				$message = 'Dag ' . $us[0]->user_nicename . '<br><br>';
+				$message.= $name . ' heeft gereageerd met ' . $comment . ' op ' . $post[0]->post_header . '<br><br>';
+
+				wp_mail($us[0]->user_email, 'Iemand heeft ook gereageerd op dit bericht', $message, $headers);
+			}
+		}
+	}
+
     function ffs_comment_create() {
 
         global $wpdb;
@@ -513,6 +540,9 @@ class Ff_Square_Public {
         $comment = strip_tags($_REQUEST['comment']);
         $ip_address = $this->GetIP();
 
+		//Send Notification
+		$this->sendNotifcation($post_id, $comment, $name);
+
         $wpdb->get_results(
             'INSERT INTO ' . $wpdb->prefix . 'ff_square_comments SET
             post_id="' . $post_id . '",
@@ -520,7 +550,6 @@ class Ff_Square_Public {
             ip_address="' . $ip_address . '",
             post_owner="' . $id . '",
             created_at=' . time());
-
 
         if (is_user_logged_in()) {
             echo json_encode([

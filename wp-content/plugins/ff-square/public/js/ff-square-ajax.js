@@ -171,7 +171,7 @@
                     if (ff_square_ajax.loggedin) {
 
                         html= '<div class="col-md-12" style="padding-top:10px;font-size:13px; color:black;">Je bent ingelogd als ' + ff_square_ajax.user.data.user_nicename + ' klik <a href="/wp-login.php?action=logout">hier</a> om uit te loggen</div>'
-                        + '<div class="col-md-12"><textarea class="ff-square-commentbox-textarea" placeholder="Reactie..." required/></div>'
+                        + '<div class="col-md-12"><textarea class="ff-square-commentbox-textarea" placeholder="Reactie..." required></textarea></div>'
                         + '<div class="col-md-12"><button class="ff-square-commentbox-button">Reactie plaatsen</button></div>'
                         + '</div>';
                     } else {
@@ -463,7 +463,7 @@
                     if (ff_square_ajax.loggedin) {
 
                         html+= '<div class="col-md-12">Je bent ingelogd als ' + ff_square_ajax.user.data.user_nicename + ' klik <a href="/wp-login.php?action=logout">hier</a>om uit te loggen</div>'
-                        + '<div class="col-md-12"><textarea class="ff-square-commentbox-textarea" placeholder="Reactie..." required/></div>'
+                        + '<div class="col-md-12"><textarea class="ff-square-commentbox-textarea" placeholder="Reactie..." required></textarea></div>'
                         + '<div class="col-md-12"><button class="ff-square-commentbox-button">Reactie plaatsen</button></div>'
                         + '</div>';
                     } else {
