@@ -55,7 +55,7 @@
         });
 
         //Mobile navigation toggle btn fix
-        $('button.navbar-toggler').initialize(function() {
+        $.initialize('button.navbar-toggler', function() {
             var is_open = 0;
             $('button.navbar-toggler').on('click', function() {
                 if (is_open) {
@@ -176,7 +176,7 @@
                         + '</div>';
                     } else {
                         html= '<div class="ff-square-notice"></div><div class="col-md-12 ff-square-user-registration-form-element" style="padding-top:10px;font-size:13px; color:black;"><p><a href="/wp-login.php">Login</a> of maak een account aan om te reageren.</p></div>'
-                        + '<div class="col-md-12 ff-square-user-registration-form-element"><textarea class="ff-square-commentbox-textarea" placeholder="Reactie..." required/></div>'
+                        + '<div class="col-md-12 ff-square-user-registration-form-element"><textarea class="ff-square-commentbox-textarea" placeholder="Reactie..." required></textarea></div>'
                         + '<div class="col-md-12 ff-square-user-registration-form-element"><input type="text" name="name" placeholder="Naam" required/></div>'
                         + '<div class="col-md-12 ff-square-user-registration-form-element"><input type="email" name="email" placeholder="Email" required/></div>'
                         + '<div class="col-md-12 ff-square-user-registration-form-element"><p>Uw e-mailadres wordt niet gepubliceerd</p></div>'
@@ -277,7 +277,7 @@
 
                             list = $.unique(list);
 
-                            $('.ff-slideshow-media').initialize(function() {
+                            $.initialize('.ff-slideshow-media', function() {
                                 $(list).each(function (key, item) {
                                     loadSlide(1, item, block[item]);
                                 });
@@ -351,7 +351,7 @@
 
                             $('.ff-square-box-items').eq(1).append(block.flat());
 
-                            $('.ff-slideshow-media').initialize(function() {
+                            $.initialize('.ff-slideshow-media', function() {
                                 $(posts).each(function (key, item) {
                                     loadSlide(2, item, block[key]);
                                 });
@@ -424,7 +424,7 @@
 
                             $('.ff-square-box-items').eq(2).append(block.flat());
 
-                            $('.ff-slideshow-media').initialize(function() {
+                            $.initialize('.ff-slideshow-media', function() {
                                 $(posts).each(function (key, item) {
                                     loadSlide(3, item, block[key]);
                                 });
@@ -433,8 +433,8 @@
                     });
                 }
 
-                //
-                $('.ff-slideshow').initialize(function() {
+
+                $.initialize('.ff-slideshow', function() {
                     $(this).append('<ul class="ff-square-slideshow-media"></ul>');
 
                     //Infinite Scroll
@@ -468,7 +468,7 @@
                         + '</div>';
                     } else {
                         html+= '<div class="col-md-12"><p><a href="/wp-login.php">Login</a>of maak een account aan om te reageren.</p></div>'
-                        + '<div class="col-md-12"><textarea class="ff-square-commentbox-textarea" placeholder="Reactie..." required/></div>'
+                        + '<div class="col-md-12"><textarea class="ff-square-commentbox-textarea" placeholder="Reactie..." required></textarea></div>'
                         + '<div class="col-md-12"><input type="text" name="name" placeholder="Naam" required/></div>'
                         + '<div class="col-md-12"><input type="email" name="email" placeholder="Email" required/></div>'
                         + '<div class="col-md-12"><p>Uw e-mailadres wordt niet gepubliceerd</p></div>'
@@ -483,7 +483,7 @@
 
                 loadBlock1();
 
-                $('#votes').initialize(function() {
+                $.initialize('#votes', function() {
 
                     if (init == 0) {
 
