@@ -235,7 +235,6 @@
                             {
                                 height:'400px'
                             }, 200);
-                        console.log(card);
 
                     });
 
@@ -283,7 +282,6 @@
                             var posts = {};
 
                             $(JSON.parse(response.posts)).each(function(key, item) {
-                                console.log(item);
                                 posts[item.post_id] = item;
                             });
 
@@ -722,6 +720,7 @@
                         html+= '<span class="ff-img-holder  ff-img-landscape" style="width: 300px; max-height: 169px; height: 169px;"><img class="ff-initial-image" src="' + post.media_url + '"></span>';
                     }
 
+
                     html+= '</div>'
                     + '<div class="ff-item-cont" style="height: 420px;">'
                     + '<h6 class="ff-label-wrapper"></h6>'
@@ -774,9 +773,20 @@
 
                             //Check if card/post already exists otherwise add
                             if ($('li[post-id="' + post_id + '"]').length == 0 ) {
+
                                 var post = createSlide(response[0]);
+
                                 $('.ff-square-slideshow-media').append(post);
                                 loadComments(post_id);
+
+
+                                let html_slide_vote = '<div class="ff-square-slide-vote-bar"><div class="col-md-4">'
+                                + '<div class="col-4 like-button like-button-left vote"><div class="ff-square-bar-item"><h6><i class="fas fa-thumbs-up"></i></h6></div></div>'
+                                + '<div class="col-4 like-button like-button-holder"><div class="ff-square-bar-item vote-holder"><h6>0</h6></div></div>'
+                                + '<div class="col-4 like-button like-button-right vote"><div class="ff-square-bar-item"><h6><i class="fas fa-thumbs-down"></i></h6></div></div></div></div>';
+
+                                $('li[post-id="' + post_id + '"]').find('.ff-item-meta').append(html_slide_vote);
+
                             } else {
                                 cardExists = 1;
                             }
@@ -788,7 +798,7 @@
 
                                 let post_id = $(this).attr('data-id');
 
-                                if ($('li[post-id="' + post_id + '"]').length > 0 ) {
+                                if ($('.ff-slideshow-media li[post-id="' + post_id + '"]').length > 0 ) {
 
                                     $('article[post-id="' + $(this).attr('data-id') + '"]').eq(0).click();
                                 } else {

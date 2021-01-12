@@ -167,6 +167,14 @@
     border-radius: 3px;
     color: dimgrey;
 }
+
+/* Css voor eigen gemaakte slides on ff-square-slideshow-media */
+.ff-square-slideshow-media .ff-content.not-empty {
+    display: block !important;
+}
+
+/* einde */
+
 .ff-square-comment-button:hover {
     background-color: #d4d4d4;
     cursor: pointer;
@@ -629,7 +637,7 @@ box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
 }
 /* .ff-slideshow .ff-content.not-empty:not(:nth-child(2)) {
 } */
-.ff-slideshow .ff-content.not-empty:not(:nth-of-type(2)) {
+.ff-slideshow-media .ff-content.not-empty:not(:nth-of-type(2)) {
     display: none !important;
 }
 .ff-item-meta .ff-item-bar {
